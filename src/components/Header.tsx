@@ -30,6 +30,7 @@ export const Header: React.FC = () => {
   const [searchInput, setSearchInput] = useState('');
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const navContainerRef = useRef<HTMLDivElement>(null);
+  const megaMenuRef = useRef<HTMLDivElement>(null);
 
   // Close menus on outside click
   useEffect(() => {
@@ -37,7 +38,11 @@ export const Header: React.FC = () => {
       if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
         setIsSearchActive(false);
       }
-      if (navContainerRef.current && !navContainerRef.current.contains(e.target as Node)) {
+      if (
+        navContainerRef.current &&
+        !navContainerRef.current.contains(e.target as Node) &&
+        !(megaMenuRef.current && megaMenuRef.current.contains(e.target as Node))
+      ) {
         setActiveMegaMenu(null);
       }
     };
@@ -400,6 +405,7 @@ export const Header: React.FC = () => {
       {/* Mega Menus Overlay */}
       {activeMegaMenu && (
         <div 
+          ref={megaMenuRef} 
           onMouseLeave={() => setActiveMegaMenu(null)}
           className="hidden lg:block absolute top-full left-0 right-0 bg-slate-900/98 backdrop-blur-md border-b border-slate-700 shadow-2xl py-8 z-50 text-slate-100"
         >
