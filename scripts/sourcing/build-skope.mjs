@@ -191,7 +191,7 @@ for (const p of products) {
     .map((q) => q.id);
 }
 
-fs.writeFileSync('src/config/products.generated.json', JSON.stringify(products, null, 1));
+fs.writeFileSync('data/products-skope.json', JSON.stringify(products, null, 1));
 console.log('products:', products.length, 'images queued:', imageJobs.length);
 
 // Download images (skip existing)

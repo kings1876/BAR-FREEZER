@@ -103,6 +103,12 @@ export const ProductDetailPage: React.FC = () => {
     window.print();
   };
 
+  const rootPath =
+    product.primaryCategory === 'Bar Fridges & Coolers'
+      ? '/bar-fridges/'
+      : product.primaryCategory === 'Accessories & Parts'
+      ? '/accessories-parts/'
+      : '/bar-freezers/';
   const hasPrice = typeof product.price === 'number';
   const silverChefWeekly = hasPrice ? Math.round((product.price as number) * 0.016) : 0;
 
@@ -114,9 +120,9 @@ export const ProductDetailPage: React.FC = () => {
         <nav aria-label="Breadcrumb" className="flex items-center text-xs text-slate-500 space-x-1 font-medium">
           <Link href="/" className="hover:text-slate-900">Home</Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <Link href="/bar-freezers/" className="hover:text-slate-900">{product.primaryCategory}</Link>
+          <Link href={rootPath} className="hover:text-slate-900">{product.primaryCategory}</Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <Link href={`/bar-freezers/${product.categorySlug}/`} className="hover:text-slate-900">{product.subCategory || product.type}</Link>
+          <Link href={`${rootPath}${product.categorySlug}/`} className="hover:text-slate-900">{product.subCategory || product.type}</Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
           <span className="text-slate-900 font-semibold truncate max-w-xs" aria-current="page">{product.model}</span>
         </nav>
@@ -163,15 +169,15 @@ export const ProductDetailPage: React.FC = () => {
               <div className="p-4 bg-slate-50 rounded-lg border border-slate-200/80 grid grid-cols-3 gap-2 text-center text-xs">
                 <div>
                   <span className="text-slate-400 text-[10px] uppercase block">Dimensions</span>
-                  <span className="font-mono font-bold text-slate-900">{product.widthMm}x{product.depthMm}x{product.heightMm}mm</span>
+                  <span className="font-mono font-bold text-slate-900">{product.widthMm && product.depthMm && product.heightMm ? `${product.widthMm}x${product.depthMm}x${product.heightMm}mm` : '—'}</span>
                 </div>
                 <div>
                   <span className="text-slate-400 text-[10px] uppercase block">Gross Volume</span>
-                  <span className="font-mono font-bold text-slate-900">{product.capacityLitres} Litres</span>
+                  <span className="font-mono font-bold text-slate-900">{product.capacityLitres ? `${product.capacityLitres} Litres` : '—'}</span>
                 </div>
                 <div>
                   <span className="text-slate-400 text-[10px] uppercase block">Operating Temp</span>
-                  <span className="font-mono font-bold text-cyan-700">{product.tempRange}</span>
+                  <span className="font-mono font-bold text-cyan-700">{product.tempRange || '—'}</span>
                 </div>
               </div>
             </div>
@@ -495,10 +501,12 @@ export const ProductDetailPage: React.FC = () => {
                       <span className="font-mono font-bold text-cyan-800 text-right">{product.ambientRating}</span>
                     </div>
                   )}
-                  <div className="flex justify-between py-2 border-b border-slate-100">
-                    <span className="text-slate-500">Australian Warranty</span>
-                    <span className="font-mono font-bold text-amber-800 text-right">{product.warrantyText || `${product.warrantyYears} Years Parts & Labour`}</span>
-                  </div>
+                  {(product.warrantyText || product.warrantyYears > 0) && (
+                    <div className="flex justify-between py-2 border-b border-slate-100">
+                      <span className="text-slate-500">Manufacturer Warranty</span>
+                      <span className="font-mono font-bold text-amber-800 text-right">{product.warrantyText || `${product.warrantyYears} Years`}</span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Features Checklist */}
@@ -585,7 +593,7 @@ export const ProductDetailPage: React.FC = () => {
                 <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5 text-xs">
                   <div className="font-bold text-slate-900">What warranty applies to this unit?</div>
                   <p className="text-slate-600 leading-relaxed">
-                    {product.warrantyText ? `The manufacturer lists: ${product.warrantyText}.` : 'Warranty terms are set by the manufacturer.'} Contact us for warranty service and claims.
+                    {product.warrantyText ? `The manufacturer lists: ${product.warrantyText}.` : 'Warranty terms are set by the manufacturer; ask us for the terms that apply to this model.'} Contact us for warranty service and claims.
                   </p>
                 </div>
               </div>

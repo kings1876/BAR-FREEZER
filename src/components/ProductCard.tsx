@@ -78,7 +78,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="grid grid-cols-3 gap-2 py-2 px-2.5 bg-slate-50 rounded text-xs text-slate-600 font-mono">
           <div>
             <span className="text-[10px] text-slate-400 block uppercase font-sans">Width</span>
-            <span className="font-medium text-slate-900">{product.widthMm}mm</span>
+            <span className="font-medium text-slate-900">{product.widthMm ? `${product.widthMm}mm` : '—'}</span>
           </div>
           <div>
             <span className="text-[10px] text-slate-400 block uppercase font-sans">Volume</span>
@@ -122,7 +122,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </div>
           </div>
           )}
-          {product.warrantyYears && (
+          {product.warrantyYears > 0 && (
             <div className="text-[11px] text-slate-500 text-right">
               <span className="font-semibold text-slate-700">{product.warrantyYears}yr Warranty</span>
               <span className="block text-[10px] text-slate-400">Manufacturer warranty</span>
