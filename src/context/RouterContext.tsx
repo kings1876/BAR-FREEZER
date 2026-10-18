@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
+import { usePathname, useRouter as useNextRouter } from 'next/navigation';
+import NextLink from 'next/link';
 
 export interface RouteMatch {
   pathname: string;
@@ -141,32 +143,18 @@ export function parseRoute(pathname: string): RouteMatch {
 }
 
 export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentPath, setCurrentPath] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      return normalizePath(window.location.pathname);
-    }
-    return '/';
-  });
+  const pathname = usePathname();
+  const nextRouter = useNextRouter();
+  const currentPath = normalizePath(pathname || '/');
 
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  useEffect(() => {
-    const handlePopState = () => {
-      setCurrentPath(normalizePath(window.location.pathname));
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-
   const navigate = useCallback((to: string) => {
     const normalized = normalizePath(to);
-    if (window.location.pathname !== normalized) {
-      window.history.pushState({}, '', normalized);
-      setCurrentPath(normalized);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (typeof window !== 'undefined' && window.location.pathname !== normalized) {
+      nextRouter.push(normalized);
     }
-  }, []);
+  }, [nextRouter]);
 
   const routeMatch = parseRoute(currentPath);
 
@@ -200,20 +188,17 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 export const Link: React.FC<LinkProps> = ({ href, children, className, onClick, ...props }) => {
-  const { navigate } = useRouter();
-
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || props.target === '_blank') {
-      return;
-    }
-    e.preventDefault();
-    if (onClick) onClick(e);
-    navigate(href);
-  };
-
+  const isInternal = href.startsWith('/') && !props.target;
+  if (!isInternal) {
+    return (
+      <a href={href} onClick={onClick} className={className} {...props}>
+        {children}
+      </a>
+    );
+  }
   return (
-    <a href={href} onClick={handleClick} className={className} {...props}>
+    <NextLink href={href} onClick={onClick} className={className} {...(props as any)}>
       {children}
-    </a>
+    </NextLink>
   );
 };

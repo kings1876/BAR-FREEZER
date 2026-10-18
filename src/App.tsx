@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -14,17 +16,17 @@ import { MobileStickyBar } from './components/MobileStickyBar';
 import { TrustpilotFloatingTab } from './components/TrustpilotWidget';
 
 // Pages
-import { HomePage } from './pages/HomePage';
-import { CategoryPage } from './pages/CategoryPage';
-import { ProductDetailPage } from './pages/ProductDetailPage';
-import { BrandPage } from './pages/BrandPage';
-import { VenuePage } from './pages/VenuePage';
-import { DeliveryPage } from './pages/DeliveryPage';
-import { GuidesPage } from './pages/GuidesPage';
-import { TradePage } from './pages/TradePage';
-import { WarrantyPage } from './pages/WarrantyPage';
-import { ComparePage } from './pages/ComparePage';
-import { ReviewsPage } from './pages/ReviewsPage';
+import { HomePage } from './views/HomePage';
+import { CategoryPage } from './views/CategoryPage';
+import { ProductDetailPage } from './views/ProductDetailPage';
+import { BrandPage } from './views/BrandPage';
+import { VenuePage } from './views/VenuePage';
+import { DeliveryPage } from './views/DeliveryPage';
+import { GuidesPage } from './views/GuidesPage';
+import { TradePage } from './views/TradePage';
+import { WarrantyPage } from './views/WarrantyPage';
+import { ComparePage } from './views/ComparePage';
+import { ReviewsPage } from './views/ReviewsPage';
 import { 
   DealsPage, 
   FinancePage, 
@@ -33,7 +35,7 @@ import {
   CheckoutPage, 
   SearchPage, 
   NotFoundPage 
-} from './pages/StaticPages';
+} from './views/StaticPages';
 
 const MainContent: React.FC = () => {
   const { routeMatch } = useRouter();

@@ -27,23 +27,20 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [cart, setCart] = useState<CartItem[]>(() => {
-    try {
-      const saved = localStorage.getItem('barfreezer_cart');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [compareList, setCompareList] = useState<Product[]>([]);
+  const [hydrated, setHydrated] = useState(false);
 
-  const [compareList, setCompareList] = useState<Product[]>(() => {
+  // Load saved cart/compare after mount so server and client markup match
+  useEffect(() => {
     try {
-      const saved = localStorage.getItem('barfreezer_compare');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
+      const savedCart = localStorage.getItem('barfreezer_cart');
+      if (savedCart) setCart(JSON.parse(savedCart));
+      const savedCompare = localStorage.getItem('barfreezer_compare');
+      if (savedCompare) setCompareList(JSON.parse(savedCompare));
+    } catch {}
+    setHydrated(true);
+  }, []);
 
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
@@ -51,16 +48,18 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [notification, setNotification] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!hydrated) return;
     try {
       localStorage.setItem('barfreezer_cart', JSON.stringify(cart));
     } catch {}
-  }, [cart]);
+  }, [cart, hydrated]);
 
   useEffect(() => {
+    if (!hydrated) return;
     try {
       localStorage.setItem('barfreezer_compare', JSON.stringify(compareList));
     } catch {}
-  }, [compareList]);
+  }, [compareList, hydrated]);
 
   const showNotification = (msg: string) => {
     setNotification(msg);
