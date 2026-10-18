@@ -1,0 +1,6 @@
+{
+  "name": "Bar Freezer Australia",
+  "description": "Commercial and home bar freezers, underbar fridges, and hospitality refrigeration delivered Australia-wide with local stock and trade pricing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
