@@ -13,7 +13,7 @@ interface ProductImageProps {
  * Renders high-fidelity, scalable SVG schematics of Australian commercial refrigeration equipment
  * matching the user's requirement: "clean white 4:3 frame, object-fit contain".
  */
-export const ProductImage: React.FC<ProductImageProps> = ({ product, className = "h-48" }) => {
+export const ProductImage: React.FC<ProductImageProps> = ({ product, className = "h-48", priority = false }) => {
   const isStainless = product.finish === 'stainless';
   const isBlack = product.finish === 'black';
   const isGlass = product.doorType === 'glass';
@@ -27,6 +27,22 @@ export const ProductImage: React.FC<ProductImageProps> = ({ product, className =
   const bodyStroke = isBlack ? '#0f172a' : isStainless ? '#94a3b8' : '#cbd5e1';
   const highlightStroke = isBlack ? '#334155' : '#ffffff';
   const accentLight = isGlass ? '#38bdf8' : '#0284c7';
+
+  if (product.images && product.images.length > 0) {
+    const hasHeight = /(^|\s)h-/.test(className);
+    return (
+      <div className={`bg-white flex items-center justify-center overflow-hidden ${hasHeight ? "" : "aspect-[4/3]"} ${className}`}>
+        <img
+          src={product.images[0]}
+          alt={product.name}
+          width={1200}
+          height={900}
+          loading={priority ? "eager" : "lazy"}
+          className="w-full h-full object-contain"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={`relative w-full aspect-[4/3] bg-white rounded-md border border-slate-100 flex items-center justify-center p-4 overflow-hidden group select-none ${className}`}>

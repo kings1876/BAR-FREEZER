@@ -34,9 +34,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Load saved cart/compare after mount so server and client markup match
   useEffect(() => {
     try {
-      const savedCart = localStorage.getItem('barfreezer_cart');
+      const savedCart = localStorage.getItem('barfreezer_cart_v2');
       if (savedCart) setCart(JSON.parse(savedCart));
-      const savedCompare = localStorage.getItem('barfreezer_compare');
+      const savedCompare = localStorage.getItem('barfreezer_compare_v2');
       if (savedCompare) setCompareList(JSON.parse(savedCompare));
     } catch {}
     setHydrated(true);
@@ -50,14 +50,14 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     if (!hydrated) return;
     try {
-      localStorage.setItem('barfreezer_cart', JSON.stringify(cart));
+      localStorage.setItem('barfreezer_cart_v2', JSON.stringify(cart));
     } catch {}
   }, [cart, hydrated]);
 
   useEffect(() => {
     if (!hydrated) return;
     try {
-      localStorage.setItem('barfreezer_compare', JSON.stringify(compareList));
+      localStorage.setItem('barfreezer_compare_v2', JSON.stringify(compareList));
     } catch {}
   }, [compareList, hydrated]);
 
@@ -69,6 +69,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const addToCart = (product: Product, quantity = 1, warrantyUpgrade = false) => {
+    // Products without a published price cannot be bought online: route to a quote request.
+    if (product.price == null) {
+      setQuoteProducts([product]);
+      setIsQuoteModalOpen(true);
+      return;
+    }
     setCart((prev) => {
       const existing = prev.find((item) => item.product.id === product.id);
       if (existing) {
@@ -139,7 +145,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+  const subtotal = cart.reduce((sum, item) => sum + (item.product.price ?? 0) * item.quantity, 0);
   const gstAmount = Math.round(subtotal / 11);
 
   return (

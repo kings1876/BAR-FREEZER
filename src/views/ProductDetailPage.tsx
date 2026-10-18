@@ -35,7 +35,7 @@ export const ProductDetailPage: React.FC = () => {
   const [bundleChecked, setBundleChecked] = useState<Record<string, boolean>>({});
 
   const productSlug = routeMatch.params.slug;
-  const product = PRODUCTS.find((p: any) => p.slug === productSlug) || PRODUCTS[0];
+  const product = (PRODUCTS.find((p: any) => p.slug === productSlug) || PRODUCTS[0]) as unknown as Product;
 
   const compared = isInCompare(product.id);
 
@@ -103,7 +103,8 @@ export const ProductDetailPage: React.FC = () => {
     window.print();
   };
 
-  const silverChefWeekly = Math.round(product.price * 0.016);
+  const hasPrice = typeof product.price === 'number';
+  const silverChefWeekly = hasPrice ? Math.round((product.price as number) * 0.016) : 0;
 
   return (
     <div className="bg-slate-50 min-h-screen py-8">
@@ -222,7 +223,24 @@ export const ProductDetailPage: React.FC = () => {
                 </p>
               </div>
 
+              {/* Price on application (manufacturer data has no price) */}
+              {!hasPrice && (
+                <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-2">
+                  <div className="text-xl font-extrabold text-slate-900">Price on application</div>
+                  <p className="text-xs text-slate-600">
+                    Request a quote for current pricing, trade discounts and delivery to your postcode.
+                  </p>
+                  <button
+                    onClick={() => openQuoteForProduct(product)}
+                    className="text-cyan-700 font-bold text-xs hover:underline"
+                  >
+                    Get a quote &rarr;
+                  </button>
+                </div>
+              )}
+
               {/* Price & Trade Pricing Block */}
+              {hasPrice && (
               <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-2">
                 <div className="flex items-baseline justify-between">
                   <div>
@@ -262,13 +280,25 @@ export const ProductDetailPage: React.FC = () => {
                   <span className="font-mono font-bold text-slate-900">From ${silverChefWeekly} AUD / week</span>
                 </div>
               </div>
+              )}
+
+              {/* Availability when stock is not published */}
+              {product.stockQty == null && (
+                <div className="flex items-center gap-2 p-3 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-700">
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0" />
+                  <span className="font-bold">Availability on request</span>
+                  <span className="text-slate-500">· Contact us for stock levels and delivery times</span>
+                </div>
+              )}
 
               {/* Stock Status Badge */}
+              {product.stockQty != null && (
               <div className="flex items-center gap-2 p-3 bg-emerald-50/70 border border-emerald-200/80 rounded-md text-xs text-emerald-900">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0" />
                 <span className="font-bold">{product.shippingBadge || "In Stock for Immediate Dispatch"}</span>
                 <span className="text-emerald-700">· {product.stockQty} units available in Sydney & Melbourne depots</span>
               </div>
+              )}
 
               {/* Quantity + Buy Actions */}
               <div className="space-y-3">
@@ -296,11 +326,11 @@ export const ProductDetailPage: React.FC = () => {
 
                   {/* Primary Buy CTA */}
                   <button
-                    onClick={() => addToCart(product, quantity, selectedWarrantyAddon)}
+                    onClick={() => (hasPrice ? addToCart(product, quantity, selectedWarrantyAddon) : openQuoteForProduct(product))}
                     className="flex-1 h-11 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors flex items-center justify-center gap-2 shadow-sm focus-visible:outline-amber-500"
                   >
                     <ShoppingBag className="w-4 h-4 text-amber-400" />
-                    <span>Add to Cart (${(product.price * quantity).toLocaleString()} AUD)</span>
+                    <span>{hasPrice ? `Add to Cart ($${((product.price as number) * quantity).toLocaleString()} AUD)` : 'Request a Quote'}</span>
                   </button>
                 </div>
 
@@ -325,7 +355,7 @@ export const ProductDetailPage: React.FC = () => {
               </div>
 
               {/* Australian Postcode Delivery Estimator Module */}
-              <PostcodeEstimator productPrice={product.price} />
+              <PostcodeEstimator productPrice={product.price ?? 0} />
 
             </div>
 
@@ -447,18 +477,24 @@ export const ProductDetailPage: React.FC = () => {
                       <span className="font-mono font-medium text-slate-900 text-right">{value}</span>
                     </div>
                   ))}
-                  <div className="flex justify-between py-2 border-b border-slate-100">
-                    <span className="text-slate-500">Power Connection</span>
-                    <span className="font-mono font-medium text-slate-900 text-right">{product.plugType || "240V / 10A standard plug"}</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b border-slate-100">
-                    <span className="text-slate-500">Refrigerant Gas</span>
-                    <span className="font-mono font-medium text-slate-900 text-right">{product.refrigerant || "R290 Eco Hydrocarbon"}</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b border-slate-100">
-                    <span className="text-slate-500">Ambient Operating Rating</span>
-                    <span className="font-mono font-bold text-cyan-800 text-right">{product.ambientRating || "43°C Tropical Class 5"}</span>
-                  </div>
+                  {product.plugType && (
+                    <div className="flex justify-between py-2 border-b border-slate-100">
+                      <span className="text-slate-500">Power Connection</span>
+                      <span className="font-mono font-medium text-slate-900 text-right">{product.plugType}</span>
+                    </div>
+                  )}
+                  {product.refrigerant && !(product.specs as any)['Refrigerant'] && (
+                    <div className="flex justify-between py-2 border-b border-slate-100">
+                      <span className="text-slate-500">Refrigerant Gas</span>
+                      <span className="font-mono font-medium text-slate-900 text-right">{product.refrigerant}</span>
+                    </div>
+                  )}
+                  {product.ambientRating && (
+                    <div className="flex justify-between py-2 border-b border-slate-100">
+                      <span className="text-slate-500">Ambient Operating Rating</span>
+                      <span className="font-mono font-bold text-cyan-800 text-right">{product.ambientRating}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-slate-500">Australian Warranty</span>
                     <span className="font-mono font-bold text-amber-800 text-right">{product.warrantyText || `${product.warrantyYears} Years Parts & Labour`}</span>
@@ -533,23 +569,23 @@ export const ProductDetailPage: React.FC = () => {
                 <h3 className="text-base font-bold text-slate-900">Frequently Asked Questions for {product.name}</h3>
                 
                 <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5 text-xs">
-                  <div className="font-bold text-slate-900">Can this unit run on a regular 10-Amp power point?</div>
+                  <div className="font-bold text-slate-900">What power supply does this unit need?</div>
                   <p className="text-slate-600 leading-relaxed">
-                    Yes. This model draws {product.powerWatts || 420} Watts and plugs directly into standard Australian single-phase 240V 10A power sockets.
+                    {product.power ? `The manufacturer lists a supply of ${product.power}. ` : ''}Contact us to confirm the plug type and circuit requirements for your venue before ordering.
                   </p>
                 </div>
 
                 <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5 text-xs">
-                  <div className="font-bold text-slate-900">Can I replace or adjust the internal wire shelving?</div>
+                  <div className="font-bold text-slate-900">What shelving or accessories are included?</div>
                   <p className="text-slate-600 leading-relaxed">
-                    Yes, all shelves are mounted on heavy stainless steel ladder clips and can be adjusted every 25mm to accommodate tall liquor bottles, beer steins, or gastronorm trays.
+                    {(product.specs as any)['Shelving'] ? `Manufacturer specification: ${(product.specs as any)['Shelving']}.` : 'Shelving details are listed in the specifications above.'} Contact us about additional shelves and accessories for this model.
                   </p>
                 </div>
 
                 <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5 text-xs">
-                  <div className="font-bold text-slate-900">What happens if a component fails during the warranty period?</div>
+                  <div className="font-bold text-slate-900">What warranty applies to this unit?</div>
                   <p className="text-slate-600 leading-relaxed">
-                    This unit includes {product.warrantyYears} years on-site commercial warranty. Our local refrigeration mechanics will attend your venue directly to repair the unit on-site.
+                    {product.warrantyText ? `The manufacturer lists: ${product.warrantyText}.` : 'Warranty terms are set by the manufacturer.'} Contact us for warranty service and claims.
                   </p>
                 </div>
               </div>
@@ -643,7 +679,7 @@ export const ProductDetailPage: React.FC = () => {
                     <ProductImage product={alt} className="w-full h-36" />
                     <div className="text-xs text-slate-500 font-mono">{alt.brand} · {alt.type}</div>
                     <h4 className="text-sm font-bold text-slate-900 line-clamp-1">{alt.name}</h4>
-                    <div className="text-sm font-mono font-bold text-slate-900">${alt.price.toLocaleString()} AUD</div>
+                    <div className="text-sm font-mono font-bold text-slate-900">{alt.price != null ? `$${alt.price.toLocaleString()} AUD` : 'Price on application'}</div>
                   </div>
                   <Link
                     href={`/product/${alt.slug}/`}

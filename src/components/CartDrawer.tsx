@@ -159,10 +159,10 @@ export const CartDrawer: React.FC = () => {
                       {/* Price */}
                       <div className="text-right">
                         <div className="text-xs font-bold font-mono text-slate-900">
-                          ${(product.price * quantity).toLocaleString()} AUD
+                          ${((product.price ?? 0) * quantity).toLocaleString()} AUD
                         </div>
                         <div className="text-[10px] text-slate-500">
-                          ${product.price.toLocaleString()} ea
+                          ${(product.price ?? 0).toLocaleString()} ea
                         </div>
                       </div>
                     </div>

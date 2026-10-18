@@ -82,34 +82,50 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
           <div>
             <span className="text-[10px] text-slate-400 block uppercase font-sans">Volume</span>
-            <span className="font-medium text-slate-900">{product.capacityLitres}L</span>
+            <span className="font-medium text-slate-900">{product.capacityLitres ? `${product.capacityLitres}L` : '—'}</span>
           </div>
           <div>
             <span className="text-[10px] text-slate-400 block uppercase font-sans">Temp</span>
-            <span className="font-medium text-slate-900">{product.tempRange.split(' ')[0]}</span>
+            <span className="font-medium text-slate-900">{product.tempRange ? product.tempRange.split(' ')[0] : '—'}</span>
           </div>
         </div>
 
         {/* Stock & Delivery Promise */}
         <div className="text-xs text-slate-600 flex items-center gap-1.5 pt-1">
-          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500" />
-          <span className="font-medium text-emerald-800">{product.shippingBadge || "In Stock - Ships Today"}</span>
+          {product.stockQty == null ? (
+            <>
+              <span className="inline-block w-2 h-2 rounded-full bg-amber-500" />
+              <span className="font-medium text-slate-700">Availability on request</span>
+            </>
+          ) : (
+            <>
+              <span className="inline-block w-2 h-2 rounded-full bg-emerald-500" />
+              <span className="font-medium text-emerald-800">{product.shippingBadge || "In Stock - Ships Today"}</span>
+            </>
+          )}
         </div>
 
         {/* Price & GST Area */}
         <div className="pt-2 border-t border-slate-100 flex items-baseline justify-between">
+          {product.price == null ? (
+            <div>
+              <div className="text-base sm:text-lg font-bold text-slate-900">Price on application</div>
+              <div className="text-[11px] text-slate-500">Request a quote for pricing</div>
+            </div>
+          ) : (
           <div>
             <div className="text-lg sm:text-xl font-bold font-mono text-slate-900 tabular-nums">
               ${product.price.toLocaleString()} <span className="text-xs font-normal text-slate-500 font-sans">AUD</span>
             </div>
             <div className="text-[11px] text-slate-500">
-              Incl. GST · <span className="text-amber-700 font-medium">Trade: ${product.tradePrice.toLocaleString()}</span>
+              Incl. GST · <span className="text-amber-700 font-medium">Trade: ${(product.tradePrice ?? 0).toLocaleString()}</span>
             </div>
           </div>
+          )}
           {product.warrantyYears && (
             <div className="text-[11px] text-slate-500 text-right">
               <span className="font-semibold text-slate-700">{product.warrantyYears}yr Warranty</span>
-              <span className="block text-[10px] text-slate-400">On-Site Service</span>
+              <span className="block text-[10px] text-slate-400">Manufacturer warranty</span>
             </div>
           )}
         </div>

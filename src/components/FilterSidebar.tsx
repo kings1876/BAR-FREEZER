@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Filter, X, ChevronDown, ChevronUp, RotateCcw } from 'lucide-react';
-import { BRANDS } from '../config/site.js';
+import { BRANDS, PRODUCTS } from '../config/site.js';
+
+const ANY_PRICED = PRODUCTS.some((p: any) => p.price != null);
 
 export interface FilterState {
   doors: number[];
@@ -215,6 +217,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
       </div>
 
       {/* 4. Price (AUD) */}
+      {ANY_PRICED && (
       <div className="border-b border-slate-100 pb-3">
         <button
           onClick={() => toggleSection('priceRange')}
@@ -245,6 +248,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           </div>
         )}
       </div>
+      )}
 
       {/* 5. Door Type */}
       <div className="border-b border-slate-100 pb-3">

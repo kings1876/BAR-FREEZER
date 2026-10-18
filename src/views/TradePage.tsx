@@ -19,7 +19,7 @@ import { Link } from '../context/RouterContext';
 export const TradePage: React.FC = () => {
   const { cart, addToCart, setIsQuoteModalOpen } = useCart();
 
-  const [selectedProductIds, setSelectedProductIds] = useState<string[]>(['bf-001', 'bf-004']);
+  const [selectedProductIds, setSelectedProductIds] = useState<string[]>(PRODUCTS.slice(0, 2).map((p: any) => p.id));
   const [businessName, setBusinessName] = useState('');
   const [abn, setAbn] = useState('');
   const [contactName, setContactName] = useState('');
@@ -36,8 +36,8 @@ export const TradePage: React.FC = () => {
     .map((id) => PRODUCTS.find((p) => p.id === id))
     .filter(Boolean);
 
-  const totalRetail = selectedProducts.reduce((sum, p: any) => sum + p.price, 0);
-  const totalTrade = selectedProducts.reduce((sum, p: any) => sum + p.tradePrice, 0);
+  const totalRetail = selectedProducts.reduce((sum, p: any) => sum + (p.price ?? 0), 0);
+  const totalTrade = selectedProducts.reduce((sum, p: any) => sum + (p.tradePrice ?? 0), 0);
   const tradeSavings = totalRetail - totalTrade;
 
   const handleAddProductToQuote = (productId: string) => {
@@ -129,10 +129,10 @@ export const TradePage: React.FC = () => {
                           </span>
                         </div>
                         <div className="col-span-2 text-right font-mono text-slate-500 line-through">
-                          ${p.price.toLocaleString()} AUD
+                          {p.price != null ? `$${p.price.toLocaleString()} AUD` : 'On application'}
                         </div>
                         <div className="col-span-3 text-right font-mono font-bold text-emerald-800">
-                          ${p.tradePrice.toLocaleString()} AUD
+                          {p.tradePrice != null ? `$${p.tradePrice.toLocaleString()} AUD` : 'Quote'}
                         </div>
                         <div className="col-span-1 text-center">
                           <button

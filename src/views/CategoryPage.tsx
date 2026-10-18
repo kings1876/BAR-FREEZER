@@ -85,6 +85,7 @@ export const CategoryPage: React.FC = () => {
 
       // Price Range
       if (filters.priceRange.length > 0) {
+        if (product.price == null) return false;
         const matchesPrice = filters.priceRange.some((range) => {
           if (range === '<1000') return product.price < 1000;
           if (range === '1000-2000') return product.price >= 1000 && product.price <= 2000;
@@ -119,9 +120,9 @@ export const CategoryPage: React.FC = () => {
   const sortedProducts = useMemo(() => {
     const list = [...filteredProducts];
     if (sortBy === 'price-asc') {
-      list.sort((a, b) => a.price - b.price);
+      list.sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
     } else if (sortBy === 'price-desc') {
-      list.sort((a, b) => b.price - a.price);
+      list.sort((a, b) => (b.price ?? -Infinity) - (a.price ?? -Infinity));
     } else if (sortBy === 'capacity-desc') {
       list.sort((a, b) => b.capacityLitres - a.capacityLitres);
     } else if (sortBy === 'brand-asc') {

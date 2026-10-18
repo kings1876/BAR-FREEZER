@@ -80,7 +80,7 @@ export const QuoteModal: React.FC = () => {
                       <div key={p.id} className="flex items-center justify-between py-1 border-b border-slate-200/60 last:border-0">
                         <span className="font-medium text-slate-900 line-clamp-1 pr-2">{p.name}</span>
                         <span className="font-mono text-slate-600 whitespace-nowrap">
-                          MSRP ${p.price.toLocaleString()} AUD
+                          {p.price != null ? `MSRP $${p.price.toLocaleString()} AUD` : 'Price on application'}
                         </span>
                       </div>
                     ))}

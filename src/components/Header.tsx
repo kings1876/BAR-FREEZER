@@ -211,11 +211,11 @@ export const Header: React.FC = () => {
                             {p.name}
                           </span>
                           <span className="text-xs text-slate-400">
-                            {p.brand} · {p.tempRange} · {p.capacityLitres}L
+                            {p.brand} · {p.tempRange || p.type}{p.capacityLitres ? ` · ${p.capacityLitres}L` : ''}
                           </span>
                         </div>
                         <span className="text-sm font-mono font-bold text-white whitespace-nowrap">
-                          ${p.price.toLocaleString()} AUD
+                          {p.price != null ? `$${p.price.toLocaleString()} AUD` : 'Get a quote'}
                         </span>
                       </Link>
                     ))}

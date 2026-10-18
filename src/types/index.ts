@@ -18,8 +18,8 @@ export interface Product {
   widthRange: string;
   capacityLitres: number;
   capacityRange: string;
-  price: number;
-  tradePrice: number;
+  price: number | null;
+  tradePrice: number | null;
   msrp?: number;
   finish: string;
   tempRange: string;
@@ -35,7 +35,7 @@ export interface Product {
   condition: string;
   availability: string;
   shippingBadge?: string;
-  stockQty: number;
+  stockQty: number | null;
   warrantyYears: number;
   warrantyText?: string;
   features: string[];
@@ -49,6 +49,8 @@ export interface Product {
   };
   frequentlyBoughtTogether?: string[];
   alternatives?: string[];
+  images?: string[];
+  sourceUrl?: string;
 }
 
 export interface CategoryType {
