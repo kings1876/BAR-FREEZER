@@ -111,7 +111,7 @@ export const ProductDetailPage: React.FC = () => {
       : '/bar-freezers/';
   const hasPrice = typeof product.price === 'number';
   const priceBasis = (product as any).priceBasis as string | undefined;
-  const firmPrice = hasPrice && (!priceBasis || priceBasis === 'au-retail');
+  const firmPrice = hasPrice;
   const silverChefWeekly = hasPrice ? Math.round((product.price as number) * 0.016) : 0;
 
   return (
@@ -260,12 +260,12 @@ export const ProductDetailPage: React.FC = () => {
                     </div>
                     {priceBasis === 'estimate' && (
                       <div className="text-[11px] text-amber-700 mt-1">
-                        Indicative price, estimated from comparable models. Request a quote to confirm the exact price.
+                        Indicative price, estimated from comparable models. We will confirm the final price with you before your order is processed.
                       </div>
                     )}
                     {priceBasis === 'overseas-estimate' && (
                       <div className="text-[11px] text-amber-700 mt-1">
-                        Indicative price, converted to AUD from overseas retail listings. Contact us to confirm before ordering.
+                        Indicative price, converted to AUD from overseas retail listings. We will confirm the final price with you before your order is processed.
                       </div>
                     )}
                   </div>
