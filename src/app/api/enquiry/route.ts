@@ -132,5 +132,5 @@ export async function POST(req: Request) {
     console.error('enquiry not delivered: no working SMTP or storage', { storeConfigured: isStoreConfigured() });
     return NextResponse.json({ ok: false, error: 'not-configured' }, { status: 503 });
   }
-  return NextResponse.json({ ok: true, ref });
+  return NextResponse.json({ ok: true, ref, emailed: shop.sent, emailIssue: shop.reason || null, stored: saved });
 }

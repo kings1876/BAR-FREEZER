@@ -27,7 +27,7 @@ export async function sendMail(opts: {
   const t = transporter();
   if (!t) return { sent: false, reason: 'not-configured' };
   try {
-    await t.sendMail({
+    const info = await t.sendMail({
       from: `"${opts.fromName || 'Bar Freezer'}" <${fromAddress()}>`,
       to: opts.to,
       subject: opts.subject,
@@ -36,7 +36,9 @@ export async function sendMail(opts: {
       replyTo: opts.replyTo,
       attachments: opts.attachments,
     });
-    return { sent: true };
+    const rejected = (info.rejected || []).length;
+    console.log('sendMail', opts.subject, 'accepted', (info.accepted || []).length, 'rejected', rejected, info.response);
+    return { sent: rejected === 0, reason: rejected ? 'rejected' : undefined };
   } catch (e) {
     console.error('sendMail failed', (e as Error).message);
     return { sent: false, reason: 'send-failed' };
