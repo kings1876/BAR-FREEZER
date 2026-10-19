@@ -199,7 +199,7 @@ export const PaymentMethodsPage: React.FC = () => (
         ['Bank Transfer (EFT)', 'Pay by direct bank transfer using the account details on your tax invoice. Use your order reference so we can match the payment.'],
         ['PayID', 'Pay instantly to our PayID shown on your tax invoice, from any participating Australian bank app.'],
         ['Osko', 'Osko payments settle in minutes, including after hours. Use the PayID or account details on your invoice.'],
-        ['Cryptocurrency (BTC, USDT, ETH)', 'We accept Bitcoin (BTC), Tether (USDT) and Ethereum (ETH). Choose crypto at checkout and tell us which coin you prefer in your order; we email the wallet address and network, with the AUD amount converted at the time of invoice. Send the exact amount quoted on the network we specify; the order is confirmed once the transaction is verified.']
+        ['Cryptocurrency (BTC, USDT, ETH)', 'We accept Bitcoin (BTC), Tether (USDT, on the Tron network as TRC-20) and Ethereum (ETH). Choose crypto at checkout and tell us which coin you prefer in your order; we email the wallet address and network, with the AUD amount converted at the time of invoice. Send the exact amount quoted on the network we specify; the order is confirmed once the transaction is verified.']
       ].map(([t, d]) => (
         <div key={t} className="bg-white p-5 rounded-xl border border-slate-200">
           <h2 className="text-base font-bold text-slate-900">{t}</h2>
@@ -428,7 +428,7 @@ export const CheckoutPage: React.FC = () => {
                     <div className="mt-2">
                       <label className="block font-semibold text-slate-700 mb-1">Preferred coin</label>
                       <select name="Crypto Coin" className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900">
-                        <option>BTC (Bitcoin)</option><option>USDT (Tether)</option><option>ETH (Ethereum)</option>
+                        <option>BTC (Bitcoin)</option><option>USDT (Tether, TRC-20 on Tron)</option><option>ETH (Ethereum)</option>
                       </select>
                     </div>
                   )}
