@@ -4,6 +4,7 @@ import { CATEGORIES, BRANDS, VENUES, CITIES, PRODUCTS, POSTS } from '../../confi
 import { allPaths } from '../../lib/routes';
 import { KEYWORD_META } from '../../config/seo-keywords';
 import { BRAND_META } from '../../config/seo-brands';
+import { CITY_META, VENUE_META } from '../../config/seo-pages';
 
 export const dynamicParams = false;
 
@@ -59,10 +60,12 @@ function lookup(slug: string[]): { title: string; description: string; image?: s
     const x: any = (BRANDS as any[]).find((y) => y.slug === b);
     return x ? { title: `${x.name} Commercial Refrigeration`, description: trim(x.description || `Shop ${x.name} bar freezers and fridges.`, 158) } : null;
   }
+  if (a === 'venues' && b && VENUE_META[b]) return { title: VENUE_META[b].title, description: VENUE_META[b].description, full: true };
   if (a === 'venues' && b) {
     const x: any = (VENUES as any[]).find((y) => y.slug === b);
     return x ? { title: `Refrigeration for ${x.name}`, description: trim(x.intro || x.name, 158) } : null;
   }
+  if (a === 'delivery' && b && CITY_META[b]) return { title: CITY_META[b].title, description: CITY_META[b].description, full: true };
   if (a === 'delivery' && b) {
     const x: any = (CITIES as any[]).find((y) => y.slug === b);
     return x ? { title: `Delivery to ${x.name}, ${x.state}`, description: `Commercial refrigeration delivery to ${x.name}: ${x.deliveryTime}.` } : null;
