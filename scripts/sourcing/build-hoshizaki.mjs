@@ -34,6 +34,7 @@ for (const p of raw) {
   if (/Castors/i.test(cats) || /Castors/i.test(ptype)) cat = R('Accessories & Parts', 'Castors, Legs & Stands', 'castors-legs-stands', 'Castors');
   else if (/Adjustable Leg/i.test(cats) || /Legs/i.test(ptype)) cat = R('Accessories & Parts', 'Castors, Legs & Stands', 'castors-legs-stands', 'Legs');
   else if (/Water Filter|Hose|Installation Kit/i.test(cats)) cat = R('Accessories & Parts', 'Ice Machines & Ice Storage', 'ice-machines-storage', /Filter/i.test(cats) ? 'Water Filtration' : 'Installation Accessories');
+  else if (/Bins/i.test(ptype) || /STORAGE BIN/i.test(title)) cat = R('Accessories & Parts', 'Ice Machines & Ice Storage', 'ice-machines-storage', 'Insulated Ice Bins');
   else if (/Top Kit/i.test(cats)) cat = R('Accessories & Parts', 'Ice Machines & Ice Storage', 'ice-machines-storage', 'Top Kit');
   else if (isIce) {
     if (/Bins/i.test(ptype) || /STORAGE BIN/i.test(title)) cat = R('Accessories & Parts', 'Ice Machines & Ice Storage', 'ice-machines-storage', 'Insulated Ice Bins');
