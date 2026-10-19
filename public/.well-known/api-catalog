@@ -1,0 +1,28 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://barfreezer.com.au/",
+      "https://www.iana.org/assignments/link-relations/service-doc": [
+        {
+          "href": "https://barfreezer.com.au/guides/"
+        }
+      ],
+      "title": "Bar Freezer Australia: bar freezers and bar fridges"
+    },
+    {
+      "anchor": "https://barfreezer.com.au/bar-fridges/",
+      "type": "text/html",
+      "title": "Bar fridges catalogue"
+    },
+    {
+      "anchor": "https://barfreezer.com.au/bar-freezers/",
+      "type": "text/html",
+      "title": "Bar freezers catalogue"
+    },
+    {
+      "anchor": "https://barfreezer.com.au/trade/",
+      "type": "text/html",
+      "title": "Trade pricing and quotes"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Building, 
   Phone, 
@@ -19,6 +19,7 @@ import {
 import { SITE, PRODUCTS, FAQS, BRANDS } from '../config/site.js';
 import { ProductCard } from '../components/ProductCard';
 import { collectForm, sendEnquiry } from '../lib/enquiry-client';
+import { PagedGrid } from '../components/PagedGrid';
 import { makeOrderNumber } from '../lib/order';
 import { waOrderLink, whatsappEnabled } from '../lib/whatsapp';
 import { useCart } from '../context/CartContext';
@@ -48,11 +49,7 @@ export const DealsPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {clearanceItems.map((p: any) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
+        <PagedGrid items={clearanceItems} render={(p: any) => <ProductCard key={p.id} product={p} />} />
       </div>
     </div>
   );
@@ -209,6 +206,48 @@ export const PaymentMethodsPage: React.FC = () => (
         </div>
       ))}
       <p className="text-xs text-slate-500">Questions about paying? <Link href="/contact/" className="text-cyan-700 font-semibold">Contact us</Link>.</p>
+    </div>
+  </div>
+);
+
+/**
+ * FAQ Page (/faq/)
+ */
+export const FaqPage: React.FC = () => (
+  <div className="bg-slate-50 min-h-screen py-8">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Bar Fridge &amp; Bar Freezer FAQs</h1>
+      <p className="text-sm text-slate-600">Answers to common questions about bar freezers, bar fridges, delivery and ordering. Can't find what you need? <Link href="/contact/" className="text-cyan-700 font-semibold">Contact us</Link>.</p>
+      <div className="space-y-3">
+        {FAQS.map((faq: any, i: number) => (
+          <div key={i} className="bg-white rounded-xl border border-slate-200 p-5">
+            <h2 className="text-base font-bold text-slate-900">{faq.question}</h2>
+            <p className="text-sm text-slate-600 mt-2 leading-relaxed">{faq.answer}</p>
+          </div>
+        ))}
+      </div>
+      <p className="text-xs text-slate-500">See also: <Link href="/guides/" className="text-cyan-700 font-semibold">buying guides</Link>, <Link href="/payment-methods/" className="text-cyan-700 font-semibold">payment methods</Link> and <Link href="/delivery/" className="text-cyan-700 font-semibold">delivery</Link>.</p>
+    </div>
+  </div>
+);
+
+/**
+ * Returns & Australian Consumer Law Page (/returns/)
+ */
+export const ReturnsPage: React.FC = () => (
+  <div className="bg-slate-50 min-h-screen py-8">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Returns &amp; Australian Consumer Law</h1>
+      <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4 text-sm text-slate-700 leading-relaxed">
+        <p>Goods bought from Bar Freezer come with consumer guarantees under the Australian Consumer Law. These guarantees cannot be excluded. They include that goods are of acceptable quality, fit for the purpose they are sold for, and match their description.</p>
+        <h2 className="text-lg font-bold text-slate-900">If something is wrong with your order</h2>
+        <p>If goods arrive damaged or faulty, contact us as soon as possible with your order number and photos. Where there is a major failure, you are entitled to choose a refund or a replacement. For other faults, we will repair or replace the goods, or provide a refund where the law requires it.</p>
+        <h2 className="text-lg font-bold text-slate-900">Warranty claims and service</h2>
+        <p>Manufacturer warranty terms are listed on each product. To lodge a claim, use the <Link href="/warranty/" className="text-cyan-700 font-semibold">warranty and service form</Link> with the model and serial number from the data plate.</p>
+        <h2 className="text-lg font-bold text-slate-900">Change of mind</h2>
+        <p>Consumer guarantees do not cover a change of mind. Please <Link href="/contact/" className="text-cyan-700 font-semibold">contact us</Link> before returning any item so we can confirm the options for your order.</p>
+        <p className="text-xs text-slate-500">This page is general information, not legal advice. Your rights under the Australian Consumer Law apply regardless of what is written here.</p>
+      </div>
     </div>
   </div>
 );
@@ -532,35 +571,57 @@ export const CheckoutPage: React.FC = () => {
  * Search Results Page (/search/)
  */
 export const SearchPage: React.FC = () => {
-  const { searchQuery } = useRouter();
-  const q = (searchQuery || '').trim().toLowerCase();
+  const { searchQuery, setSearchQuery } = useRouter();
+  const [urlQ, setUrlQ] = useState('');
 
-  const results = PRODUCTS.filter((p: any) =>
-    p.name.toLowerCase().includes(q) ||
-    p.brand.toLowerCase().includes(q) ||
-    p.sku.toLowerCase().includes(q) ||
-    p.categorySlug.toLowerCase().includes(q) ||
-    p.shortDescription.toLowerCase().includes(q)
-  );
+  // Read ?q= from the address (the page is statically exported, so the query is only available in the browser).
+  useEffect(() => {
+    const q0 = new URLSearchParams(window.location.search).get('q') || '';
+    setUrlQ(q0);
+    if (q0 && !searchQuery) setSearchQuery(q0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const term = (searchQuery || urlQ || '').trim();
+  const q = term.toLowerCase();
+  const results = q
+    ? PRODUCTS.filter((p: any) =>
+        p.name.toLowerCase().includes(q) ||
+        p.brand.toLowerCase().includes(q) ||
+        String(p.sku).toLowerCase().includes(q) ||
+        p.categorySlug.toLowerCase().includes(q) ||
+        String(p.shortDescription).toLowerCase().includes(q)
+      )
+    : [];
 
   return (
     <div className="bg-slate-50 min-h-screen py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <h1 className="text-2xl font-bold text-slate-900">
-          Search Results for "{searchQuery}" ({results.length} items found)
+          {term ? `Search results for "${term}" (${results.length} items found)` : 'Search bar fridges, bar freezers and accessories'}
         </h1>
 
-        {results.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {results.map((p: any) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
+        {!term && (
+          <div className="bg-white p-8 rounded-xl border border-slate-200 space-y-3 text-sm text-slate-600">
+            <p>Use the search box at the top of the page to find a product by name, brand, model or capacity. Or browse a category:</p>
+            <div className="flex flex-wrap gap-2">
+              <Link href="/bar-fridges/" className="px-4 py-2 bg-slate-900 text-white text-xs font-semibold rounded">Bar fridges</Link>
+              <Link href="/bar-freezers/" className="px-4 py-2 bg-slate-900 text-white text-xs font-semibold rounded">Bar freezers</Link>
+              <Link href="/accessories-parts/" className="px-4 py-2 bg-slate-900 text-white text-xs font-semibold rounded">Accessories and parts</Link>
+              <Link href="/guides/" className="px-4 py-2 bg-slate-100 text-slate-800 text-xs font-semibold rounded">Buying guides</Link>
+            </div>
           </div>
-        ) : (
+        )}
+
+        {term && results.length > 0 && (
+          <PagedGrid items={results} render={(p: any) => <ProductCard key={p.id} product={p} />} resetKey={term} />
+        )}
+
+        {term && results.length === 0 && (
           <div className="bg-white p-12 rounded-xl border border-slate-200 text-center space-y-3">
-            <p className="text-sm text-slate-600">No exact matches found. Try searching by brand (e.g. Skope, Bromic, Williams) or litres.</p>
+            <p className="text-sm text-slate-600">No exact matches found. Try searching by brand (for example Skope, Bromic or Williams) or by capacity in litres.</p>
             <Link href="/bar-freezers/" className="inline-block px-4 py-2 bg-slate-900 text-white text-xs font-semibold rounded">
-              Browse All Bar Freezers
+              Browse all bar freezers
             </Link>
           </div>
         )}

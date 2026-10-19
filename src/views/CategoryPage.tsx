@@ -6,6 +6,7 @@ import { FilterSidebar, initialFilterState, FilterState } from '../components/Fi
 import { useRouter, Link } from '../context/RouterContext';
 import { Product } from '../types';
 import { CATEGORY_COPY } from '../config/seo-category-copy';
+import { PagedGrid } from '../components/PagedGrid';
 
 export const CategoryPage: React.FC = () => {
   const { currentPath, routeMatch } = useRouter();
@@ -257,11 +258,12 @@ export const CategoryPage: React.FC = () => {
 
             {/* Product Cards Grid */}
             {sortedProducts.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                {sortedProducts.map((product: any) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
+              <PagedGrid
+                items={sortedProducts}
+                resetKey={`${currentPath}|${sortBy}|${JSON.stringify(filters)}`}
+                className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
+                render={(product: any) => <ProductCard key={product.id} product={product} />}
+              />
             ) : (
               <div className="bg-white p-12 rounded-xl border border-slate-200 text-center space-y-4">
                 <div className="w-12 h-12 mx-auto rounded-full bg-slate-100 flex items-center justify-center text-slate-400">

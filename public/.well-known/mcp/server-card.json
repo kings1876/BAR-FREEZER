@@ -1,0 +1,43 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/server-card/v1.json",
+  "serverInfo": {
+    "name": "Bar Freezer Australia",
+    "version": "1.0.0",
+    "description": "Australian online store for commercial and home bar freezers, bar fridges, wine fridges, kegerators, ice machines, accessories and spare parts, delivered Australia-wide.",
+    "homepage": "https://barfreezer.com.au",
+    "contact": {
+      "email": "sales@barfreezer.com.au"
+    }
+  },
+  "transport": {
+    "type": "none",
+    "note": "Static site: no live MCP server. Resources below are public web pages."
+  },
+  "capabilities": {
+    "resources": [
+      {
+        "name": "catalogue",
+        "description": "Product catalogue",
+        "uri": "https://barfreezer.com.au/bar-fridges/"
+      },
+      {
+        "name": "guides",
+        "description": "Buying guides",
+        "uri": "https://barfreezer.com.au/guides/"
+      }
+    ],
+    "commerce": {
+      "ordering": "human-completed order request or quote",
+      "payment": [
+        "bank-transfer",
+        "payid",
+        "osko",
+        "crypto-btc",
+        "crypto-usdt-trc20",
+        "crypto-eth"
+      ],
+      "currency": "AUD",
+      "ships": "Australia-wide"
+    }
+  }
+}

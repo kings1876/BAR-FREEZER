@@ -1,0 +1,9 @@
+{
+  "resource": "https://barfreezer.com.au",
+  "resource_name": "Bar Freezer Australia public catalogue",
+  "authorization_servers": [],
+  "scopes_supported": [],
+  "bearer_methods_supported": [],
+  "resource_documentation": "https://barfreezer.com.au/auth.md",
+  "note": "All catalogue resources are public. No OAuth tokens are required."
+}

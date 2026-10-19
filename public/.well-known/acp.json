@@ -1,0 +1,34 @@
+{
+  "protocol": {
+    "name": "acp",
+    "version": "0.1.0"
+  },
+  "name": "Bar Freezer Australia",
+  "description": "Australian online store for commercial and home bar freezers, bar fridges, wine fridges, kegerators, ice machines, accessories and spare parts, delivered Australia-wide.",
+  "homepage": "https://barfreezer.com.au",
+  "transports": [
+    "https"
+  ],
+  "capabilities": {
+    "services": [
+      "product-catalog",
+      "quotes",
+      "guides"
+    ],
+    "ordering": "human-completed",
+    "payment_methods": [
+      "bank-transfer",
+      "payid",
+      "osko",
+      "crypto"
+    ],
+    "currency": "AUD"
+  },
+  "contact": {
+    "email": "sales@barfreezer.com.au"
+  },
+  "legal": {
+    "region": "Australia",
+    "ships_to": "Australia"
+  }
+}

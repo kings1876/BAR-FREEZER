@@ -3,6 +3,7 @@ import { ShieldCheck, ChevronRight, ArrowRight, Award } from 'lucide-react';
 import { BRANDS, PRODUCTS } from '../config/site.js';
 import { ProductCard } from '../components/ProductCard';
 import { useRouter, Link } from '../context/RouterContext';
+import { PagedGrid } from '../components/PagedGrid';
 import { BRAND_META } from '../config/seo-brands';
 
 export const BrandPage: React.FC = () => {
@@ -63,11 +64,7 @@ export const BrandPage: React.FC = () => {
           </div>
 
           {brandProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {brandProducts.map((p: any) => (
-                <ProductCard key={p.id} product={p} />
-              ))}
-            </div>
+            <PagedGrid items={brandProducts} render={(p: any) => <ProductCard key={p.id} product={p} />} />
           ) : (
             <div className="bg-white p-8 rounded-xl border border-slate-200 text-center space-y-3">
               <p className="text-sm text-slate-600">

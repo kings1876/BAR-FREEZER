@@ -1,0 +1,35 @@
+{
+  "ucp": "1.0",
+  "protocol_version": "1.0",
+  "spec": "https://ucp.dev/specification/overview/",
+  "schema": "https://ucp.dev/schema/v1.json",
+  "site": "https://barfreezer.com.au",
+  "name": "Bar Freezer Australia",
+  "description": "Australian online store for commercial and home bar freezers, bar fridges, wine fridges, kegerators, ice machines, accessories and spare parts, delivered Australia-wide.",
+  "services": [
+    {
+      "id": "product-catalog",
+      "type": "catalog",
+      "url": "https://barfreezer.com.au/bar-fridges/",
+      "description": "Product catalogue"
+    },
+    {
+      "id": "quote",
+      "type": "commerce",
+      "url": "https://barfreezer.com.au/quote/",
+      "description": "Request a quote"
+    }
+  ],
+  "capabilities": [
+    "browse",
+    "inquiry",
+    "content"
+  ],
+  "currency": "AUD",
+  "payment_methods": [
+    "bank-transfer",
+    "payid",
+    "osko",
+    "crypto"
+  ]
+}

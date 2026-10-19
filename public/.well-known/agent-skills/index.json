@@ -1,0 +1,36 @@
+{
+  "$schema": "https://agentskills.io/schema/v0.2.0/index.json",
+  "name": "Bar Freezer Australia",
+  "url": "https://barfreezer.com.au",
+  "description": "Australian online store for commercial and home bar freezers, bar fridges, wine fridges, kegerators, ice machines, accessories and spare parts, delivered Australia-wide.",
+  "skills": [
+    {
+      "name": "browse-products",
+      "type": "navigation",
+      "description": "Browse bar freezers, bar fridges, accessories and parts by category",
+      "url": "https://barfreezer.com.au/bar-fridges/",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "buying-guides",
+      "type": "content",
+      "description": "Buying guides for bar fridges, freezers and refrigeration",
+      "url": "https://barfreezer.com.au/guides/",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "request-quote",
+      "type": "commerce",
+      "description": "Request a quote for one or more units (completed by a person)",
+      "url": "https://barfreezer.com.au/quote/",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "contact",
+      "type": "support",
+      "description": "Contact the store about products, delivery or warranty",
+      "url": "https://barfreezer.com.au/contact/",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}
