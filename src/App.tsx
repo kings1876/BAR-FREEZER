@@ -8,6 +8,7 @@
 import React from 'react';
 import { RouterProvider, useRouter } from './context/RouterContext';
 import { CartProvider, useCart } from './context/CartContext';
+import { ProductDetailProvider, ProductDetail } from './context/ProductDetailContext';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { CartDrawer } from './components/CartDrawer';
@@ -129,11 +130,13 @@ const MainContent: React.FC = () => {
   );
 };
 
-export default function App() {
+export default function App({ productDetail = null }: { productDetail?: ProductDetail | null }) {
   return (
     <RouterProvider>
       <CartProvider>
-        <MainContent />
+        <ProductDetailProvider detail={productDetail}>
+          <MainContent />
+        </ProductDetailProvider>
       </CartProvider>
     </RouterProvider>
   );

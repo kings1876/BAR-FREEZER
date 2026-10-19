@@ -24,6 +24,7 @@ import { PostcodeEstimator } from '../components/PostcodeEstimator';
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
 import { Product } from '../types';
+import { useProductDetail } from '../context/ProductDetailContext';
 
 export const ProductDetailPage: React.FC = () => {
   const { routeMatch } = useRouter();
@@ -35,7 +36,14 @@ export const ProductDetailPage: React.FC = () => {
   const [bundleChecked, setBundleChecked] = useState<Record<string, boolean>>({});
 
   const productSlug = routeMatch.params.slug;
-  const product = (PRODUCTS.find((p: any) => p.slug === productSlug) || PRODUCTS[0]) as unknown as Product;
+  const detail = useProductDetail();
+  const baseProduct: any = PRODUCTS.find((p: any) => p.slug === productSlug) || PRODUCTS[0];
+  const product = {
+    ...baseProduct,
+    specs: {},
+    fullDescription: baseProduct.shortDescription,
+    ...(detail && detail.id === baseProduct.id ? detail : {}),
+  } as unknown as Product;
 
   const compared = isInCompare(product.id);
 
@@ -91,7 +99,7 @@ export const ProductDetailPage: React.FC = () => {
           features: [],
           shortDescription: b.shortDescription,
           fullDescription: b.shortDescription,
-          specs: b.specs
+          specs: {}
         };
         addToCart(accProduct, 1);
       }

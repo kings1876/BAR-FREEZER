@@ -6,6 +6,7 @@ import { KEYWORD_META } from '../../config/seo-keywords';
 import { BRAND_META } from '../../config/seo-brands';
 import { CITY_META, VENUE_META } from '../../config/seo-pages';
 import PRODUCT_KW from '../../config/product-keywords.json';
+import FULL_PRODUCTS from '../../config/products.generated.json';
 
 export const dynamicParams = false;
 
@@ -199,6 +200,11 @@ function breadcrumb(slug: string[]) {
 export default async function Page({ params }: { params: Promise<{ slug?: string[] }> }) {
   const { slug = [] } = await params;
   const blocks: any[] = [];
+  let productDetail: any = null;
+  if (slug[0] === 'product' && slug[1]) {
+    const full: any = (FULL_PRODUCTS as any[]).find((x) => x.slug === slug[1]);
+    if (full) productDetail = { id: full.id, specs: full.specs, fullDescription: full.fullDescription, dimensionGuide: full.dimensionGuide, sourceUrl: full.sourceUrl, alternatives: full.alternatives, frequentlyBoughtTogether: full.frequentlyBoughtTogether };
+  }
   const bc = breadcrumb(slug);
   if (bc) blocks.push(bc);
 
@@ -259,7 +265,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
       {blocks.map((b, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(b).replace(/</g, '\\u003c') }} />
       ))}
-      <ClientApp />
+      <ClientApp productDetail={productDetail} />
     </>
   );
 }

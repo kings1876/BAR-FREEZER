@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/gen-agent-files.mjs",
+    "prebuild": "node scripts/split-products.mjs && node scripts/gen-agent-files.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "tsc --noEmit"

@@ -4,7 +4,7 @@
  * All navigation, taxonomy, products, venues, cities, FAQs, and guides are derived from here.
  */
 
-import productsData from './products.generated.json';
+import productsData from './products.light.json';
 import { EXTRA_POSTS } from './guides-extra.js';
 
 
