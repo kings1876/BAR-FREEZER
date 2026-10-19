@@ -183,6 +183,34 @@ export const AboutPage: React.FC = () => {
   );
 };
 
+const PAYMENT_OPTIONS: [string, string, string][] = [
+  ['Bank Transfer', 'Bank Transfer (EFT)', 'Bank details on your tax invoice'],
+  ['PayID', 'PayID', 'PayID details on your tax invoice'],
+  ['Osko', 'Osko (instant bank payment)', 'Pay instantly from your banking app'],
+  ['Crypto', 'Cryptocurrency (Bitcoin)', 'Wallet address and AUD amount emailed after order']
+];
+
+export const PaymentMethodsPage: React.FC = () => (
+  <div className="bg-slate-50 min-h-screen py-8">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Payment Methods</h1>
+      <p className="text-sm text-slate-600">We accept the payment methods below. After you place an order request we confirm stock and freight, then email your tax invoice with payment instructions. Orders are dispatched once payment is confirmed. All prices are in AUD and include GST.</p>
+      {[
+        ['Bank Transfer (EFT)', 'Pay by direct bank transfer using the account details on your tax invoice. Use your order reference so we can match the payment.'],
+        ['PayID', 'Pay instantly to our PayID shown on your tax invoice, from any participating Australian bank app.'],
+        ['Osko', 'Osko payments settle in minutes, including after hours. Use the PayID or account details on your invoice.'],
+        ['Cryptocurrency (Bitcoin)', 'Choose crypto at checkout and we email a wallet address with the AUD amount converted to Bitcoin at the time of invoice. Send the exact amount quoted; the order is confirmed once the transaction is verified on the network.']
+      ].map(([t, d]) => (
+        <div key={t} className="bg-white p-5 rounded-xl border border-slate-200">
+          <h2 className="text-base font-bold text-slate-900">{t}</h2>
+          <p className="text-xs text-slate-600 mt-1 leading-relaxed">{d}</p>
+        </div>
+      ))}
+      <p className="text-xs text-slate-500">Questions about paying? <Link href="/contact/" className="text-cyan-700 font-semibold">Contact us</Link>.</p>
+    </div>
+  </div>
+);
+
 /**
  * Contact Us Page (/contact/)
  */
@@ -291,7 +319,7 @@ export const CheckoutPage: React.FC = () => {
   const { cart, subtotal, gstAmount, clearCart } = useCart();
   const [complete, setComplete] = useState(false);
   const [orderId, setOrderId] = useState('');
-  const [payMethod, setPayMethod] = useState('Direct EFT');
+  const [payMethod, setPayMethod] = useState('Bank Transfer');
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
 
@@ -386,11 +414,7 @@ export const CheckoutPage: React.FC = () => {
                 <div className="pt-4 border-t border-slate-100">
                   <h3 className="text-sm font-bold text-slate-900 mb-2">Payment Method</h3>
                   <div className="space-y-2">
-                    {[
-                      ['Direct EFT', 'Direct Electronic Funds Transfer (EFT)', 'Bank details on your invoice; dispatches on clearance'],
-                      ['Card (payment link)', 'Credit Card / Debit Card', 'Secure payment link emailed with your invoice'],
-                      ['Bitcoin', 'Bitcoin (BTC)', 'Payment address and AUD-to-BTC amount emailed after order']
-                    ].map(([value, title, hint]) => (
+                    {PAYMENT_OPTIONS.map(([value, title, hint]) => (
                       <label key={value} className={`p-3 rounded border flex items-center justify-between gap-3 cursor-pointer ${payMethod === value ? 'bg-amber-50 border-amber-400' : 'bg-slate-50 border-slate-300'}`}>
                         <span className="flex items-center gap-2">
                           <input type="radio" name="Payment Option" value={value} checked={payMethod === value} onChange={() => setPayMethod(value)} />

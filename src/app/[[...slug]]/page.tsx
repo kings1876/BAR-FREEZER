@@ -5,7 +5,7 @@ export const dynamicParams = false;
 
 const STATIC_ROUTES = [
   'trade', 'quote', 'finance', 'warranty-service', 'warranty', 'deals', 'clearance',
-  'compare', 'reviews', 'about', 'contact', 'faq', 'returns', 'cart', 'checkout',
+  'compare', 'reviews', 'about', 'contact', 'faq', 'returns', 'payment-methods', 'cart', 'checkout',
   'search', 'delivery', 'guides',
 ];
 

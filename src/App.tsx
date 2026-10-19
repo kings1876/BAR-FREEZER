@@ -34,7 +34,8 @@ import {
   ContactPage, 
   CheckoutPage, 
   SearchPage, 
-  NotFoundPage 
+  NotFoundPage,
+  PaymentMethodsPage
 } from './views/StaticPages';
 
 const MainContent: React.FC = () => {
@@ -77,6 +78,8 @@ const MainContent: React.FC = () => {
       case 'faq':
       case 'returns':
         return <ContactPage />;
+      case 'payment-methods':
+        return <PaymentMethodsPage />;
       case 'checkout':
       case 'cart':
         return <CheckoutPage />;

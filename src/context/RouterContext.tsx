@@ -24,6 +24,7 @@ export interface RouteMatch {
     | 'contact'
     | 'faq'
     | 'returns'
+    | 'payment-methods'
     | 'cart'
     | 'checkout'
     | 'search'
@@ -68,6 +69,7 @@ export function parseRoute(pathname: string): RouteMatch {
   if (norm === '/about/') return { pathname: norm, routeType: 'about', params: {}, slugs: [] };
   if (norm === '/contact/') return { pathname: norm, routeType: 'contact', params: {}, slugs: [] };
   if (norm === '/faq/') return { pathname: norm, routeType: 'faq', params: {}, slugs: [] };
+  if (norm === '/payment-methods/') return { pathname: norm, routeType: 'payment-methods', params: {}, slugs: [] };
   if (norm === '/returns/') return { pathname: norm, routeType: 'returns', params: {}, slugs: [] };
   if (norm === '/cart/') return { pathname: norm, routeType: 'cart', params: {}, slugs: [] };
   if (norm === '/checkout/') return { pathname: norm, routeType: 'checkout', params: {}, slugs: [] };

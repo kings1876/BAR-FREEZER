@@ -187,6 +187,7 @@ export const Footer: React.FC = () => {
             <li><Link href="/compare/" className="hover:text-white transition-colors">Side-by-Side Spec Compare</Link></li>
             <li><Link href="/guides/" className="hover:text-white transition-colors">Refrigeration Buying Guides</Link></li>
             <li><Link href="/reviews/" className="hover:text-white transition-colors">Trustpilot Customer Reviews</Link></li>
+            <li><Link href="/payment-methods/" className="hover:text-white transition-colors">Payment Methods</Link></li>
             <li><Link href="/returns/" className="hover:text-white transition-colors">Returns & Australian Consumer Law</Link></li>
             <li><Link href="/faq/" className="hover:text-white transition-colors">Equipment FAQs</Link></li>
             <li><Link href="/about/" className="hover:text-white transition-colors">About Bar Freezer Australia</Link></li>
