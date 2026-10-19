@@ -27,9 +27,11 @@ products = products.filter((p) => (p.condition && p.condition !== "new") || (!/2
   const set = (p, primaryCategory, subCategory, categorySlug, type) => Object.assign(p, { primaryCategory, subCategory, categorySlug, type });
   for (const p of products) {
     const n = p.name;
+    if (p.id === 'hz-adjustable-leg') { set(p, 'Accessories & Parts', 'Castors, Legs & Stands', 'castors-legs-stands', 'Adjustable Stainless Legs'); continue; }
+    if (p.brand === 'Bromic' && p.categorySlug === 'under-bar-freezers' && /underbench|under bench/i.test(n) && !/drawer/i.test(p.type)) { set(p, 'Bar Freezers', 'Under Bar / Undercounter Freezers', 'under-bar-freezers', 'Stainless Steel Top'); continue; }
     if (p.primaryCategory === 'Bar Freezers' && /bar freezer/i.test(n) && p.categorySlug === 'under-bar-freezers' && !/drawer/i.test(p.type)) {
       set(p, 'Bar Freezers', 'Back Bar Freezers', 'back-bar-freezers', p.doorType === 'glass' ? 'Glass Door Back Bar' : 'Solid Door Back Bar');
-    } else if (/glass froster/i.test(n)) {
+    } else if (p.primaryCategory === 'Bar Freezers' && /glass froster/i.test(n)) {
       set(p, 'Bar Freezers', 'Glass Frosters & Specialty', 'glass-frosters-specialty', 'Glass Frosters & Mug Chillers');
     } else if (/under zero/i.test(n)) {
       set(p, 'Bar Fridges & Coolers', 'Beer & Beverage Fridges', 'beer-beverage-fridges', 'Sub-Zero Beer Fridges');
