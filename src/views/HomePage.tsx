@@ -613,7 +613,7 @@ export const HomePage: React.FC = () => {
                 <span className="text-sm font-bold text-slate-200 group-hover:text-amber-400 block">
                   {b.name}
                 </span>
-                <span className="text-[10px] text-slate-500 font-mono mt-0.5 block">
+                <span className="text-[10px] text-slate-400 font-mono mt-0.5 block">
                   {b.warrantyYears}yr Warranty
                 </span>
               </Link>
