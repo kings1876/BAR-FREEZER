@@ -1,0 +1,26 @@
+// Brand page titles and descriptions informed by Semrush AU brand keyword research (docs/keyword-map-brands.md).
+// Counts and categories come from the live product data, so the descriptions make no unverified claims.
+export const BRAND_META: Record<string, { title: string; description: string }> = {
+  '/brands/skope/': { title: "Skope Fridges & Freezers Australia | Bar Freezer", description: "Shop 161 Skope products: bar fridges and bar freezers. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/bromic/': { title: "Bromic Fridges & Freezers Australia | Bar Freezer", description: "Shop 50 Bromic products: bar fridges and bar freezers. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/williams/': { title: "Williams Refrigeration Australia | Bar Freezer", description: "Shop 79 Williams products: bar fridges and bar freezers. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/foster/': { title: "Foster Fridges & Freezers Australia | Bar Freezer", description: "Shop 23 Foster products: bar fridges, bar freezers, ice makers and accessories & parts. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/polar/': { title: "Polar Refrigeration Australia | Bar Freezer", description: "Shop 66 Polar products: bar fridges, bar freezers, ice makers and accessories & parts. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/thermaster/': { title: "Thermaster Fridges & Freezers Australia | Bar Freezer", description: "Shop 74 Thermaster products: bar fridges and bar freezers. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/atosa/': { title: "Atosa Refrigeration Australia | Bar Freezer", description: "Shop 52 Atosa products: bar fridges and bar freezers. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/fed/': { title: "F.E.D. Fridges & Freezers Australia | Bar Freezer", description: "Shop 77 F.E.D. products: bar fridges, bar freezers, ice makers and accessories & parts. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/anvil/': { title: "Anvil Fridges & Freezers Australia | Bar Freezer", description: "Shop 23 Anvil products: bar fridges and bar freezers. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/exquisite/': { title: "Exquisite Fridges & Freezers Australia | Bar Freezer", description: "Shop 53 Exquisite products: bar fridges and bar freezers. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/husky/': { title: "Husky Bar Fridges & Wine Coolers | Bar Freezer", description: "Shop 23 Husky products: bar fridges and bar freezers. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/vestfrost/': { title: "Vestfrost Fridges & Freezers Australia | Bar Freezer", description: "Shop 43 Vestfrost products: bar fridges and bar freezers. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/tefcold/': { title: "Tefcold Fridges & Freezers Australia | Bar Freezer", description: "Shop 389 Tefcold products: bar fridges and bar freezers. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/hoshizaki/': { title: "Hoshizaki Ice Machines Australia | Bar Freezer", description: "Shop 134 Hoshizaki products: bar fridges, bar freezers, ice makers and accessories & parts. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/haier/': { title: "Haier Freezers Australia | Bar Freezer", description: "Shop 2 Haier products: bar freezers. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/hisense/': { title: "Hisense Bar Fridges Australia | Bar Freezer", description: "Shop 12 Hisense products: bar fridges and bar freezers. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/westinghouse/': { title: "Westinghouse Freezers Australia | Bar Freezer", description: "Shop 15 Westinghouse products: bar freezers, ice makers and accessories & parts. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/electrolux/': { title: "Electrolux Fridges & Freezers Australia | Bar Freezer", description: "Shop 14 Electrolux products: bar fridges and bar freezers. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/liebherr/': { title: "Liebherr Fridges & Freezers Australia | Bar Freezer", description: "Shop 36 Liebherr products: bar fridges and bar freezers. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/dometic/': { title: "Dometic Fridges Australia | Bar Freezer", description: "Shop 23 Dometic products: bar fridges. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/vintec/': { title: "Vintec Wine Fridges Australia | Bar Freezer", description: "Shop 21 Vintec products: bar fridges. Compare models, specs and prices, delivered Australia-wide." },
+  '/brands/schmick/': { title: "Schmick Fridges & Freezers Australia | Bar Freezer", description: "Shop 71 Schmick products: bar fridges, bar freezers, ice makers and accessories & parts. Compare models, specs and prices, delivered Australia-wide." },
+};

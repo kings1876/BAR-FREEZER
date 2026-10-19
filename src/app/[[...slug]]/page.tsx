@@ -3,6 +3,7 @@ import ClientApp from '../../App';
 import { CATEGORIES, BRANDS, VENUES, CITIES, PRODUCTS, POSTS } from '../../config/site.js';
 import { allPaths } from '../../lib/routes';
 import { KEYWORD_META } from '../../config/seo-keywords';
+import { BRAND_META } from '../../config/seo-brands';
 
 export const dynamicParams = false;
 
@@ -53,6 +54,7 @@ function lookup(slug: string[]): { title: string; description: string; image?: s
     if (!p) return null;
     return { title: trim(p.name, 70), description: trim(p.shortDescription || p.name, 158), image: p.images?.[0] };
   }
+  if (a === 'brands' && b && BRAND_META[path]) return { title: BRAND_META[path].title, description: BRAND_META[path].description, full: true };
   if (a === 'brands' && b) {
     const x: any = (BRANDS as any[]).find((y) => y.slug === b);
     return x ? { title: `${x.name} Commercial Refrigeration`, description: trim(x.description || `Shop ${x.name} bar freezers and fridges.`, 158) } : null;
