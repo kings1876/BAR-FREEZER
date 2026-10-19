@@ -8,7 +8,7 @@ const mono = Space_Mono({ subsets: ['latin'], weight: ['400', '700'], display: '
 
 const title = 'Bar Fridges & Bar Freezers Australia | Bar Freezer';
 const description =
-  'Shop bar fridges and bar freezers in Australia: under bar, back bar, glass door and display models, kegerators, wine fridges and ice machines. Delivered Australia-wide.';
+  'Shop bar fridges and bar freezers in Australia: under bar, glass door and display models, kegerators, wine fridges and ice machines. Delivered Australia-wide.';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://barfreezer.com.au'),

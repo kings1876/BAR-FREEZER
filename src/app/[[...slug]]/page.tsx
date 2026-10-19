@@ -18,8 +18,8 @@ const SITE_URL = 'https://barfreezer.com.au';
 const STATIC_META: Record<string, [string, string]> = {
   trade: ['Trade Pricing & Quotes', 'Trade pricing, multi-unit quotes and delivery for Australian pubs, bars, restaurants and venues buying commercial refrigeration.'],
   quote: ['Multi-Product Quote Builder', 'Build a multi-product quote for bar freezers, bar fridges, kegerators and ice machines, and send it to our sales team.'],
-  finance: ['Commercial Equipment Finance & Leasing', 'Finance and leasing options for commercial bar refrigeration and hospitality equipment. Ask about your fit-out.'],
-  'warranty-service': ['Warranty Claims & Service', 'Lodge a warranty claim or request service for your commercial bar fridge, bar freezer or ice machine.'],
+  finance: ['Equipment Finance & Leasing', 'Finance and leasing options for commercial bar refrigeration and hospitality equipment. Ask about your fit-out.'],
+  'warranty-service': ['Service Dispatch & Warranty Claims', 'Request service dispatch or lodge a warranty claim for your commercial bar fridge, bar freezer or ice machine.'],
   warranty: ['Warranty Claims & Service', 'Lodge a warranty claim or request service for your commercial bar fridge, bar freezer or ice machine.'],
   deals: ['Deals on Bar Fridges & Freezers', 'Current deals on bar freezers, bar fridges and accessories. Compare prices and models, delivered Australia-wide.'],
   clearance: ['Clearance & Ex-Display Fridges', 'Clearance and ex-display bar fridges and bar freezers. Compare condition, price and specifications.'],
@@ -34,7 +34,7 @@ const STATIC_META: Record<string, [string, string]> = {
   checkout: ['Checkout & Order Request', 'Enter your delivery details and choose a payment method to send your bar fridge or freezer order request.'],
   search: ['Search Bar Fridges & Freezers', 'Search bar freezers, bar fridges, kegerators, ice machines and accessories by name, brand or model.'],
   delivery: ['Australia-Wide Delivery', 'Delivery of bar fridges, bar freezers and commercial refrigeration to Australian capital cities and regional areas.'],
-  guides: ['Buying Guides for Bar Fridges & Freezers', 'Buying guides for bar fridges, bar freezers and hospitality refrigeration: sizing, ventilation, doors and what to check.'],
+  guides: ['Bar Fridge & Freezer Buying Guides', 'Buying guides for bar fridges, bar freezers and hospitality refrigeration: sizing, ventilation, doors and what to check.'],
 };
 
 // These URLs show the same page; point them at one canonical.
@@ -77,10 +77,13 @@ function productMeta(p: any) {
   const kw: any = (PRODUCT_KW as any)[p.id];
   const isAcc = p.primaryCategory === 'Accessories & Parts';
   let title = baseProductTitle(p);
-  if ((titleCount().get(title) || 0) > 1 && p.sku) {
+  let tag = '';
+  if ((titleCount().get(title) || 0) > 1) {
+    const group = (PRODUCTS as any[]).filter((q) => baseProductTitle(q) === title);
+    const skuUnique = new Set(group.map((q) => String(q.sku))).size === group.length;
+    tag = skuUnique && p.sku ? String(p.sku) : String(p.slug).split('-').slice(-2).join('-').toUpperCase();
     const t = title.replace(' | Bar Freezer', '');
-    const sku = String(p.sku);
-    title = `${trim(t, 60 - 14 - sku.length - 1)} ${sku} | Bar Freezer`;
+    title = `${trim(t, 60 - 14 - tag.length - 1)} ${tag} | Bar Freezer`;
   }
   let desc: string;
   if (kw && !isAcc) {
@@ -90,7 +93,7 @@ function productMeta(p: any) {
   } else {
     desc = String(p.shortDescription || p.name);
   }
-  if ((titleCount().get(baseProductTitle(p)) || 0) > 1 && p.sku && !desc.includes(String(p.sku))) desc = desc.replace(/\.$/, '') + ` (SKU ${p.sku}).`;
+  if (tag && !desc.includes(tag)) desc = desc.replace(/\.$/, '') + ` (${tag}).`;
   return { title, description: padDesc(desc) };
 }
 
@@ -121,7 +124,7 @@ function lookup(slug: string[]): { title: string; description: string; image?: s
   }
   if (a === 'guides' && b) {
     const x: any = (POSTS as any[]).find((y) => y.slug === b);
-    return x ? { title: x.title.length <= 60 ? x.title : trim(x.title, 60), description: padDesc(x.excerpt || x.title), full: true } : null;
+    return x ? { title: x.title.length <= 60 ? x.title : (x.title.includes(':') && x.title.split(':')[0].length >= 20 ? x.title.split(':')[0] : trim(x.title, 60)), description: padDesc(x.excerpt || x.title), full: true } : null;
   }
   if (slug.length === 1 && STATIC_META[a]) {
     const [t, d] = STATIC_META[a];

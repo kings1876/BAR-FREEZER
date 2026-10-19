@@ -5,12 +5,12 @@ export const KEYWORD_META: Record<string, { title: string; description: string }
   // "bar fridge" 22.2K, "bar fridges" 4.4K, "bar refrigerators australia" 2.9K
   '/bar-fridges/': {
     title: 'Bar Fridges Australia | Glass Door & Under Bar',
-    description: 'Shop bar fridges in Australia: under bar, glass door, back bar, bottle coolers and outdoor models from leading brands. Compare sizes and prices, delivered Australia-wide.',
+    description: 'Shop bar fridges in Australia: under bar, glass door, back bar and outdoor models. Compare sizes and prices, delivered Australia-wide.',
   },
   // "bar freezer" 480, "bar freezers", "under bar freezer"
   '/bar-freezers/': {
     title: 'Bar Freezers Australia | Under Bar & Back Bar',
-    description: 'Commercial bar freezers for pubs, cocktail bars and home bars: under bar, back bar, glass door display and chest freezers. Compare models and prices, delivered Australia-wide.',
+    description: 'Commercial bar freezers for pubs, bars and home bars: under bar, back bar, glass door display and chest freezers. Compare prices, delivered Australia-wide.',
   },
   // "wine fridge" 8.1K, "wine cooler" 2.9K, "wine storage" 1.9K
   '/bar-fridges/wine-fridges/': {

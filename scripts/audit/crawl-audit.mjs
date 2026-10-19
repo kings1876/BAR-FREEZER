@@ -9,7 +9,7 @@ const m = await import('../../data/_site-tmp.mjs?x=' + Date.now());
 fs.unlinkSync('data/_site-tmp.mjs');
 
 const routes = new Set(['/']);
-['trade', 'quote', 'finance', 'warranty-service', 'warranty', 'deals', 'clearance', 'compare', 'reviews', 'about', 'contact', 'faq', 'returns', 'cart', 'checkout', 'search', 'delivery', 'guides'].forEach((r) => routes.add(`/${r}/`));
+['trade', 'quote', 'finance', 'warranty-service', 'warranty', 'deals', 'clearance', 'compare', 'reviews', 'about', 'contact', 'faq', 'returns', 'cart', 'checkout', 'search', 'delivery', 'guides', 'payment-methods'].forEach((r) => routes.add(`/${r}/`));
 (function walk(nodes) { for (const n of nodes || []) { if (n.path) routes.add(n.path); walk(n.subcategories); walk(n.types); } })(m.CATEGORIES);
 m.BRANDS.forEach((b) => routes.add(`/brands/${b.slug}/`));
 m.VENUES.forEach((v) => routes.add(`/venues/${v.slug}/`));
