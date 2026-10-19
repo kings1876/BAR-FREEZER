@@ -74,6 +74,24 @@ function itemsTable(items: any[], totals: any) {
   return `<h3 style="margin:20px 0 8px;font-size:15px">Items</h3><table cellpadding="0" cellspacing="0" style="width:100%;font-size:14px"><tr><th align="left" style="color:#64748b;font-weight:normal">Product</th><th style="color:#64748b;font-weight:normal">Qty</th><th align="right" style="color:#64748b;font-weight:normal">Price</th></tr>${rows}${tot}</table>`;
 }
 
+async function sendWeb3Forms(type: EnquiryType, ref: string, fields: Record<string, string>, items: any[], totals: any, customerEmail: string): Promise<boolean> {
+  const key = type === 'order' ? env('WEB3FORMS_KEY_ORDER') || env('WEB3FORMS_KEY') : env('WEB3FORMS_KEY_CONTACT') || env('WEB3FORMS_KEY');
+  if (!key) return false;
+  const lines = items.map((i: any) => `${i.qty} x ${i.name} (${i.sku}) ${money(i.price)}`).join('
+');
+  try {
+    const r = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ access_key: key, subject: `${LABEL[type]} ${ref}`, from_name: SITE.name, email: customerEmail, ...fields, Reference: ref, ...(lines ? { Items: lines } : {}), ...(totals ? { Total: money(totals.total) } : {}) })
+    });
+    const d: any = await r.json().catch(() => ({}));
+    return r.ok && d.success === true;
+  } catch {
+    return false;
+  }
+}
+
 async function saveRecord(record: any): Promise<boolean> {
   const url = env('UPSTASH_REDIS_REST_URL') || env('KV_REST_API_URL');
   const token = env('UPSTASH_REDIS_REST_TOKEN') || env('KV_REST_API_TOKEN');
@@ -164,6 +182,7 @@ export async function POST(req: Request) {
       }
     }
   }
+  if (!emailed) emailed = await sendWeb3Forms(type, ref, fields, items, totals, customerEmail);
   const saved = await saveRecord(record);
 
   if (!emailed && !saved) {
