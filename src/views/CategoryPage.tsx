@@ -5,6 +5,7 @@ import { ProductCard } from '../components/ProductCard';
 import { FilterSidebar, initialFilterState, FilterState } from '../components/FilterSidebar';
 import { useRouter, Link } from '../context/RouterContext';
 import { Product } from '../types';
+import { CATEGORY_COPY } from '../config/seo-category-copy';
 
 export const CategoryPage: React.FC = () => {
   const { currentPath, routeMatch } = useRouter();
@@ -33,6 +34,8 @@ export const CategoryPage: React.FC = () => {
     : activeSubCategory
     ? activeSubCategory.description
     : rootCategory.description;
+
+  const kwCopy = (CATEGORY_COPY as any)[currentPath];
 
   // Filter products based on route category and active faceted filters
   const categoryBaseProducts = useMemo(() => {
@@ -162,11 +165,16 @@ export const CategoryPage: React.FC = () => {
             <span>43°C AMBIENT RATED</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            {pageTitle}
+            {kwCopy ? kwCopy.h1 : pageTitle}
           </h1>
           <p className="text-sm text-slate-600 max-w-3xl leading-relaxed">
-            {pageDescription}
+            {kwCopy ? kwCopy.intro : pageDescription}
           </p>
+          {kwCopy && kwCopy.guide && (
+            <p className="text-xs">
+              <Link href={kwCopy.guide.href} className="font-semibold text-cyan-700 hover:text-cyan-800">{kwCopy.guide.label} &rarr;</Link>
+            </p>
+          )}
 
           {/* Subcategories Selector Tabs */}
           {rootCategory.subcategories.length > 0 && !activeType && (

@@ -72,7 +72,7 @@ function lookup(slug: string[]): { title: string; description: string; image?: s
   }
   if (a === 'guides' && b) {
     const x: any = (POSTS as any[]).find((y) => y.slug === b);
-    return x ? { title: trim(x.title, 60 - SUFFIX.length), description: trim(x.excerpt || x.title, 158) } : null;
+    return x ? { title: x.title.length <= 60 ? x.title : trim(x.title, 60), description: trim(x.excerpt || x.title, 158), full: true } : null;
   }
   if (slug.length === 1 && STATIC_META[a]) {
     const [t, d] = STATIC_META[a];
@@ -120,6 +120,21 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
           url: `https://barfreezer.com.au/product/${p.slug}/`,
           itemCondition: p.condition === 'new' ? 'https://schema.org/NewCondition' : 'https://schema.org/UsedCondition',
         },
+      };
+    }
+  } else if (slug[0] === 'guides' && slug[1]) {
+    const post: any = (POSTS as any[]).find((x) => x.slug === slug[1]);
+    if (post) {
+      const d = new Date(post.publishedAt);
+      ld = {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: post.title,
+        description: post.excerpt,
+        datePublished: isNaN(d.getTime()) ? undefined : d.toISOString().slice(0, 10),
+        author: { '@type': 'Organization', name: 'Bar Freezer Australia' },
+        publisher: { '@type': 'Organization', name: 'Bar Freezer Australia' },
+        mainEntityOfPage: `https://barfreezer.com.au/guides/${post.slug}/`,
       };
     }
   } else if (!slug.length) {

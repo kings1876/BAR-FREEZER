@@ -3,6 +3,7 @@ import { Truck, Clock, ShieldCheck, MapPin, CheckCircle2, ChevronRight, Phone, A
 import { CITIES, SITE } from '../config/site.js';
 import { PostcodeEstimator } from '../components/PostcodeEstimator';
 import { useRouter, Link } from '../context/RouterContext';
+import { CITY_META } from '../config/seo-pages';
 
 export const DeliveryPage: React.FC = () => {
   const { routeMatch } = useRouter();
@@ -35,7 +36,7 @@ export const DeliveryPage: React.FC = () => {
           </div>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
-            {activeCity ? `${activeCity.name} Bar Freezer & Fridge Delivery` : 'Australia-Wide Commercial Refrigeration Delivery'}
+            {activeCity ? ((CITY_META as any)[activeCity.slug]?.h1 || `${activeCity.name} Bar Freezer & Fridge Delivery`) : 'Australia-Wide Commercial Refrigeration Delivery'}
           </h1>
 
           <p className="text-sm sm:text-base text-slate-600 max-w-3xl leading-relaxed">
@@ -44,6 +45,15 @@ export const DeliveryPage: React.FC = () => {
               : 'Bar Freezer operates dedicated distribution hubs in Sydney, Melbourne, Brisbane, and Perth. We dispatch heavy commercial refrigeration daily to all Australian capital cities and regional towns with hydraulic tailgate lifters standard.'}
           </p>
         </div>
+
+        {activeCity && (
+          <div className="bg-white rounded-xl border border-slate-200/90 p-6 shadow-xs space-y-2">
+            <h2 className="text-base font-bold text-slate-900">Bar fridges and commercial refrigeration for {activeCity.name}</h2>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Shop <Link href="/bar-fridges/" className="text-cyan-700 font-semibold">bar fridges</Link>, <Link href="/bar-fridges/under-bar-fridges/" className="text-cyan-700 font-semibold">under bar fridges</Link>, <Link href="/bar-freezers/" className="text-cyan-700 font-semibold">bar freezers</Link>, <Link href="/bar-fridges/kegerators-dispensers/" className="text-cyan-700 font-semibold">kegerators</Link>, <Link href="/bar-fridges/wine-fridges/" className="text-cyan-700 font-semibold">wine fridges</Link> and <Link href="/accessories-parts/ice-machines-storage/" className="text-cyan-700 font-semibold">ice machines</Link> delivered to {activeCity.name} and the wider {activeCity.state} area. Use the postcode estimator below for a freight estimate, or <Link href="/quote/" className="text-cyan-700 font-semibold">request a quote</Link> for a multi-unit order.
+            </p>
+          </div>
+        )}
 
         {/* City-Specific Details If Viewed */}
         {activeCity ? (

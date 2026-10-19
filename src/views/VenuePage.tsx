@@ -4,6 +4,7 @@ import { VENUES, CATEGORIES, PRODUCTS, SITE } from '../config/site.js';
 import { ProductCard } from '../components/ProductCard';
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
+import { VENUE_META } from '../config/seo-pages';
 
 export const VenuePage: React.FC = () => {
   const { routeMatch } = useRouter();
@@ -39,11 +40,14 @@ export const VenuePage: React.FC = () => {
           </div>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
-            {venue.name} Commercial Bar Refrigeration
+            {(VENUE_META as any)[venue.slug]?.h1 || `${venue.name} Commercial Bar Refrigeration`}
           </h1>
 
           <p className="text-sm sm:text-base text-slate-300 max-w-3xl leading-relaxed">
             {venue.intro}
+          </p>
+          <p className="text-xs text-slate-400">
+            Browse <Link href="/bar-fridges/" className="underline hover:text-white">bar fridges</Link>, <Link href="/bar-freezers/" className="underline hover:text-white">bar freezers</Link>, <Link href="/bar-fridges/kegerators-dispensers/" className="underline hover:text-white">kegerators</Link> and <Link href="/accessories-parts/ice-machines-storage/" className="underline hover:text-white">ice machines</Link>.
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-4">

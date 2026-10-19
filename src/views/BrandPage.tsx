@@ -3,6 +3,7 @@ import { ShieldCheck, ChevronRight, ArrowRight, Award } from 'lucide-react';
 import { BRANDS, PRODUCTS } from '../config/site.js';
 import { ProductCard } from '../components/ProductCard';
 import { useRouter, Link } from '../context/RouterContext';
+import { BRAND_META } from '../config/seo-brands';
 
 export const BrandPage: React.FC = () => {
   const { routeMatch } = useRouter();
@@ -34,7 +35,7 @@ export const BrandPage: React.FC = () => {
                 <span>{brand.tag}</span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
-                {brand.name} Commercial Refrigeration Australia
+                {((BRAND_META as any)['/brands/' + brand.slug + '/']?.title || '').split(' | ')[0] || `${brand.name} Commercial Refrigeration Australia`}
               </h1>
             </div>
             

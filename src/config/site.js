@@ -5,6 +5,7 @@
  */
 
 import productsData from './products.generated.json';
+import { EXTRA_POSTS } from './guides-extra.js';
 
 
 export const SITE = {
@@ -1031,6 +1032,7 @@ export const FAQS = [
 ];
 
 export const POSTS = [
+  ...EXTRA_POSTS,
   {
     title: "Underbar Freezer Sizing Guide: Glass vs Solid Doors for Australian Pubs",
     slug: "underbar-freezer-sizing-guide-glass-vs-solid-doors",

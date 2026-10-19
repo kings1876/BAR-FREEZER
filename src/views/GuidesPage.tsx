@@ -3,6 +3,36 @@ import { ChevronRight, ArrowRight, Clock, Calendar, BookOpen, Share2, Printer } 
 import { POSTS } from '../config/site.js';
 import { useRouter, Link } from '../context/RouterContext';
 
+const renderInline = (text: string) => {
+  const parts: React.ReactNode[] = [];
+  const re = /\[([^\]]+)\]\((\/[^)]*)\)/g;
+  let last = 0; let m: RegExpExecArray | null; let k = 0;
+  while ((m = re.exec(text))) {
+    if (m.index > last) parts.push(text.slice(last, m.index));
+    parts.push(<Link key={k++} href={m[2]} className="text-cyan-700 font-semibold hover:underline">{m[1]}</Link>);
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts;
+};
+
+const renderBody = (content: string) =>
+  content.split('\n\n').map((block: string, i: number) => {
+    if (block.startsWith('## ')) return <h2 key={i} className="text-xl font-bold text-slate-900 pt-2">{block.slice(3)}</h2>;
+    const lines = block.split('\n');
+    const bullets = lines.filter((l) => l.startsWith('- '));
+    if (bullets.length && bullets.length >= lines.length - 1) {
+      const intro = lines.filter((l) => !l.startsWith('- '));
+      return (
+        <div key={i}>
+          {intro.map((t, n) => <p key={n} className="whitespace-pre-line">{renderInline(t)}</p>)}
+          <ul className="list-disc pl-5 space-y-1 mt-1">{bullets.map((b, n) => <li key={n}>{renderInline(b.slice(2))}</li>)}</ul>
+        </div>
+      );
+    }
+    return <p key={i} className="whitespace-pre-line">{renderInline(block)}</p>;
+  });
+
 export const GuidesPage: React.FC = () => {
   const { routeMatch } = useRouter();
   const guideSlug = routeMatch.params.slug;
@@ -62,11 +92,7 @@ export const GuidesPage: React.FC = () => {
 
           {/* Article Body */}
           <article className="bg-white rounded-xl border border-slate-200/90 p-6 sm:p-10 shadow-xs prose prose-slate max-w-none text-sm text-slate-700 leading-relaxed space-y-4">
-            {currentGuide.content.split('\n\n').map((paragraph: string, i: number) => (
-              <p key={i} className="whitespace-pre-line">
-                {paragraph}
-              </p>
-            ))}
+            {renderBody(currentGuide.content)}
           </article>
 
           {/* Related Articles Footer */}
