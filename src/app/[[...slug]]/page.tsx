@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import ClientApp from '../../App';
 import { CATEGORIES, BRANDS, VENUES, CITIES, PRODUCTS, POSTS } from '../../config/site.js';
 import { allPaths } from '../../lib/routes';
+import { KEYWORD_META } from '../../config/seo-keywords';
 
 export const dynamicParams = false;
 
@@ -43,7 +44,7 @@ function findPath(nodes: any[], path: string): any {
   return null;
 }
 
-function lookup(slug: string[]): { title: string; description: string; image?: string; noindex?: boolean } | null {
+function lookup(slug: string[]): { title: string; description: string; image?: string; noindex?: boolean; full?: boolean } | null {
   if (!slug.length) return null;
   const path = '/' + slug.join('/') + '/';
   const [a, b] = slug;
@@ -72,6 +73,8 @@ function lookup(slug: string[]): { title: string; description: string; image?: s
     const [t, d] = STATIC_META[a];
     return { title: t, description: d, noindex: a === 'cart' || a === 'checkout' || a === 'search' };
   }
+  const kw = KEYWORD_META[path];
+  if (kw) return { title: kw.title, description: kw.description, full: true };
   const cat = findPath(CATEGORIES as any[], path);
   if (cat) return { title: trim(cat.name, 60 - SUFFIX.length), description: trim(cat.description || `Shop ${cat.name} in Australia.`, 158) };
   return null;
@@ -83,11 +86,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
   const canonical = '/' + slug.join('/') + (slug.length ? '/' : '');
   if (!m) return { alternates: { canonical } };
   return {
-    title: m.title + SUFFIX,
+    title: m.full ? m.title : m.title + SUFFIX,
     description: m.description,
     alternates: { canonical },
     robots: m.noindex ? { index: false, follow: true } : undefined,
-    openGraph: { title: m.title + SUFFIX, description: m.description, url: canonical, images: m.image ? [m.image] : undefined },
+    openGraph: { title: m.full ? m.title : m.title + SUFFIX, description: m.description, url: canonical, images: m.image ? [m.image] : undefined },
   };
 }
 
