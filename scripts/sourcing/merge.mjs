@@ -19,6 +19,32 @@ products = products.filter((p) => {
   return true;
 });
 
+// Drop second-hand / scratch-and-dent one-off units and low-temperature laboratory freezers
+products = products.filter((p) => !/2NDs|SCRATCH & DENT|EX-?DISPLAY|B[- ]GRADE/i.test(p.name) && !/-30.C Upright Freezer/i.test(p.name));
+
+// Re-sort products into more specific categories when the product name or specs clearly say so
+{
+  const set = (p, primaryCategory, subCategory, categorySlug, type) => Object.assign(p, { primaryCategory, subCategory, categorySlug, type });
+  for (const p of products) {
+    const n = p.name;
+    if (p.primaryCategory === 'Bar Freezers' && /bar freezer/i.test(n) && p.categorySlug === 'under-bar-freezers' && !/drawer/i.test(p.type)) {
+      set(p, 'Bar Freezers', 'Back Bar Freezers', 'back-bar-freezers', p.doorType === 'glass' ? 'Glass Door Back Bar' : 'Solid Door Back Bar');
+    } else if (/glass froster/i.test(n)) {
+      set(p, 'Bar Freezers', 'Glass Frosters & Specialty', 'glass-frosters-specialty', 'Glass Frosters & Mug Chillers');
+    } else if (/under zero/i.test(n)) {
+      set(p, 'Bar Fridges & Coolers', 'Beer & Beverage Fridges', 'beer-beverage-fridges', 'Sub-Zero Beer Fridges');
+    } else if (p.primaryCategory === 'Bar Freezers' && p.doorType === 'glass' && (/tabletop freezer|mini glass door freezer/i.test(n))) {
+      set(p, 'Bar Freezers', 'Glass Door Display Freezers', 'glass-door-display-freezers', 'Counter-top Display');
+    } else if (p.categorySlug === 'under-bar-freezers' && /^(Single Door)$/.test(p.type) && p.widthMm > 0 && p.widthMm <= 550) {
+      set(p, 'Bar Freezers', 'Under Bar / Undercounter Freezers', 'under-bar-freezers', 'Compact & Slimline');
+    } else if (p.primaryCategory === 'Bar Freezers' && /^(Westinghouse|Hisense|Haier)$/.test(p.brand)) {
+      set(p, 'Bar Freezers', 'Home Bar & Outdoor Freezers', 'home-bar-outdoor-freezers', 'Man Cave & Home Bar');
+    } else if (p.primaryCategory === 'Bar Freezers' && p.brand === 'Husky' && /vertical freezer/i.test(n)) {
+      set(p, 'Bar Freezers', 'Home Bar & Outdoor Freezers', 'home-bar-outdoor-freezers', 'Man Cave & Home Bar');
+    }
+  }
+}
+
 // Similar models: same subcategory, closest width, preferring the same brand
 for (const p of products) {
   p.alternatives = products
