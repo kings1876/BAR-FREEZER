@@ -40,3 +40,19 @@ products.forEach((p) => {
 });
 console.log('TOTAL', products.length, byBrand);
 console.log(Object.entries(byCat).sort().map(([k, v]) => `${v}  ${k}`).join('\n'));
+
+// Re-apply market prices found at Australian retailers (see match-prices.mjs / prices.mjs)
+if (fs.existsSync('data/prices-found.json')) {
+  const found = JSON.parse(fs.readFileSync('data/prices-found.json', 'utf8'));
+  let n = 0;
+  for (const p of products) {
+    const v = found[p.id];
+    if (!v) continue;
+    const ps = v.prices.map((x) => x.price).sort((a, b) => a - b);
+    const med = ps.length % 2 ? ps[(ps.length - 1) / 2] : (ps[ps.length / 2 - 1] + ps[ps.length / 2]) / 2;
+    p.price = Math.round(med);
+    n++;
+  }
+  fs.writeFileSync('src/config/products.generated.json', JSON.stringify(products));
+  console.log('market prices re-applied:', n);
+}

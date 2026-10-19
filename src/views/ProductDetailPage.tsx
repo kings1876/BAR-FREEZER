@@ -270,7 +270,7 @@ export const ProductDetailPage: React.FC = () => {
                 <div className="pt-2 border-t border-slate-200/80 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-1.5 text-amber-800">
                     <span className="font-semibold">Trade Discount Price:</span>
-                    <strong className="font-mono text-sm">${product.tradePrice.toLocaleString()} AUD</strong>
+                    <strong className="font-mono text-sm">{product.tradePrice != null ? `$${product.tradePrice.toLocaleString()} AUD` : 'On application'}</strong>
                   </div>
                   <button
                     onClick={() => openQuoteForProduct(product)}
