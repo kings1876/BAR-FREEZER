@@ -172,7 +172,7 @@ export const HomePage: React.FC = () => {
                 <div className="space-y-2">
                   <div className="flex items-baseline justify-between gap-3">
                     <div>
-                      <h4 className="text-base font-bold text-white">{spotlight.name.replace(/ - [A-Z0-9.-]+$/, '')}</h4>
+                      <h3 className="text-base font-bold text-white">{spotlight.name.replace(/ - [A-Z0-9.-]+$/, '')}</h3>
                       <p className="text-xs text-slate-400">
                         {[spotlight.widthMm ? `${spotlight.widthMm}mm W` : '', spotlight.capacityLitres ? `${spotlight.capacityLitres}L` : '', spotlight.refrigerant, spotlight.warrantyText].filter(Boolean).join(' · ')}
                       </p>
@@ -552,7 +552,7 @@ export const HomePage: React.FC = () => {
                       <span className="uppercase text-amber-700 font-bold">{tierKey} Venue</span>
                       <span>{setup.capacity}</span>
                     </div>
-                    <h4 className="text-base font-bold text-slate-900">{setup.name}</h4>
+                    <h3 className="text-base font-bold text-slate-900">{setup.name}</h3>
                     <div className="text-sm font-mono font-bold text-cyan-800 mt-1">
                       {setup.budget}
                     </div>
@@ -561,7 +561,7 @@ export const HomePage: React.FC = () => {
                     </p>
 
                     <div className="space-y-1.5 pt-2 border-t border-slate-100">
-                      <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
+                      <span className="text-[10px] uppercase font-bold text-slate-500 block tracking-wider">
                         Recommended Equipment:
                       </span>
                       {setup.equipment.map((eq: string, i: number) => (
@@ -600,7 +600,7 @@ export const HomePage: React.FC = () => {
                 Supplying Australia's Leading Commercial Refrigeration Brands
               </h2>
             </div>
-            <span className="text-xs text-slate-400 font-mono hidden sm:inline">100% Genuine Stock</span>
+            <span className="text-xs text-slate-500 font-mono hidden sm:inline">100% Genuine Stock</span>
           </div>
 
           <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-8 gap-3">
@@ -613,7 +613,7 @@ export const HomePage: React.FC = () => {
                 <span className="text-sm font-bold text-slate-200 group-hover:text-amber-400 block">
                   {b.name}
                 </span>
-                <span className="text-[10px] text-slate-400 font-mono mt-0.5 block">
+                <span className="text-[10px] text-slate-500 font-mono mt-0.5 block">
                   {b.warrantyYears}yr Warranty
                 </span>
               </Link>
@@ -750,7 +750,7 @@ export const HomePage: React.FC = () => {
                 </div>
 
                 <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-xs">
-                  <span className="text-slate-400 font-mono">{post.publishedAt}</span>
+                  <span className="text-slate-500 font-mono">{post.publishedAt}</span>
                   <Link 
                     href={`/guides/${post.slug}/`} 
                     className="font-bold text-slate-800 hover:text-amber-600 flex items-center gap-1 uppercase tracking-wider"

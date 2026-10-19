@@ -48,18 +48,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <span aria-hidden="true">·</span>
             <span>{product.type}</span>
           </div>
-          <span className="font-mono text-[11px] text-slate-400">SKU: {product.sku}</span>
+          <span className="font-mono text-[11px] text-slate-500">SKU: {product.sku}</span>
         </div>
 
         {/* Product Title */}
-        <h3 className="text-sm sm:text-base font-semibold text-slate-900 leading-snug line-clamp-2">
+        <h2 className="text-sm sm:text-base font-semibold text-slate-900 leading-snug line-clamp-2">
           <Link 
             href={`/product/${product.slug}/`} 
             className="hover:text-cyan-700 transition-colors focus-visible:outline-amber-500"
           >
             {product.name}
           </Link>
-        </h3>
+        </h2>
 
         {/* Trustpilot Review Metric */}
         <div className="flex items-center gap-1.5 text-[11px] text-slate-500">
@@ -71,21 +71,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             ))}
           </div>
           <span className="font-bold text-slate-800">4.9 / 5.0</span>
-          <span className="text-slate-400">· Trustpilot</span>
+          <span className="text-slate-500">· Trustpilot</span>
         </div>
 
         {/* Quick Specs Strip */}
         <div className="grid grid-cols-3 gap-2 py-2 px-2.5 bg-slate-50 rounded text-xs text-slate-600 font-mono">
           <div>
-            <span className="text-[10px] text-slate-400 block uppercase font-sans">Width</span>
+            <span className="text-[10px] text-slate-500 block uppercase font-sans">Width</span>
             <span className="font-medium text-slate-900">{product.widthMm ? `${product.widthMm}mm` : '—'}</span>
           </div>
           <div>
-            <span className="text-[10px] text-slate-400 block uppercase font-sans">Volume</span>
+            <span className="text-[10px] text-slate-500 block uppercase font-sans">Volume</span>
             <span className="font-medium text-slate-900">{product.capacityLitres ? `${product.capacityLitres}L` : '—'}</span>
           </div>
           <div>
-            <span className="text-[10px] text-slate-400 block uppercase font-sans">Temp</span>
+            <span className="text-[10px] text-slate-500 block uppercase font-sans">Temp</span>
             <span className="font-medium text-slate-900">{product.tempRange ? product.tempRange.split(' ')[0] : '—'}</span>
           </div>
         </div>
@@ -125,7 +125,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           {product.warrantyYears > 0 && (
             <div className="text-[11px] text-slate-500 text-right">
               <span className="font-semibold text-slate-700">{product.warrantyYears}yr Warranty</span>
-              <span className="block text-[10px] text-slate-400">Manufacturer warranty</span>
+              <span className="block text-[10px] text-slate-500">Manufacturer warranty</span>
             </div>
           )}
         </div>

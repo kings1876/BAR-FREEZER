@@ -243,6 +243,7 @@ export const CategoryPage: React.FC = () => {
               <div className="flex items-center gap-2 text-xs">
                 <span className="text-slate-500 font-medium">Sort by:</span>
                 <select
+                  aria-label="Sort products"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as any)}
                   className="bg-slate-50 border border-slate-300 rounded px-2.5 py-1.5 text-xs text-slate-800 font-medium focus:outline-none focus:border-amber-500"

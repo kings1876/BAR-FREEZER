@@ -146,7 +146,7 @@ export const Header: React.FC = () => {
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
             <Link href="/" className="group flex items-center gap-2.5 whitespace-nowrap focus-visible:outline-amber-500">
-              <div className="w-9 h-9 rounded bg-cyan-600 flex items-center justify-center text-white font-black text-lg tracking-wider shadow-sm group-hover:bg-cyan-500 transition-colors">
+              <div className="w-9 h-9 rounded bg-cyan-700 flex items-center justify-center text-white font-black text-lg tracking-wider shadow-sm group-hover:bg-cyan-500 transition-colors">
                 BF
               </div>
               <div className="flex flex-col">

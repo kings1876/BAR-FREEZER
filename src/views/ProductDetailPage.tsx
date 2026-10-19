@@ -177,15 +177,15 @@ export const ProductDetailPage: React.FC = () => {
               {/* Dimension Callout Strip */}
               <div className="p-4 bg-slate-50 rounded-lg border border-slate-200/80 grid grid-cols-3 gap-2 text-center text-xs">
                 <div>
-                  <span className="text-slate-400 text-[10px] uppercase block">Dimensions</span>
+                  <span className="text-slate-500 text-[10px] uppercase block">Dimensions</span>
                   <span className="font-mono font-bold text-slate-900">{product.widthMm && product.depthMm && product.heightMm ? `${product.widthMm}x${product.depthMm}x${product.heightMm}mm` : '—'}</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 text-[10px] uppercase block">Gross Volume</span>
+                  <span className="text-slate-500 text-[10px] uppercase block">Gross Volume</span>
                   <span className="font-mono font-bold text-slate-900">{product.capacityLitres ? `${product.capacityLitres} Litres` : '—'}</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 text-[10px] uppercase block">Operating Temp</span>
+                  <span className="text-slate-500 text-[10px] uppercase block">Operating Temp</span>
                   <span className="font-mono font-bold text-cyan-700">{product.tempRange || '—'}</span>
                 </div>
               </div>
@@ -658,7 +658,7 @@ export const ProductDetailPage: React.FC = () => {
                           <span className="font-bold text-slate-900">{rev.name}</span>
                           <span className="text-slate-500">· {rev.venue} ({rev.city})</span>
                         </div>
-                        <span className="text-slate-400 font-mono">{rev.date}</span>
+                        <span className="text-slate-500 font-mono">{rev.date}</span>
                       </div>
                       <div className="flex text-emerald-500">
                         {[...Array(rev.rating)].map((_, r) => (

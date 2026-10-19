@@ -97,7 +97,7 @@ export const Footer: React.FC = () => {
         {/* Column 1: Company & Contact */}
         <div className="lg:col-span-2 space-y-4 pr-4">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded bg-cyan-600 flex items-center justify-center text-white font-black text-sm">
+            <div className="w-8 h-8 rounded bg-cyan-700 flex items-center justify-center text-white font-black text-sm">
               BF
             </div>
             <span className="text-lg font-bold text-white tracking-tight">BAR FREEZER AUSTRALIA</span>
@@ -163,7 +163,7 @@ export const Footer: React.FC = () => {
           <ul className="space-y-1.5 text-slate-400 grid grid-cols-2 gap-x-2">
             {CITIES.map((c: any) => (
               <li key={c.slug}>
-                <Link href={`/delivery/${c.slug}/`} className="hover:text-cyan-400 transition-colors">
+                <Link href={`/delivery/${c.slug}/`} className="hover:text-cyan-400 transition-colors inline-block py-1.5">
                   {c.name}
                 </Link>
               </li>
