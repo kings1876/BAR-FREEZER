@@ -119,7 +119,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </div>
             <div className="text-[11px] text-slate-500">
               Incl. GST{product.tradePrice != null && <> · <span className="text-amber-700 font-medium">Trade: ${product.tradePrice.toLocaleString()}</span></>}
-              {(product as any).priceBasis && (product as any).priceBasis !== 'au-retail' && <> · <span className="text-amber-700 font-medium">Indicative</span></>}
             </div>
           </div>
           )}

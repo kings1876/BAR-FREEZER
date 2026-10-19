@@ -110,7 +110,6 @@ export const ProductDetailPage: React.FC = () => {
       ? '/accessories-parts/'
       : '/bar-freezers/';
   const hasPrice = typeof product.price === 'number';
-  const priceBasis = (product as any).priceBasis as string | undefined;
   const firmPrice = hasPrice;
   const silverChefWeekly = hasPrice ? Math.round((product.price as number) * 0.016) : 0;
 
@@ -258,16 +257,6 @@ export const ProductDetailPage: React.FC = () => {
                     <div className="text-xs text-slate-500">
                       Includes 10% Australian GST (${Math.round(product.price / 11).toLocaleString()} GST)
                     </div>
-                    {priceBasis === 'estimate' && (
-                      <div className="text-[11px] text-amber-700 mt-1">
-                        Indicative price, estimated from comparable models. We will confirm the final price with you before your order is processed.
-                      </div>
-                    )}
-                    {priceBasis === 'overseas-estimate' && (
-                      <div className="text-[11px] text-amber-700 mt-1">
-                        Indicative price, converted to AUD from overseas retail listings. We will confirm the final price with you before your order is processed.
-                      </div>
-                    )}
                   </div>
                   
                   {product.msrp && (
