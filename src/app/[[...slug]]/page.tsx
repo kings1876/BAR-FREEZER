@@ -5,6 +5,7 @@ import { allPaths } from '../../lib/routes';
 import { KEYWORD_META } from '../../config/seo-keywords';
 import { BRAND_META } from '../../config/seo-brands';
 import { CITY_META, VENUE_META } from '../../config/seo-pages';
+import PRODUCT_KW from '../../config/product-keywords.json';
 
 export const dynamicParams = false;
 
@@ -53,6 +54,15 @@ function lookup(slug: string[]): { title: string; description: string; image?: s
   if (a === 'product' && b) {
     const p: any = (PRODUCTS as any[]).find((x) => x.slug === b);
     if (!p) return null;
+    const kw: any = (PRODUCT_KW as any)[p.id];
+    const cap = (t: string) => t.replace(/\b\w/g, (c) => c.toUpperCase());
+    if (kw && p.primaryCategory !== 'Accessories & Parts') {
+      const model = p.model && !String(p.brand).toLowerCase().includes(String(p.model).toLowerCase()) ? ' ' + p.model : '';
+      const t1 = `${p.brand}${model} ${cap(kw.term)} | Bar Freezer`;
+      const specs = [p.widthMm >= 300 ? `${p.widthMm}mm wide` : '', p.capacityLitres >= 20 ? `${p.capacityLitres}L` : '', p.tempRange ? String(p.tempRange).split(' (')[0] : ''].filter(Boolean).join(', ');
+      const d1 = `${p.brand}${model} ${kw.term}${specs ? ': ' + specs : ''}. Compare price and full specifications, delivered Australia-wide.`;
+      return { title: t1.length <= 60 ? t1 : trim(p.name, 70), description: trim(d1, 158), image: p.images?.[0], full: t1.length <= 60 };
+    }
     return { title: trim(p.name, 70), description: trim(p.shortDescription || p.name, 158), image: p.images?.[0] };
   }
   if (a === 'brands' && b && BRAND_META[path]) return { title: BRAND_META[path].title, description: BRAND_META[path].description, full: true };
