@@ -76,7 +76,6 @@ export const CATEGORIES = [
         types: [
           { name: "Glass Door Back Bar", slug: "glass-door", path: "/bar-freezers/back-bar-freezers/glass-door/" },
           { name: "Solid Door Back Bar", slug: "solid-door", path: "/bar-freezers/back-bar-freezers/solid-door/" },
-          { name: "Sliding Door Back Bar", slug: "sliding-door", path: "/bar-freezers/back-bar-freezers/sliding-door/" }
         ]
       },
       {
@@ -109,8 +108,6 @@ export const CATEGORIES = [
         description: "Instant sub-zero beer stein and martini glass chillers, shot freezers, and frozen beverage service.",
         types: [
           { name: "Glass Frosters & Mug Chillers", slug: "glass-frosters", path: "/bar-freezers/glass-frosters-specialty/glass-frosters/" },
-          { name: "Cocktail & Ice Freezers", slug: "cocktail-ice", path: "/bar-freezers/glass-frosters-specialty/cocktail-ice/" },
-          { name: "Bottle Freezers (Vodka/Spirits)", slug: "bottle-freezers", path: "/bar-freezers/glass-frosters-specialty/bottle-freezers/" },
           { name: "Slush & Frozen Drink Freezers", slug: "slush-frozen-drink", path: "/bar-freezers/glass-frosters-specialty/slush-frozen-drink/" }
         ]
       },
@@ -131,7 +128,6 @@ export const CATEGORIES = [
         path: "/bar-freezers/home-bar-outdoor-freezers/",
         description: "Architectural luxury freezers engineered for outdoor BBQ kitchens, alfresco entertainment, and premium man caves.",
         types: [
-          { name: "Alfresco & Outdoor-Rated (IPX4)", slug: "alfresco-outdoor", path: "/bar-freezers/home-bar-outdoor-freezers/alfresco-outdoor/" },
           { name: "Man Cave & Home Bar", slug: "man-cave-home-bar", path: "/bar-freezers/home-bar-outdoor-freezers/man-cave-home-bar/" }
         ]
       },
@@ -263,7 +259,6 @@ export const CATEGORIES = [
         path: "/accessories-parts/door-locks-gaskets/",
         description: "Magnetic push-in door seals, cylinder barrel key locks, and heavy-duty slam latches.",
         types: [
-          { name: "Magnetic Door Seals", slug: "magnetic-seals", path: "/accessories-parts/door-locks-gaskets/magnetic-seals/" },
           { name: "Key Lock Assemblies", slug: "key-locks", path: "/accessories-parts/door-locks-gaskets/key-locks/" }
         ]
       },
@@ -302,7 +297,6 @@ export const CATEGORIES = [
         path: "/accessories-parts/covers-cleaning/",
         description: "Heavy-duty outdoor weather covers, condenser coil cleaning brushes, and stainless steel sanitiser polish.",
         types: [
-          { name: "Outdoor Protective Covers", slug: "outdoor-covers", path: "/accessories-parts/covers-cleaning/outdoor-covers/" },
           { name: "Refrigeration Coil Cleaners", slug: "coil-cleaners", path: "/accessories-parts/covers-cleaning/coil-cleaners/" }
         ]
       },
