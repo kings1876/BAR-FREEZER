@@ -50,7 +50,7 @@ function lookup(slug: string[]): { title: string; description: string; image?: s
   if (a === 'product' && b) {
     const p: any = (PRODUCTS as any[]).find((x) => x.slug === b);
     if (!p) return null;
-    return { title: trim(p.name, 60 - SUFFIX.length), description: trim(p.shortDescription || p.name, 158), image: p.images?.[0] };
+    return { title: trim(p.name, 70), description: trim(p.shortDescription || p.name, 158), image: p.images?.[0] };
   }
   if (a === 'brands' && b) {
     const x: any = (BRANDS as any[]).find((y) => y.slug === b);
