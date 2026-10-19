@@ -30,7 +30,7 @@ export async function downloadAll(jobs, concurrency = 4) {
       let done = false;
       for (let t = 0; t < 3 && !done; t++) {
         try {
-          const r = await fetch(j.url, { headers: { 'user-agent': 'Mozilla/5.0 (compatible; BarFreezerCatalogueBot/1.0)' } });
+          const r = await fetch(j.url, { headers: { 'user-agent': 'Mozilla/5.0 (compatible; BarFreezerCatalogue/1.0 (product catalogue import))' } });
           if (r.ok) { fs.writeFileSync(j.dest, Buffer.from(await r.arrayBuffer())); ok++; done = true; }
         } catch {}
         if (!done) await new Promise((r) => setTimeout(r, 700 * (t + 1)));
