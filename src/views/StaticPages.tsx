@@ -19,6 +19,8 @@ import {
 import { SITE, PRODUCTS, FAQS, BRANDS } from '../config/site.js';
 import { ProductCard } from '../components/ProductCard';
 import { collectForm, sendEnquiry } from '../lib/enquiry-client';
+import { makeOrderNumber } from '../lib/order';
+import { waOrderLink, whatsappEnabled } from '../lib/whatsapp';
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
 
@@ -326,18 +328,26 @@ export const CheckoutPage: React.FC = () => {
   const deliveryFee = subtotal >= 3500 ? 0 : 89;
   const grandTotal = subtotal + deliveryFee;
 
-  const handleOrder = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const formRef = React.useRef<HTMLFormElement>(null);
+
+  const placeOrder = async (form: HTMLFormElement, channel: 'email' | 'whatsapp') => {
     if (sending || cart.length === 0) return;
+    if (!form.reportValidity()) return;
+    const ref = makeOrderNumber();
+    const fields = collectForm(form);
+    fields['Payment Method'] = payMethod;
+    const items = cart.map(({ product, quantity }: any) => ({ name: product.name, sku: product.sku, qty: quantity, price: product.price ?? null }));
+    // window.open must run synchronously inside the click, before any await (pop-up blockers).
+    if (channel === 'whatsapp') {
+      window.open(
+        waOrderLink(ref, { name: fields['Contact Name'] || '', phone: fields['Phone'] || '' }, cart.map(({ product, quantity }: any) => ({ name: product.name, quantity })), grandTotal),
+        '_blank'
+      );
+    }
     setSending(true);
     setError('');
     try {
-      const fields = collectForm(e.currentTarget);
-      fields['Payment Method'] = payMethod;
-      const { ref } = await sendEnquiry('order', fields, {
-        items: cart.map(({ product, quantity }: any) => ({ name: product.name, sku: product.sku, qty: quantity, price: product.price ?? null })),
-        totals: { subtotal, delivery: deliveryFee, total: grandTotal }
-      });
+      await sendEnquiry('order', fields, { items, totals: { subtotal, delivery: deliveryFee, total: grandTotal }, ref, channel });
       setOrderId(ref);
       setComplete(true);
       clearCart();
@@ -346,6 +356,11 @@ export const CheckoutPage: React.FC = () => {
     } finally {
       setSending(false);
     }
+  };
+
+  const handleOrder = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    placeOrder(e.currentTarget, 'email');
   };
 
   return (
@@ -361,7 +376,7 @@ export const CheckoutPage: React.FC = () => {
               <h2 className="text-base font-bold text-slate-900 border-b border-slate-100 pb-2">
                 1. Delivery & Tax Invoice Details
               </h2>
-              <form onSubmit={handleOrder} className="space-y-4">
+              <form ref={formRef} onSubmit={handleOrder} className="space-y-4">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block font-semibold text-slate-700 mb-1">Business Name (Optional)</label>
@@ -441,8 +456,18 @@ export const CheckoutPage: React.FC = () => {
                   disabled={sending || cart.length === 0}
                   className="w-full py-3 bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-md transition-colors shadow-sm"
                 >
-                  {sending ? 'Sending…' : `Place Order Request ($${grandTotal.toLocaleString()} AUD)`}
+                  {sending ? 'Sending…' : `Place Order Request (${grandTotal.toLocaleString()} AUD)`}
                 </button>
+                {whatsappEnabled() && (
+                  <button
+                    type="button"
+                    disabled={sending || cart.length === 0}
+                    onClick={() => formRef.current && placeOrder(formRef.current, 'whatsapp')}
+                    className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-60 text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors"
+                  >
+                    Order via WhatsApp
+                  </button>
+                )}
               </form>
             </div>
 

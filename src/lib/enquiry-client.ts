@@ -36,14 +36,14 @@ export interface EnquiryTotals { subtotal: number; delivery: number; total: numb
 export async function sendEnquiry(
   type: EnquiryType,
   fields: Record<string, string>,
-  extra: { items?: EnquiryItem[]; totals?: EnquiryTotals } = {}
+  extra: { items?: EnquiryItem[]; totals?: EnquiryTotals; ref?: string; channel?: 'email' | 'whatsapp' } = {}
 ): Promise<{ ref: string }> {
   let res: Response;
   try {
     res = await fetch('/api/enquiry/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type, fields, items: extra.items || [], totals: extra.totals || null })
+      body: JSON.stringify({ type, fields, items: extra.items || [], totals: extra.totals || null, ref: extra.ref, channel: extra.channel })
     });
   } catch {
     throw new Error('We could not reach the server. Please check your connection and try again, or call us on 1300 858 290.');
