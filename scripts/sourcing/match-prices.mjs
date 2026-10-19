@@ -49,6 +49,7 @@ function toAud(l, n) {
 const found = {};
 let matched = 0;
 for (const p of products) {
+  if (p.condition && p.condition !== 'new') continue; // ex-display / second-grade keep their own listed price
   const firstTok = String(p.model).split(/\s+/)[0];
   const keys = [
     ...new Set([

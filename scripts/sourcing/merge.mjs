@@ -20,7 +20,7 @@ products = products.filter((p) => {
 });
 
 // Drop second-hand / scratch-and-dent one-off units and low-temperature laboratory freezers
-products = products.filter((p) => !/2NDs|SCRATCH & DENT|EX-?DISPLAY|B[- ]GRADE/i.test(p.name) && !/-30.C Upright Freezer/i.test(p.name));
+products = products.filter((p) => (p.condition && p.condition !== "new") || (!/2NDs|SCRATCH & DENT|EX-?DISPLAY|B[- ]GRADE/i.test(p.name) && !/-30.C Upright Freezer/i.test(p.name)));
 
 // Re-sort products into more specific categories when the product name or specs clearly say so
 {
