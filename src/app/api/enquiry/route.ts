@@ -77,8 +77,7 @@ function itemsTable(items: any[], totals: any) {
 async function sendWeb3Forms(type: EnquiryType, ref: string, fields: Record<string, string>, items: any[], totals: any, customerEmail: string): Promise<boolean> {
   const key = type === 'order' ? env('WEB3FORMS_KEY_ORDER') || env('WEB3FORMS_KEY') : env('WEB3FORMS_KEY_CONTACT') || env('WEB3FORMS_KEY');
   if (!key) return false;
-  const lines = items.map((i: any) => `${i.qty} x ${i.name} (${i.sku}) ${money(i.price)}`).join('
-');
+  const lines = items.map((i: any) => `${i.qty} x ${i.name} (${i.sku}) ${money(i.price)}`).join(', ');
   try {
     const r = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
