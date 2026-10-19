@@ -39,7 +39,8 @@ for (const url of urls) {
     title: h1 ? dec(h1[1]) : ld?.name || '',
     description: ld?.description || '',
     image: (ld && (Array.isArray(ld.image) ? ld.image[0] : ld.image)) || (h.match(/https?:\/\/[^"'\s]+resourceimageelectrolux[^"'\s?]+\.png/) || [])[0] || '',
-    specs
+    specs,
+    price: (() => { const m = h.match(/product-details_heading_pricing-number[^>]*>\s*\$\s*([\d,]+)/); return m ? Number(m[1].replace(/,/g, '')) : null; })()
   });
   await sleep(250);
 }

@@ -29,7 +29,7 @@ for (const l of listings) {
     const toks = String(t).split(/[\s/,()]+/).filter(Boolean);
     for (let i = 0; i < toks.length; i++) {
       add(norm(toks[i]), l);
-      if (i + 1 < toks.length) add(norm(toks[i] + toks[i + 1]), l);
+      for (let n = 2; n <= 4 && i + n <= toks.length; n++) add(norm(toks.slice(i, i + n).join('')), l);
     }
   }
 }
@@ -37,7 +37,8 @@ for (const l of listings) {
 const found = {};
 let matched = 0;
 for (const p of products) {
-  const keys = [...new Set([norm(p.model), norm(p.sku)])].filter((k) => k.length >= 5);
+  const firstTok = String(p.model).split(/\s+/)[0];
+  const keys = [...new Set([norm(p.model), norm(p.sku), String(p.model).includes(' ') && /\d/.test(firstTok) && /-/.test(firstTok) ? norm(firstTok) : ''])].filter((k) => k.length >= 5);
   const cands = new Set();
   for (const k of keys) for (const l of index.get(k) || []) cands.add(l);
   const good = [...cands].filter((l) => brandOk(p, l) || p.brand === 'Tefcold');
@@ -53,6 +54,16 @@ for (const p of products) {
   prices.sort((a, b) => a.price - b.price);
   found[p.id] = { model: p.model, brand: p.brand, prices };
   matched++;
+}
+// Extra prices read directly from manufacturer pages: data/prices-extra-*.json = { productId: [{price, host, url}] }
+for (const f of fs.readdirSync('data').filter((f) => /^prices-extra-.*.json$/.test(f))) {
+  const extra = JSON.parse(fs.readFileSync('data/' + f, 'utf8'));
+  for (const [id, list] of Object.entries(extra)) {
+    const p = products.find((x) => x.id === id);
+    if (!p) continue;
+    if (!found[id]) { found[id] = { model: p.model, brand: p.brand, prices: [] }; matched++; }
+    found[id].prices.push(...list.map((x) => ({ available: true, title: p.name, ...x })));
+  }
 }
 fs.writeFileSync('data/prices-found.json', JSON.stringify(found, null, 1));
 const byBrand = {};
