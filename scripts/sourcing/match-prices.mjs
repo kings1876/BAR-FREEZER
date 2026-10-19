@@ -59,6 +59,20 @@ for (const p of products) {
   ].filter((k) => k.length >= 5);
   const cands = new Set();
   for (const k of keys) for (const l of index.get(k) || []) cands.add(l);
+  // Accessories often carry descriptive names: fall back to token-set / product-code matching
+  if (!cands.size && p.primaryCategory === 'Accessories & Parts') {
+    const stop = new Set(['hoshizaki', 'each', 'the', 'and', 'with', 'of']);
+    const mine = String(p.name + ' ' + p.model).toLowerCase().replace(/[^a-z0-9.]+/g, ' ').split(' ').filter((t) => t && !stop.has(t));
+    const myTokens = [...new Set(String(p.model).toLowerCase().replace(/[^a-z0-9.]+/g, ' ').split(' ').filter((t) => t && !stop.has(t)))];
+    const codeTok = myTokens.find((t) => /[a-z]/.test(t) && /[0-9]/.test(t) && t.length >= 4 && !/mm$/.test(t));
+    for (const l of listings) {
+      if (!brandOk(p, l)) continue;
+      const toks = new Set(String(l.title + ' ' + l.handle.replace(/-/g, ' ') + ' ' + (l.variants || []).map((v) => v.sku || '').join(' ')).toLowerCase().replace(/[^a-z0-9.]+/g, ' ').split(' ').filter(Boolean));
+      const all = myTokens.length >= 2 && myTokens.every((t) => toks.has(t));
+      const code = codeTok && toks.has(codeTok);
+      if (all || code) cands.add(l);
+    }
+  }
   const good = [...cands].filter((l) => brandOk(p, l));
   if (!good.length) continue;
   const prices = [];

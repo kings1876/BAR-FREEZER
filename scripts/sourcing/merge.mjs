@@ -58,3 +58,33 @@ if (fs.existsSync('data/prices-found.json')) {
   fs.writeFileSync('src/config/products.generated.json', JSON.stringify(products));
   console.log('market prices re-applied:', n);
 }
+
+// ---------------------------------------------------------------------------
+// Estimates for products with no listing anywhere: nearest comparable priced models in the same
+// subcategory (by capacity, else width), scaled by size^0.6, median of up to 5. Flagged priceBasis 'estimate'.
+{
+  const sizeOf = (p) => (p.capacityLitres > 0 ? { v: p.capacityLitres, k: 'cap' } : p.widthMm > 0 ? { v: p.widthMm, k: 'w' } : null);
+  const med = (a) => { const s = [...a].sort((x, y) => x - y); return s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2; };
+  const priced = products.filter((p) => p.price);
+  let est = 0;
+  for (const u of products) {
+    if (u.price) continue;
+    const isAcc = u.primaryCategory === 'Accessories & Parts';
+    let pool = priced.filter((p) => p.subCategory === u.subCategory && (!isAcc || p.price < 1000 === u.price < 1000 || true));
+    if (isAcc) pool = priced.filter((p) => p.primaryCategory === u.primaryCategory && p.price < 1000);
+    if (pool.length < 3) pool = priced.filter((p) => p.primaryCategory === u.primaryCategory);
+    const su = sizeOf(u);
+    let cands = pool;
+    let value;
+    if (su && !isAcc) {
+      cands = pool.map((p) => ({ p, s: sizeOf(p) })).filter((x) => x.s && x.s.k === su.k).sort((a, b) => Math.abs(Math.log(su.v / a.s.v)) - Math.abs(Math.log(su.v / b.s.v))).slice(0, 5);
+      if (cands.length) value = med(cands.map((x) => x.p.price * Math.pow(su.v / x.s.v, 0.6)));
+    }
+    if (value == null) value = med(pool.map((p) => p.price));
+    u.price = value < 500 ? Math.round(value) : Math.round(value / 10) * 10;
+    u.priceBasis = 'estimate';
+    est++;
+  }
+  fs.writeFileSync('src/config/products.generated.json', JSON.stringify(products));
+  console.log('estimated prices:', est, '| total priced:', products.filter((p) => p.price).length, 'of', products.length);
+}

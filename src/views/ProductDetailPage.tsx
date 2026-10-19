@@ -110,6 +110,8 @@ export const ProductDetailPage: React.FC = () => {
       ? '/accessories-parts/'
       : '/bar-freezers/';
   const hasPrice = typeof product.price === 'number';
+  const priceBasis = (product as any).priceBasis as string | undefined;
+  const firmPrice = hasPrice && (!priceBasis || priceBasis === 'au-retail');
   const silverChefWeekly = hasPrice ? Math.round((product.price as number) * 0.016) : 0;
 
   return (
@@ -256,7 +258,12 @@ export const ProductDetailPage: React.FC = () => {
                     <div className="text-xs text-slate-500">
                       Includes 10% Australian GST (${Math.round(product.price / 11).toLocaleString()} GST)
                     </div>
-                    {(product as any).priceBasis === 'overseas-estimate' && (
+                    {priceBasis === 'estimate' && (
+                      <div className="text-[11px] text-amber-700 mt-1">
+                        Indicative price, estimated from comparable models. Request a quote to confirm the exact price.
+                      </div>
+                    )}
+                    {priceBasis === 'overseas-estimate' && (
                       <div className="text-[11px] text-amber-700 mt-1">
                         Indicative price, converted to AUD from overseas retail listings. Contact us to confirm before ordering.
                       </div>
@@ -337,11 +344,11 @@ export const ProductDetailPage: React.FC = () => {
 
                   {/* Primary Buy CTA */}
                   <button
-                    onClick={() => (hasPrice ? addToCart(product, quantity, selectedWarrantyAddon) : openQuoteForProduct(product))}
+                    onClick={() => (firmPrice ? addToCart(product, quantity, selectedWarrantyAddon) : openQuoteForProduct(product))}
                     className="flex-1 h-11 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors flex items-center justify-center gap-2 shadow-sm focus-visible:outline-amber-500"
                   >
                     <ShoppingBag className="w-4 h-4 text-amber-400" />
-                    <span>{hasPrice ? `Add to Cart ($${((product.price as number) * quantity).toLocaleString()} AUD)` : 'Request a Quote'}</span>
+                    <span>{firmPrice ? `Add to Cart ($${((product.price as number) * quantity).toLocaleString()} AUD)` : 'Request a Quote to Confirm Price'}</span>
                   </button>
                 </div>
 

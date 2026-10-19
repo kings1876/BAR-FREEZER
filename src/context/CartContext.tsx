@@ -70,7 +70,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const addToCart = (product: Product, quantity = 1, warrantyUpgrade = false) => {
     // Products without a published price cannot be bought online: route to a quote request.
-    if (product.price == null) {
+    const basis = (product as any).priceBasis;
+    if (product.price == null || (basis && basis !== 'au-retail')) {
       setQuoteProducts([product]);
       setIsQuoteModalOpen(true);
       return;
