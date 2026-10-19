@@ -286,7 +286,7 @@ export const CategoryPage: React.FC = () => {
             {/* Quick Trade Quote Callout at bottom of category */}
             <div className="bg-slate-900 text-slate-100 p-6 rounded-xl border border-slate-800 mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="space-y-1 text-center sm:text-left">
-                <h4 className="text-base font-bold text-white">Need multiple units or custom stainless benchwork?</h4>
+                <h2 className="text-base font-bold text-white">Need multiple units or custom stainless benchwork?</h2>
                 <p className="text-xs text-slate-400">Our estimating desk supplies tailored equipment bundles with project discounts.</p>
               </div>
               <Link

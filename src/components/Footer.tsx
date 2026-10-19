@@ -200,7 +200,7 @@ export const Footer: React.FC = () => {
       <div className="border-t border-slate-800 bg-slate-900/30 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="max-w-md">
-            <h5 className="text-sm font-bold text-white">Australian Hospitality Trade Updates</h5>
+            <h2 className="text-sm font-bold text-white">Australian Hospitality Trade Updates</h2>
             <p className="text-slate-400 text-xs mt-1">
               Receive monthly notices on container arrivals, ex-display clearances, and tax deduction guides.
             </p>

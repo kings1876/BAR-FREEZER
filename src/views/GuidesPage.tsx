@@ -97,9 +97,9 @@ export const GuidesPage: React.FC = () => {
 
           {/* Related Articles Footer */}
           <div className="bg-slate-900 text-white rounded-xl p-6 sm:p-8 space-y-4">
-            <h3 className="text-base font-bold text-white uppercase tracking-wider">
+            <h2 className="text-base font-bold text-white uppercase tracking-wider">
               More Australian Refrigeration Guides
-            </h3>
+            </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               {POSTS.filter((p: any) => p.slug !== currentGuide.slug).slice(0, 2).map((other: any) => (
                 <Link

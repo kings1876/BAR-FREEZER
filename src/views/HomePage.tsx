@@ -172,7 +172,7 @@ export const HomePage: React.FC = () => {
                 <div className="space-y-2">
                   <div className="flex items-baseline justify-between gap-3">
                     <div>
-                      <h3 className="text-base font-bold text-white">{spotlight.name.replace(/ - [A-Z0-9.-]+$/, '')}</h3>
+                      <h2 className="text-base font-bold text-white">{spotlight.name.replace(/ - [A-Z0-9.-]+$/, '')}</h2>
                       <p className="text-xs text-slate-400">
                         {[spotlight.widthMm ? `${spotlight.widthMm}mm W` : '', spotlight.capacityLitres ? `${spotlight.capacityLitres}L` : '', spotlight.refrigerant, spotlight.warrantyText].filter(Boolean).join(' · ')}
                       </p>
