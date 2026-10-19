@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { SITE, PRODUCTS, FAQS, BRANDS } from '../config/site.js';
 import { ProductCard } from '../components/ProductCard';
+import { collectForm, sendEnquiry } from '../lib/enquiry-client';
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
 
@@ -187,6 +188,23 @@ export const AboutPage: React.FC = () => {
  */
 export const ContactPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleContact = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (sending) return;
+    setSending(true);
+    setError('');
+    try {
+      await sendEnquiry('contact', collectForm(e.currentTarget));
+      setSubmitted(true);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <div className="bg-slate-50 min-h-screen py-8">
@@ -233,7 +251,7 @@ export const ContactPage: React.FC = () => {
 
           <div className="bg-white p-6 rounded-xl border border-slate-200">
             {!submitted ? (
-              <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="space-y-4 text-xs">
+              <form onSubmit={handleContact} className="space-y-4 text-xs">
                 <h3 className="text-base font-bold text-slate-900">Send an Online Inquiry</h3>
                 <div>
                   <label className="block font-semibold text-slate-700 mb-1">Your Name *</label>
@@ -247,8 +265,9 @@ export const ContactPage: React.FC = () => {
                   <label className="block font-semibold text-slate-700 mb-1">Message / Question *</label>
                   <textarea rows={3} required placeholder="Ask about equipment specs, stock availability, or delivery..." className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900" />
                 </div>
-                <button type="submit" className="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider rounded transition-colors">
-                  Send Message
+                {error && <div role="alert" className="p-3 rounded border border-red-200 bg-red-50 text-red-800">{error}</div>}
+                <button type="submit" disabled={sending} className="w-full py-2.5 bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-slate-950 font-bold text-xs uppercase tracking-wider rounded transition-colors">
+                  {sending ? 'Sending…' : 'Send Message'}
                 </button>
               </form>
             ) : (
@@ -272,17 +291,34 @@ export const CheckoutPage: React.FC = () => {
   const { cart, subtotal, gstAmount, clearCart } = useCart();
   const [complete, setComplete] = useState(false);
   const [orderId, setOrderId] = useState('');
-
-  const handleOrder = (e: React.FormEvent) => {
-    e.preventDefault();
-    const oid = `BF-ORD-${Math.floor(10000 + Math.random() * 90000)}`;
-    setOrderId(oid);
-    setComplete(true);
-    clearCart();
-  };
+  const [payMethod, setPayMethod] = useState('Direct EFT');
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
 
   const deliveryFee = subtotal >= 3500 ? 0 : 89;
   const grandTotal = subtotal + deliveryFee;
+
+  const handleOrder = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (sending || cart.length === 0) return;
+    setSending(true);
+    setError('');
+    try {
+      const fields = collectForm(e.currentTarget);
+      fields['Payment Method'] = payMethod;
+      const { ref } = await sendEnquiry('order', fields, {
+        items: cart.map(({ product, quantity }: any) => ({ name: product.name, sku: product.sku, qty: quantity, price: product.price ?? null })),
+        totals: { subtotal, delivery: deliveryFee, total: grandTotal }
+      });
+      setOrderId(ref);
+      setComplete(true);
+      clearCart();
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <div className="bg-slate-50 min-h-screen py-8">
@@ -321,6 +357,11 @@ export const CheckoutPage: React.FC = () => {
                 </div>
 
                 <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Email *</label>
+                  <input type="email" required placeholder="name@venue.com.au" className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900" />
+                </div>
+
+                <div>
                   <label className="block font-semibold text-slate-700 mb-1">Delivery Street Address *</label>
                   <input type="text" required placeholder="Street address" className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900" />
                 </div>
@@ -345,22 +386,30 @@ export const CheckoutPage: React.FC = () => {
                 <div className="pt-4 border-t border-slate-100">
                   <h3 className="text-sm font-bold text-slate-900 mb-2">Payment Method</h3>
                   <div className="space-y-2">
-                    <label className="p-3 bg-slate-50 rounded border border-slate-300 flex items-center justify-between cursor-pointer">
-                      <span className="font-semibold text-slate-900">Commercial Credit Card / Debit Card</span>
-                      <span className="text-[11px] text-slate-500 font-mono">Visa / Mastercard / Amex (No Surcharge)</span>
-                    </label>
-                    <label className="p-3 bg-slate-50 rounded border border-slate-200 flex items-center justify-between cursor-pointer">
-                      <span className="font-semibold text-slate-900">Direct Electronic Funds Transfer (EFT)</span>
-                      <span className="text-[11px] text-slate-500 font-mono">Dispatches on bank clearance</span>
-                    </label>
+                    {[
+                      ['Direct EFT', 'Direct Electronic Funds Transfer (EFT)', 'Bank details on your invoice; dispatches on clearance'],
+                      ['Card (payment link)', 'Credit Card / Debit Card', 'Secure payment link emailed with your invoice'],
+                      ['Bitcoin', 'Bitcoin (BTC)', 'Payment address and AUD-to-BTC amount emailed after order']
+                    ].map(([value, title, hint]) => (
+                      <label key={value} className={`p-3 rounded border flex items-center justify-between gap-3 cursor-pointer ${payMethod === value ? 'bg-amber-50 border-amber-400' : 'bg-slate-50 border-slate-300'}`}>
+                        <span className="flex items-center gap-2">
+                          <input type="radio" name="Payment Option" value={value} checked={payMethod === value} onChange={() => setPayMethod(value)} />
+                          <span className="font-semibold text-slate-900">{title}</span>
+                        </span>
+                        <span className="text-[11px] text-slate-500 text-right">{hint}</span>
+                      </label>
+                    ))}
                   </div>
+                  <p className="mt-2 text-[11px] text-slate-500">No payment is taken on this page. We email your tax invoice and payment instructions after we confirm stock and freight.</p>
                 </div>
 
+                {error && <div role="alert" className="p-3 rounded border border-red-200 bg-red-50 text-red-800">{error}</div>}
                 <button
                   type="submit"
-                  className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-md transition-colors shadow-sm"
+                  disabled={sending || cart.length === 0}
+                  className="w-full py-3 bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-md transition-colors shadow-sm"
                 >
-                  Place Commercial Order (${grandTotal.toLocaleString()} AUD)
+                  {sending ? 'Sending…' : `Place Order Request ($${grandTotal.toLocaleString()} AUD)`}
                 </button>
               </form>
             </div>
@@ -406,9 +455,9 @@ export const CheckoutPage: React.FC = () => {
             <span className="text-xs font-mono font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded border border-amber-200">
               Order ID: {orderId}
             </span>
-            <h2 className="text-2xl font-bold text-slate-900">Commercial Order Confirmed!</h2>
+            <h2 className="text-2xl font-bold text-slate-900">Order Request Received</h2>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Your equipment order has been routed to our nearest warehouse for freight packing. Your official Australian Tax Invoice and consignment tracking number will be emailed shortly.
+              Thanks, we have received your order request. We will email your tax invoice and payment instructions shortly. Your order is not paid or dispatched until payment is confirmed.
             </p>
             <div className="pt-2">
               <Link href="/" className="px-5 py-2.5 bg-slate-900 text-white font-semibold text-xs rounded-md">

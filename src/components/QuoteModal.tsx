@@ -3,6 +3,7 @@ import { X, FileText, CheckCircle2, ShieldCheck, Phone, Building, Send, Plus, Tr
 import { SITE, VENUES, PRODUCTS } from '../config/site.js';
 import { useCart } from '../context/CartContext';
 import { Product } from '../types';
+import { sendEnquiry } from '../lib/enquiry-client';
 
 export const QuoteModal: React.FC = () => {
   const { isQuoteModalOpen, setIsQuoteModalOpen, quoteProducts, cart } = useCart();
@@ -20,16 +21,43 @@ export const QuoteModal: React.FC = () => {
   const [financeInterest, setFinanceInterest] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [quoteRef, setQuoteRef] = useState('');
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
 
   if (!isQuoteModalOpen) return null;
 
   const itemsToQuote = quoteProducts.length > 0 ? quoteProducts : cart.map((c) => c.product);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const randomRef = `BF-Q-${Math.floor(10000 + Math.random() * 90000)}`;
-    setQuoteRef(randomRef);
-    setSubmitted(true);
+    if (sending) return;
+    setSending(true);
+    setError('');
+    try {
+      const { ref } = await sendEnquiry(
+        'quote',
+        {
+          'Business Name': businessName,
+          ABN: abn,
+          'Contact Name': contactName,
+          Email: email,
+          Phone: phone,
+          'Venue Type': venueType,
+          'Delivery Postcode': postcode,
+          'Tailgate truck required': tailgateNeeded ? 'Yes' : 'No',
+          'Stairs / difficult access': stairAccess ? 'Yes' : 'No',
+          'Finance estimate wanted': financeInterest ? 'Yes' : 'No',
+          Notes: notes
+        },
+        { items: itemsToQuote.map((p: any) => ({ name: p.name, sku: p.sku, qty: 1, price: p.price ?? null })) }
+      );
+      setQuoteRef(ref);
+      setSubmitted(true);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleClose = () => {
@@ -229,6 +257,7 @@ export const QuoteModal: React.FC = () => {
                   />
                 </div>
 
+                {error && <div role="alert" className="p-3 rounded border border-red-200 bg-red-50 text-red-800">{error}</div>}
                 <div className="pt-2 flex items-center justify-between">
                   <div className="text-[11px] text-slate-500 flex items-center gap-1.5">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
@@ -237,10 +266,11 @@ export const QuoteModal: React.FC = () => {
 
                   <button
                     type="submit"
-                    className="py-2.5 px-6 rounded-md bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-sm transition-colors"
+                    disabled={sending}
+                    className="py-2.5 px-6 rounded-md bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-sm transition-colors"
                   >
                     <Send className="w-3.5 h-3.5" />
-                    <span>Submit Official Quote Request</span>
+                    <span>{sending ? 'Sending…' : 'Submit Official Quote Request'}</span>
                   </button>
                 </div>
               </form>
@@ -257,7 +287,7 @@ export const QuoteModal: React.FC = () => {
                 </span>
                 <h3 className="text-2xl font-bold text-slate-900 mt-3">Trade Quote Submitted!</h3>
                 <p className="text-sm text-slate-600 mt-2 max-w-md mx-auto">
-                  Thank you, <strong>{contactName || 'Business Owner'}</strong>. Your commercial quote request has been routed directly to our Sydney commercial refrigeration estimating team.
+                  Thank you, <strong>{contactName || 'Business Owner'}</strong>. We have received your quote request and our sales team will reply by email.
                 </p>
               </div>
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ShieldCheck, Wrench, CheckCircle2, Phone, AlertCircle, Send, FileText } from 'lucide-react';
 import { BRANDS, SITE } from '../config/site.js';
 import { Link } from '../context/RouterContext';
+import { collectForm, sendEnquiry } from '../lib/enquiry-client';
 
 export const WarrantyPage: React.FC = () => {
   const [brand, setBrand] = useState('Skope');
@@ -19,11 +20,23 @@ export const WarrantyPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [claimId, setClaimId] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const cid = `CLM-AU-${Math.floor(10000 + Math.random() * 90000)}`;
-    setClaimId(cid);
-    setSubmitted(true);
+    if (sending) return;
+    setSending(true);
+    setError('');
+    try {
+      const { ref } = await sendEnquiry('warranty', collectForm(e.currentTarget));
+      setClaimId(ref);
+      setSubmitted(true);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -243,12 +256,14 @@ export const WarrantyPage: React.FC = () => {
                   <span>Licensed ARC refrigerant technicians dispatched</span>
                 </span>
 
+                {error && <div role="alert" className="mr-4 p-3 rounded border border-red-200 bg-red-50 text-red-800">{error}</div>}
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors shadow-sm flex items-center gap-2"
+                  disabled={sending}
+                  className="px-6 py-3 bg-slate-900 hover:bg-slate-800 disabled:opacity-60 text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors shadow-sm flex items-center gap-2"
                 >
                   <Send className="w-4 h-4 text-amber-400" />
-                  <span>Lodge Warranty Service Claim</span>
+                  <span>{sending ? 'Sending…' : 'Lodge Warranty Service Claim'}</span>
                 </button>
               </div>
             </form>

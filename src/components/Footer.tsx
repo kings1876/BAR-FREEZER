@@ -15,16 +15,24 @@ import {
 } from 'lucide-react';
 import { SITE, CATEGORIES, BRANDS, CITIES } from '../config/site.js';
 import { Link } from '../context/RouterContext';
+import { sendEnquiry } from '../lib/enquiry-client';
 
 export const Footer: React.FC = () => {
   const [emailInput, setEmailInput] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const [subError, setSubError] = useState('');
+
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (emailInput.trim()) {
+    if (!emailInput.trim()) return;
+    setSubError('');
+    try {
+      await sendEnquiry('newsletter', { Email: emailInput.trim() });
       setSubscribed(true);
       setEmailInput('');
+    } catch (err) {
+      setSubError((err as Error).message);
     }
   };
 
@@ -214,6 +222,7 @@ export const Footer: React.FC = () => {
             </button>
           </form>
         </div>
+        {subError && <p role="alert" className="max-w-7xl mx-auto text-red-400 text-xs mt-2 text-center md:text-right">{subError}</p>}
         {subscribed && (
           <p className="max-w-7xl mx-auto text-emerald-400 text-xs mt-2 text-center md:text-right">
             ✓ Subscribed to Bar Freezer trade updates.

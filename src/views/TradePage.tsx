@@ -15,6 +15,7 @@ import {
 import { SITE, PRODUCTS, VENUES } from '../config/site.js';
 import { useCart } from '../context/CartContext';
 import { Link } from '../context/RouterContext';
+import { collectForm, sendEnquiry } from '../lib/enquiry-client';
 
 export const TradePage: React.FC = () => {
   const { cart, addToCart, setIsQuoteModalOpen } = useCart();
@@ -31,6 +32,8 @@ export const TradePage: React.FC = () => {
   const [tailgateNeeded, setTailgateNeeded] = useState(true);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [quoteNumber, setQuoteNumber] = useState('');
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
 
   const selectedProducts = selectedProductIds
     .map((id) => PRODUCTS.find((p) => p.id === id))
@@ -50,11 +53,24 @@ export const TradePage: React.FC = () => {
     setSelectedProductIds(selectedProductIds.filter((id) => id !== productId));
   };
 
-  const handleSubmitQuote = (e: React.FormEvent) => {
+  const handleSubmitQuote = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const qNum = `BF-TR-${Math.floor(100000 + Math.random() * 900000)}`;
-    setQuoteNumber(qNum);
-    setIsSubmitted(true);
+    if (sending) return;
+    setSending(true);
+    setError('');
+    try {
+      const { ref } = await sendEnquiry(
+        'trade',
+        { ...collectForm(e.currentTarget), 'Tailgate required': tailgateNeeded ? 'Yes' : 'No' },
+        { items: selectedProducts.map((p: any) => ({ name: p.name, sku: p.sku, qty: 1, price: p.price ?? null })) }
+      );
+      setQuoteNumber(ref);
+      setIsSubmitted(true);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -311,12 +327,14 @@ export const TradePage: React.FC = () => {
                     <span>Official Tax Invoices supplied for Australian business expensing</span>
                   </span>
 
+                  {error && <div role="alert" className="mr-4 p-3 rounded border border-red-200 bg-red-50 text-red-800">{error}</div>}
                   <button
                     type="submit"
-                    className="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-md transition-colors shadow-sm flex items-center gap-2"
+                    disabled={sending}
+                    className="px-6 py-3 bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-md transition-colors shadow-sm flex items-center gap-2"
                   >
                     <Send className="w-4 h-4" />
-                    <span>Generate Official Trade Quote</span>
+                    <span>{sending ? 'Sending…' : 'Submit Trade Quote Request'}</span>
                   </button>
                 </div>
               </form>

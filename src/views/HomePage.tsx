@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { SITE, CATEGORIES, BRANDS, VENUES, PRODUCTS, FAQS, POSTS } from '../config/site.js';
 import { ProductCard } from '../components/ProductCard';
+import { ProductImage } from '../components/ProductImage';
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
 
@@ -40,6 +41,7 @@ export const HomePage: React.FC = () => {
 
   const selectedVenue = VENUES.find((v: any) => v.slug === activeVenueTab) || VENUES[0];
   const bestSellers = PRODUCTS.slice(0, 8);
+  const spotlight: any = PRODUCTS.find((p: any) => p.id === 'sk-rf7-ubf-2-sd') || PRODUCTS[0];
 
   const toggleFaq = (idx: number) => {
     setOpenFaqIndex(openFaqIndex === idx ? null : idx);
@@ -157,42 +159,33 @@ export const HomePage: React.FC = () => {
                 <div className="flex items-center justify-between text-xs text-slate-400 border-b border-slate-700/80 pb-3">
                   <span className="font-mono text-cyan-400">SPOTLIGHT EQUIPMENT</span>
                   <span className="bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded font-mono text-[11px]">
-                    43°C Tropical Rated
+                    {spotlight.brand}
                   </span>
                 </div>
 
                 <div className="bg-white rounded-lg p-4 border border-slate-200">
                   <div className="aspect-[4/3] flex items-center justify-center">
-                    {/* Hero technical SVG showcase */}
-                    <svg className="w-full h-full max-h-52 object-contain" viewBox="0 0 280 200" fill="none">
-                      <rect x="35" y="45" width="210" height="125" rx="4" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="2" />
-                      <rect x="33" y="42" width="214" height="12" rx="2" fill="#64748b" />
-                      <rect x="42" y="60" width="94" height="85" rx="3" fill="#f8fafc" stroke="#94a3b8" strokeWidth="1.5" />
-                      <rect x="144" y="60" width="94" height="85" rx="3" fill="#f8fafc" stroke="#94a3b8" strokeWidth="1.5" />
-                      <rect x="122" y="80" width="6" height="42" rx="2" fill="#64748b" />
-                      <rect x="152" y="80" width="6" height="42" rx="2" fill="#64748b" />
-                      <rect x="45" y="152" width="190" height="14" rx="2" fill="#1e293b" />
-                      <rect x="195" y="154" width="30" height="10" rx="1.5" fill="#020617" />
-                      <text x="210" y="162" fill="#38bdf8" fontSize="6.5" fontFamily="monospace" fontWeight="bold" textAnchor="middle">-22°C</text>
-                    </svg>
+                    <ProductImage product={spotlight} className="w-full h-full max-h-52" priority />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <div className="flex items-baseline justify-between">
+                  <div className="flex items-baseline justify-between gap-3">
                     <div>
-                      <h4 className="text-base font-bold text-white">Skope ReFlex 2-Door Underbar Freezer</h4>
-                      <p className="text-xs text-slate-400">1360mm W · 210L · 10A Plug · Natural R290 Hydrocarbon</p>
+                      <h4 className="text-base font-bold text-white">{spotlight.name.replace(/ - [A-Z0-9.-]+$/, '')}</h4>
+                      <p className="text-xs text-slate-400">
+                        {[spotlight.widthMm ? `${spotlight.widthMm}mm W` : '', spotlight.capacityLitres ? `${spotlight.capacityLitres}L` : '', spotlight.refrigerant, spotlight.warrantyText].filter(Boolean).join(' · ')}
+                      </p>
                     </div>
-                    <div className="text-right">
-                      <span className="text-lg font-bold font-mono text-amber-400">$3,690</span>
+                    <div className="text-right shrink-0">
+                      <span className="text-lg font-bold font-mono text-amber-400">${spotlight.price.toLocaleString()}</span>
                       <span className="block text-[10px] text-slate-400">Incl. GST</span>
                     </div>
                   </div>
 
                   <div className="pt-2 flex items-center gap-2">
                     <Link
-                      href="/product/skope-reflex-2-door-underbar-stainless-commercial-freezer-210l/"
+                      href={`/product/${spotlight.slug}/`}
                       className="flex-1 py-2 text-center rounded bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider transition-colors"
                     >
                       View Specs & Postcode Delivery
