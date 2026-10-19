@@ -256,6 +256,11 @@ export const ProductDetailPage: React.FC = () => {
                     <div className="text-xs text-slate-500">
                       Includes 10% Australian GST (${Math.round(product.price / 11).toLocaleString()} GST)
                     </div>
+                    {(product as any).priceBasis === 'overseas-estimate' && (
+                      <div className="text-[11px] text-amber-700 mt-1">
+                        Indicative price, converted to AUD from overseas retail listings. Contact us to confirm before ordering.
+                      </div>
+                    )}
                   </div>
                   
                   {product.msrp && (

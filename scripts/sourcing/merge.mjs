@@ -48,9 +48,11 @@ if (fs.existsSync('data/prices-found.json')) {
   for (const p of products) {
     const v = found[p.id];
     if (!v) continue;
-    const ps = v.prices.map((x) => x.price).sort((a, b) => a - b);
+    const au = v.prices.filter((x) => !x.foreign);
+    const ps = (au.length ? au : v.prices).map((x) => x.price).sort((a, b) => a - b);
     const med = ps.length % 2 ? ps[(ps.length - 1) / 2] : (ps[ps.length / 2 - 1] + ps[ps.length / 2]) / 2;
     p.price = Math.round(med);
+    p.priceBasis = au.length ? 'au-retail' : 'overseas-estimate';
     n++;
   }
   fs.writeFileSync('src/config/products.generated.json', JSON.stringify(products));

@@ -7,7 +7,7 @@ fs.mkdirSync('data', { recursive: true });
 
 for (const host of HOSTS) {
   let all = [];
-  for (let page = 1; page <= 60; page++) {
+  for (let page = 1; page <= 250; page++) {
     let j = null;
     for (let t = 0; t < 3 && !j; t++) {
       try {
