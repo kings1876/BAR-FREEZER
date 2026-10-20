@@ -261,7 +261,18 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
         publisher: { '@type': 'Organization', name: 'Bar Freezer Australia', logo: { '@type': 'ImageObject', url: SITE_URL + '/og-image.png' } },
         image: SITE_URL + '/og-image.png',
         mainEntityOfPage: `${SITE_URL}/guides/${post.slug}/`,
+        keywords: post.primaryKeyword ? [post.primaryKeyword, ...(post.supportingKeywords || [])].join(', ') : undefined,
+        wordCount: post.content ? String(post.content).split(/\s+/).length : undefined,
+        articleSection: post.category,
+        inLanguage: 'en-AU',
       });
+      if (post.faqs && post.faqs.length) {
+        blocks.push({
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: post.faqs.map((f: any) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+        });
+      }
     }
   } else if (!slug.length) {
     blocks.push({ '@context': 'https://schema.org', '@type': 'Organization', name: 'Bar Freezer Australia', url: SITE_URL, logo: SITE_URL + '/og-image.png' });

@@ -2,7 +2,9 @@
 // General buying advice only. No performance statistics, savings figures or author claims.
 // Format: blank line = new paragraph; "## " = heading; lines starting "- " = bullet list; [text](/path/) = internal link.
 
-export const EXTRA_POSTS = [
+import { BLOG_POSTS } from './blog-posts.js';
+
+const CORE_POSTS = [
   {
     title: "Bar Fridge Freezer Buying Guide: Sizes & Types",
     slug: "bar-fridge-freezer-buying-guide",
@@ -157,3 +159,5 @@ Running costs depend on the model, the door type and how often it is opened. Com
 Ready to compare? Browse [under bar and under bench fridges](/bar-fridges/under-bar-fridges/), [bar fridges](/bar-fridges/) and [bar freezers](/bar-freezers/), or [request a quote](/quote/) for a multi-unit order.`
   }
 ];
+
+export const EXTRA_POSTS = [...CORE_POSTS, ...BLOG_POSTS];

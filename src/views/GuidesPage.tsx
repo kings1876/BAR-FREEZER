@@ -93,6 +93,17 @@ export const GuidesPage: React.FC = () => {
           {/* Article Body */}
           <article className="bg-white rounded-xl border border-slate-200/90 p-6 sm:p-10 shadow-xs prose prose-slate max-w-none text-sm text-slate-700 leading-relaxed space-y-4">
             {renderBody(currentGuide.content)}
+            {currentGuide.faqs && currentGuide.faqs.length > 0 && (
+              <section aria-labelledby="guide-faqs" className="pt-4 space-y-3">
+                <h2 id="guide-faqs" className="text-xl font-bold text-slate-900">Frequently asked questions</h2>
+                {currentGuide.faqs.map((f: any, i: number) => (
+                  <div key={i} className="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                    <h3 className="text-sm font-bold text-slate-900">{f.q}</h3>
+                    <p className="mt-1">{f.a}</p>
+                  </div>
+                ))}
+              </section>
+            )}
           </article>
 
           {/* Related Articles Footer */}
@@ -101,7 +112,10 @@ export const GuidesPage: React.FC = () => {
               More Australian Refrigeration Guides
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              {POSTS.filter((p: any) => p.slug !== currentGuide.slug).slice(0, 2).map((other: any) => (
+              {(() => {
+                const i = POSTS.findIndex((p: any) => p.slug === currentGuide.slug);
+                return [POSTS[(i + 1) % POSTS.length], POSTS[(i + 2) % POSTS.length]];
+              })().map((other: any) => (
                 <Link
                   key={other.slug}
                   href={`/guides/${other.slug}/`}
