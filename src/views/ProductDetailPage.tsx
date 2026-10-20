@@ -426,6 +426,16 @@ export const ProductDetailPage: React.FC = () => {
           </div>
         )}
 
+        {/* About this product: specification-based description (also in the page HTML for search engines) */}
+        {product.fullDescription && product.fullDescription !== product.shortDescription && (
+          <section aria-labelledby="about-product" className="bg-white rounded-xl border border-slate-200/90 p-6 lg:p-8 space-y-3">
+            <h2 id="about-product" className="text-xl font-bold text-slate-900">About the {product.brand} {product.model}</h2>
+            {String(product.fullDescription).split(/\n\n/).map((para: string, i: number) => (
+              <p key={i} className="text-sm text-slate-700 leading-relaxed">{para}</p>
+            ))}
+          </section>
+        )}
+
         {/* Detailed Tabs: Specifications, Will it Fit?, FAQ, Customer Reviews */}
         <div className="bg-white rounded-xl border border-slate-200/90 overflow-hidden shadow-xs">
           {/* Tab Navigation */}
