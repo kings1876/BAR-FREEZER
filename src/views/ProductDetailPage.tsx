@@ -209,8 +209,11 @@ export const ProductDetailPage: React.FC = () => {
                 </div>
 
                 <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 leading-tight">
-                  {product.name}
+                  {(detail && detail.id === baseProduct.id && detail.h1) || product.name}
                 </h1>
+                {detail && detail.id === baseProduct.id && detail.intro && (
+                  <p className="text-sm text-slate-600 leading-relaxed">{detail.intro}</p>
+                )}
 
                 {/* Prominent Trustpilot Rating Link */}
                 <div className="flex flex-wrap items-center gap-2 pt-1 pb-1">
@@ -384,9 +387,9 @@ export const ProductDetailPage: React.FC = () => {
         {/* Frequently Bought Together Bundles */}
         {bundleItems.length > 0 && (
           <div className="bg-white rounded-xl border border-slate-200/90 p-6 lg:p-8 space-y-4">
-            <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide">
+            <h2 className="text-base font-bold text-slate-900 uppercase tracking-wide">
               Frequently Bought Together with {product.model}
-            </h3>
+            </h2>
             <p className="text-xs text-slate-500">
               Bundle genuine spare shelves, castors, and condenser maintenance kits to ship together on the same pallet.
             </p>
@@ -477,7 +480,7 @@ export const ProductDetailPage: React.FC = () => {
               <div className="space-y-6">
                 <div className="flex items-center justify-between pb-4 border-b border-slate-200">
                   <div>
-                    <h3 className="text-lg font-bold text-slate-900">{product.name} Engineering Data</h3>
+                    <h2 className="text-lg font-bold text-slate-900">{product.brand} {product.model} Specifications</h2>
                     <p className="text-xs text-slate-500">Tested to Australian MEPS and HACCP food safety standards.</p>
                   </div>
                   <button
@@ -524,7 +527,7 @@ export const ProductDetailPage: React.FC = () => {
 
                 {/* Features Checklist */}
                 <div className="pt-4 border-t border-slate-100">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">Included Factory Features:</h4>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">Included Factory Features:</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs text-slate-700">
                     {product.features.map((feat, i) => (
                       <div key={i} className="flex items-center gap-2">
@@ -541,7 +544,7 @@ export const ProductDetailPage: React.FC = () => {
             {activeTab === 'fit' && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900">Cabinetry Cutout & Ventilation Rules</h3>
+                  <h2 className="text-lg font-bold text-slate-900">{product.model} Installation, Cutout &amp; Ventilation</h2>
                   <p className="text-xs text-slate-500 mt-1">
                     Follow these architectural guidelines when building custom underbench bar joinery to maintain full warranty coverage and prevent compressor overheating.
                   </p>
@@ -587,7 +590,7 @@ export const ProductDetailPage: React.FC = () => {
             {/* 3. MODEL FAQ */}
             {activeTab === 'faq' && (
               <div className="space-y-4 max-w-3xl">
-                <h3 className="text-base font-bold text-slate-900">Frequently Asked Questions for {product.name}</h3>
+                <h2 className="text-base font-bold text-slate-900">{product.model} FAQs</h2>
                 
                 <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5 text-xs">
                   <div className="font-bold text-slate-900">What power supply does this unit need?</div>
@@ -687,9 +690,9 @@ export const ProductDetailPage: React.FC = () => {
                 <span className="text-xs font-mono font-semibold text-cyan-700 uppercase tracking-wider block">
                   SIMILAR BENCHMARKS
                 </span>
-                <h3 className="text-xl font-bold text-slate-900">
-                  Alternative Commercial Units to Consider
-                </h3>
+                <h2 className="text-xl font-bold text-slate-900">
+                  Alternatives to the {product.brand} {product.model}
+                </h2>
               </div>
             </div>
 
@@ -699,7 +702,7 @@ export const ProductDetailPage: React.FC = () => {
                   <div className="space-y-2">
                     <ProductImage product={alt} className="w-full h-36" />
                     <div className="text-xs text-slate-500 font-mono">{alt.brand} · {alt.type}</div>
-                    <h4 className="text-sm font-bold text-slate-900 line-clamp-1">{alt.name}</h4>
+                    <h3 className="text-sm font-bold text-slate-900 line-clamp-1">{alt.name}</h3>
                     <div className="text-sm font-mono font-bold text-slate-900">{alt.price != null ? `$${alt.price.toLocaleString()} AUD` : 'Price on application'}</div>
                   </div>
                   <Link

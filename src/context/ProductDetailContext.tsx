@@ -12,6 +12,9 @@ export interface ProductDetail {
   sourceUrl?: string;
   alternatives?: string[];
   frequentlyBoughtTogether?: string[];
+  h1?: string;
+  term?: string;
+  intro?: string;
 }
 
 const Ctx = createContext<ProductDetail | null>(null);

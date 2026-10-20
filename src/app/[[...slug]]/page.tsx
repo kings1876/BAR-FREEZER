@@ -218,7 +218,9 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   let productDetail: any = null;
   if (slug[0] === 'product' && slug[1]) {
     const full: any = (FULL_PRODUCTS as any[]).find((x) => x.slug === slug[1]);
-    if (full) productDetail = { id: full.id, specs: full.specs, fullDescription: full.fullDescription, dimensionGuide: full.dimensionGuide, sourceUrl: full.sourceUrl, alternatives: full.alternatives, frequentlyBoughtTogether: full.frequentlyBoughtTogether };
+    const kwd: any = (PRODUCT_KW as any)[full && full.id];
+    const meta = full ? productMeta(full) : null;
+    if (full) productDetail = { h1: meta ? meta.title.replace(' | Bar Freezer', '') : undefined, term: kwd ? kwd.term : undefined, intro: meta ? meta.description : undefined, id: full.id, specs: full.specs, fullDescription: full.fullDescription, dimensionGuide: full.dimensionGuide, sourceUrl: full.sourceUrl, alternatives: full.alternatives, frequentlyBoughtTogether: full.frequentlyBoughtTogether };
   }
   const bc = breadcrumb(slug);
   if (bc) blocks.push(bc);
