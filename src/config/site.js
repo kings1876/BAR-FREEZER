@@ -133,14 +133,13 @@ export const CATEGORIES = [
         ]
       },
       {
-        name: "Ex-Display, Clearance & Second Hand",
+        name: "Ex-Display & Clearance",
         slug: "clearance-ex-display",
         path: "/bar-freezers/clearance-ex-display/",
-        description: "Fully tested factory seconds, showroom ex-displays, and verified second-hand trade units with 12-month warranty.",
+        description: "Ex-display and refurbished commercial freezers. Each listing shows its condition.",
         types: [
           { name: "Ex-Display Freezers", slug: "ex-display", path: "/bar-freezers/clearance-ex-display/ex-display/" },
-          { name: "Clearance Overstock", slug: "overstock", path: "/bar-freezers/clearance-ex-display/overstock/" },
-          { name: "Refurbished Second Hand", slug: "refurbished", path: "/bar-freezers/clearance-ex-display/refurbished/" }
+          { name: "Refurbished", slug: "refurbished", path: "/bar-freezers/clearance-ex-display/refurbished/" }
         ]
       }
     ]

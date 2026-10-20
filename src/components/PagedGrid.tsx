@@ -16,6 +16,7 @@ export function PagedGrid<T>({ items, render, pageSize = 48, className = 'grid g
   const remaining = items.length - shown.length;
   return (
     <>
+      <h2 className="sr-only">Products</h2>
       <div className={className}>{shown.map(render)}</div>
       {remaining > 0 && (
         <div className="pt-6 text-center">

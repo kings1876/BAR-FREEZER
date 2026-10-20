@@ -172,7 +172,7 @@ export const ProductDetailPage: React.FC = () => {
                       aria-pressed={activePhoto === i}
                       className={`aspect-[4/3] rounded bg-white overflow-hidden border-2 ${activePhoto === i ? 'border-amber-500' : 'border-slate-200 hover:border-slate-400'}`}
                     >
-                      <img src={src} alt="" width={200} height={150} loading="lazy" className="w-full h-full object-contain" />
+                      <img src={src} alt={`${product.name} (photo ${i + 1})`} width={200} height={150} loading="lazy" className="w-full h-full object-contain" />
                     </button>
                   ))}
                 </div>

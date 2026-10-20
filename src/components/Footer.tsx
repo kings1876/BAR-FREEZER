@@ -46,7 +46,7 @@ export const Footer: React.FC = () => {
               <Truck className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-white">Australia-Wide Direct Delivery</h2>
+              <p className="text-sm font-bold text-white">Australia-Wide Direct Delivery</p>
               <p className="mt-1 text-slate-400 leading-relaxed">
                 Stock dispatched from Sydney, Melbourne, Brisbane & Perth. Hydraulic tailgate delivery included.
               </p>
@@ -58,7 +58,7 @@ export const Footer: React.FC = () => {
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-white">Up to 5 Years On-Site Warranty</h2>
+              <p className="text-sm font-bold text-white">Up to 5 Years On-Site Warranty</p>
               <p className="mt-1 text-slate-400 leading-relaxed">
                 140+ licensed commercial refrigeration mechanics across metro & regional Australia.
               </p>
@@ -70,7 +70,7 @@ export const Footer: React.FC = () => {
               <Award className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-white">43°C Tropical Ambient Rated</h2>
+              <p className="text-sm font-bold text-white">43°C Tropical Ambient Rated</p>
               <p className="mt-1 text-slate-400 leading-relaxed">
                 Engineered specifically for brutal Australian summer heat, high humidity, and open alfresco venues.
               </p>
@@ -82,7 +82,7 @@ export const Footer: React.FC = () => {
               <Building className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-white">Hospitality Trade Pricing</h2>
+              <p className="text-sm font-bold text-white">Hospitality Trade Pricing</p>
               <p className="mt-1 text-slate-400 leading-relaxed">
                 SilverChef Rent-Try-Buy partner, Zip Business, and tiered multi-unit commercial discounts.
               </p>
@@ -141,7 +141,7 @@ export const Footer: React.FC = () => {
 
         {/* Column 2: Equipment Categories */}
         <div className="space-y-3">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-white">Refrigeration</h2>
+          <p className="text-xs font-bold uppercase tracking-wider text-white">Refrigeration</p>
           <ul className="space-y-2 text-slate-400">
             <li><Link href="/bar-freezers/under-bar-freezers/" className="hover:text-white transition-colors">Underbar Freezers</Link></li>
             <li><Link href="/bar-freezers/back-bar-freezers/" className="hover:text-white transition-colors">Back Bar Freezers</Link></li>
@@ -159,7 +159,7 @@ export const Footer: React.FC = () => {
 
         {/* Column 3: Australian Delivery Hubs */}
         <div className="space-y-3">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-white">Delivery Australia-Wide</h2>
+          <p className="text-xs font-bold uppercase tracking-wider text-white">Delivery Australia-Wide</p>
           <ul className="space-y-1.5 text-slate-400 grid grid-cols-2 gap-x-2">
             {CITIES.map((c: any) => (
               <li key={c.slug}>
@@ -178,7 +178,7 @@ export const Footer: React.FC = () => {
 
         {/* Column 4: Trade & Support */}
         <div className="space-y-3">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-white">Trade & Operations</h2>
+          <p className="text-xs font-bold uppercase tracking-wider text-white">Trade & Operations</p>
           <ul className="space-y-2 text-slate-400">
             <li><Link href="/trade/" className="text-amber-400 hover:text-amber-300 font-semibold">Trade Account & Pricing</Link></li>
             <li><Link href="/quote/" className="hover:text-white transition-colors">Multi-Product Quote Builder</Link></li>
@@ -200,7 +200,7 @@ export const Footer: React.FC = () => {
       <div className="border-t border-slate-800 bg-slate-900/30 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="max-w-md">
-            <h2 className="text-sm font-bold text-white">Australian Hospitality Trade Updates</h2>
+            <p className="text-sm font-bold text-white">Australian Hospitality Trade Updates</p>
             <p className="text-slate-400 text-xs mt-1">
               Receive monthly notices on container arrivals, ex-display clearances, and tax deduction guides.
             </p>

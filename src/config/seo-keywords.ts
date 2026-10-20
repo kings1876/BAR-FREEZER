@@ -1,6 +1,8 @@
 // Keyword-informed titles and meta descriptions for the highest-volume category pages.
 // Source: Semrush AU keyword research (docs/keyword-map.md). Volumes are monthly AU searches.
 // Titles are final (60 characters or fewer); the page template does not add a suffix.
+import { FREEZER_META } from './seo-freezers';
+
 export const KEYWORD_META: Record<string, { title: string; description: string }> = {
   '/bar-fridges/': {
     title: "Bar Fridges for Sale Australia | Glass Door & Under Bar",
@@ -51,3 +53,5 @@ export const KEYWORD_META: Record<string, { title: string; description: string }
     description: "Buy glass frosters and mug chillers that serve beer in frosted glasses. Compare capacity and prices for bars and pubs.",
   },
 };
+
+Object.assign(KEYWORD_META, FREEZER_META);

@@ -63,7 +63,7 @@ for (const x of second.slice(0, 40)) {
     title: x.base,
     slug,
     primaryCategory: 'Bar Freezers',
-    subCategory: 'Ex-Display, Clearance & Second Hand',
+    subCategory: 'Ex-Display & Clearance',
     categorySlug: 'clearance-ex-display',
     type: freezer && x.kind === 'ex-display' ? 'Ex-Display Freezers' : 'Clearance Overstock',
     doorCount: 1,

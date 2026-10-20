@@ -97,7 +97,7 @@ for (const l of [...OZ, ...CE].filter((x) => /Castor & Leg Kit/i.test(x.title)))
   for (const l of ref.slice(0, 24)) {
     const brand = OURB[String(l.vendor).toLowerCase()];
     const clean0 = clean(l.title.replace(/\s*-\s*\d{5,7}$/, ''));
-    add(l, brand, R('Bar Freezers', 'Ex-Display, Clearance & Second Hand', 'clearance-ex-display', 'Refurbished Second Hand'), { title: clean0, name: `Refurbished ${clean0}`, condition: 'refurbished', dir: 'clearance', short: `Refurbished unit: ${clean0}.`, full: `Refurbished ${clean0}. Refurbished stock is limited and unit-specific; contact us to confirm availability, warranty and delivery.` });
+    add(l, brand, R('Bar Freezers', 'Ex-Display & Clearance', 'clearance-ex-display', 'Refurbished'), { title: clean0, name: `Refurbished ${clean0}`, condition: 'refurbished', dir: 'clearance', short: `Refurbished unit: ${clean0}.`, full: `Refurbished ${clean0}. Refurbished stock is limited and unit-specific; contact us to confirm availability, warranty and delivery.` });
   }
 }
 

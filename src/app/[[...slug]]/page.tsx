@@ -243,7 +243,10 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
           priceCurrency: 'AUD',
           price: p.price,
           url: `${SITE_URL}/product/${p.slug}/`,
-          itemCondition: p.condition === 'new' ? 'https://schema.org/NewCondition' : 'https://schema.org/UsedCondition',
+          itemCondition: p.condition === 'new' ? 'https://schema.org/NewCondition' : p.condition === 'refurbished' ? 'https://schema.org/RefurbishedCondition' : 'https://schema.org/UsedCondition',
+          availability: p.condition === 'new' ? 'https://schema.org/InStock' : 'https://schema.org/LimitedAvailability',
+          priceValidUntil: '2027-06-30',
+          seller: { '@type': 'Organization', name: 'Bar Freezer Australia' },
         },
       });
     }

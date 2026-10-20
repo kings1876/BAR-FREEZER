@@ -41,7 +41,9 @@ const lc = (t) => (t.length > 1 && /[a-z]/.test(t[1]) ? t[0].toLowerCase() + t.s
 const dd = (str) => { let w = str.split(' '); for (let k = 3; k >= 1; k--) for (let i = 0; i + 2 * k <= w.length; i++) if (w.slice(i, i + k).join(' ').toLowerCase() === w.slice(i + k, i + 2 * k).join(' ').toLowerCase()) { w = [...w.slice(0, i), ...w.slice(i + k)]; i = -1; } return w.join(' '); };
 const isIceMachine = (p) => /ice (maker|machine|dispenser)|flak(e|er)|nugget|cuber|ice-maker/i.test(p.name) || Object.keys(p.specs || {}).some((k) => /production capacity/i.test(k));
 const an = (w) => (/^[aeiou]/i.test(w) ? 'an' : 'a');
-const short = (v, n = 64) => { v = clean(v); if (v.length <= n) return v; const cut = v.slice(0, n); const i = cut.lastIndexOf(' '); return (i > 20 ? cut.slice(0, i) : cut).replace(/[,;:( -]+$/, ''); };
+// Scraped feature strings are sometimes cut off mid-sentence or written in the maker's voice; skip those.
+const goodFeature = (f) => { const t = clean(f); return t.length > 3 && !/(our|we|your)/i.test(t) && !/(a|an|the|and|or|with|for|to|of|in|on|at|by|that|is|are|this|digital|makes|from|as|which)$/i.test(t); };
+const short = (v, n = 64) => { v = clean(v); if (v.length <= n) return v; const cut = v.slice(0, n); const i = cut.lastIndexOf(' '); let r = (i > 20 ? cut.slice(0, i) : cut).replace(/[,;:( -]+$/, ''); for (let k = 0; k < 4; k++) r = r.replace(/\s+(a|an|the|and|or|with|for|to|of|in|on|at|by|that|is|are|this|digital|makes|from|as|which|model|suitable|system)$/i, '').replace(/[,;:( -]+$/, ''); return r; };
 const ACC = {
   'Shelving, Baskets & Trays': 'shelf, basket or tray',
   'Door Locks & Gaskets': 'door seal, lock or hinge part',
@@ -72,7 +74,7 @@ function describeAccessory(p) {
   if (p.widthMm >= 10 && p.depthMm >= 10 && p.heightMm >= 10) f.push(`dimensions of ${p.widthMm} x ${p.depthMm} x ${p.heightMm} mm`);
   if (p.weightKg) f.push(`a weight of ${p.weightKg} kg`);
   const power = clean(p.power); if (power && power !== '10A') f.push(`a ${power} supply`);
-  (p.features || []).slice(0, 3).forEach((x) => f.push(String(x)));
+  (p.features || []).filter(goodFeature).slice(0, 3).forEach((x) => f.push(String(x)));
   if (f.length >= 2) out.push(`Listed details include ${f.slice(0, -1).join(', ')} and ${f[f.length - 1]}.`);
   else if (f.length === 1) out.push(`Listed details include ${f[0]}.`);
   out.push(pick([
@@ -122,7 +124,7 @@ function describe(p) {
 
   // ---- paragraph 1: overview
   const openers = [
-    `The ${label} is a ${noun} designed ${use}.`,
+    `The ${label} is ${an(noun)} ${noun} designed ${use}.`,
     `${label} is ${an(noun)} ${noun} made ${use}.`.replace('made for', 'built for'),
     `Choose the ${label} ${noun} ${use.startsWith('to ') ? use : use}.`,
   ];
@@ -151,7 +153,7 @@ function describe(p) {
   if (storage && /ice maker/.test(termKey)) facts.push(`storage of ${short(storage, 40)}`);
   if (bottles) facts.push(`room for ${bottles} 330 ml bottles`);
   if (cans) facts.push(`room for ${cans} 330 ml cans`);
-  (p.features || []).slice(0, 4).forEach((f) => { if (/^shelves?:/i.test(String(f)) && shelves) return; const t = lc(short(String(f).replace(/^shelves?:\s*/i, 'shelves: '), 50)); if (!facts.some((x) => x.toLowerCase().includes(t.toLowerCase().slice(0, 8)))) facts.push(t); });
+  (p.features || []).filter(goodFeature).slice(0, 4).forEach((f) => { if (/^shelves?:/i.test(String(f)) && shelves) return; const t = lc(short(String(f).replace(/^shelves?:\s*/i, 'shelves: '), 50)); if (!facts.some((x) => x.toLowerCase().includes(t.toLowerCase().slice(0, 8)))) facts.push(t); });
   const start = facts.length ? h(seed + 's') % facts.length : 0;
   const rot = facts.slice(start).concat(facts.slice(0, start)).slice(0, 7);
   if (rot.length >= 2) {

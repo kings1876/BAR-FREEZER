@@ -52,14 +52,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Product Title */}
-        <h2 className="text-sm sm:text-base font-semibold text-slate-900 leading-snug line-clamp-2">
+        <h3 className="text-sm sm:text-base font-semibold text-slate-900 leading-snug line-clamp-2">
           <Link 
             href={`/product/${product.slug}/`} 
             className="hover:text-cyan-700 transition-colors focus-visible:outline-amber-500"
           >
             {product.name}
           </Link>
-        </h2>
+        </h3>
 
         {/* Trustpilot Review Metric */}
         <div className="flex items-center gap-1.5 text-[11px] text-slate-500">

@@ -1,5 +1,7 @@
 // On-page H1 and opening copy for the highest-volume category pages (keywords: docs/keyword-map.md).
 // General buying information only; no unverified claims.
+import { FREEZER_COPY } from './seo-freezers';
+
 export const CATEGORY_COPY: Record<string, { h1: string; intro: string; guide?: { href: string; label: string } }> = {
   '/bar-fridges/': {
     h1: 'Bar Fridges for Sale in Australia',
@@ -53,3 +55,5 @@ export const CATEGORY_COPY: Record<string, { h1: string; intro: string; guide?: 
     intro: 'Glass frosters and mug chillers pre-chill glassware so beer is served in a frosted glass. Compare capacity and dimensions to fit your bar.',
   },
 };
+
+Object.assign(CATEGORY_COPY, FREEZER_COPY);
