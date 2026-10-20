@@ -219,7 +219,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
         mpn: p.model || undefined,
         brand: { '@type': 'Brand', name: p.brand },
         description: p.shortDescription,
-        image: p.images?.[0] ? SITE_URL + p.images[0] : undefined,
+        image: p.images?.length ? p.images.slice(0, 4).map((u: string) => SITE_URL + u) : undefined,
         url: `${SITE_URL}/product/${p.slug}/`,
         offers: {
           '@type': 'Offer',

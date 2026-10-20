@@ -34,6 +34,7 @@ export const ProductDetailPage: React.FC = () => {
   const [selectedWarrantyAddon, setSelectedWarrantyAddon] = useState(false);
   const [activeTab, setActiveTab] = useState<'specs' | 'fit' | 'faq' | 'reviews'>('specs');
   const [bundleChecked, setBundleChecked] = useState<Record<string, boolean>>({});
+  const [activePhoto, setActivePhoto] = useState(0);
 
   const productSlug = routeMatch.params.slug;
   const detail = useProductDetail();
@@ -143,7 +144,7 @@ export const ProductDetailPage: React.FC = () => {
             {/* Left 6 Columns: Product Visuals & Thumbnails */}
             <div className="lg:col-span-6 space-y-4">
               <div className="relative bg-slate-50 rounded-lg border border-slate-200 p-6 flex items-center justify-center">
-                <ProductImage product={product} className="w-full max-h-96" priority />
+                <ProductImage product={product} className="w-full max-h-96" priority imageIndex={activePhoto} />
                 <div className="absolute top-4 right-4 flex items-center gap-2">
                   <button
                     onClick={() => toggleCompare(product)}
@@ -158,21 +159,23 @@ export const ProductDetailPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Thumbnails Row */}
-              <div className="grid grid-cols-4 gap-2 text-center text-[10px] font-mono text-slate-500">
-                <div className="p-2 border-2 border-amber-500 rounded bg-white">
-                  <span>Front View</span>
+              {/* Photo gallery thumbnails (only when the product has more than one photo) */}
+              {product.images && product.images.length > 1 && (
+                <div className="grid grid-cols-4 gap-2" role="group" aria-label="Product photos">
+                  {product.images.slice(0, 4).map((src: string, i: number) => (
+                    <button
+                      key={src}
+                      type="button"
+                      onClick={() => setActivePhoto(i)}
+                      aria-label={`View photo ${i + 1} of ${Math.min(product.images.length, 4)}`}
+                      aria-pressed={activePhoto === i}
+                      className={`aspect-[4/3] rounded bg-white overflow-hidden border-2 ${activePhoto === i ? 'border-amber-500' : 'border-slate-200 hover:border-slate-400'}`}
+                    >
+                      <img src={src} alt="" width={200} height={150} loading="lazy" className="w-full h-full object-contain" />
+                    </button>
+                  ))}
                 </div>
-                <div className="p-2 border border-slate-200 rounded bg-white hover:border-slate-400 cursor-pointer">
-                  <span>Interior Rails</span>
-                </div>
-                <div className="p-2 border border-slate-200 rounded bg-white hover:border-slate-400 cursor-pointer">
-                  <span>Plinth Airflow</span>
-                </div>
-                <div className="p-2 border border-slate-200 rounded bg-white hover:border-slate-400 cursor-pointer">
-                  <span>Digital Controller</span>
-                </div>
-              </div>
+              )}
 
               {/* Dimension Callout Strip */}
               <div className="p-4 bg-slate-50 rounded-lg border border-slate-200/80 grid grid-cols-3 gap-2 text-center text-xs">
