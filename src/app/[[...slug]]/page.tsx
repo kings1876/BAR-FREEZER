@@ -235,9 +235,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
         sku: p.sku,
         mpn: p.model || undefined,
         brand: { '@type': 'Brand', name: p.brand },
-        description: productDetail && productDetail.fullDescription ? String(productDetail.fullDescription).split('
-
-').join(' ') : p.shortDescription,
+        description: productDetail && productDetail.fullDescription ? String(productDetail.fullDescription).split(/\n\n/).join(' ') : p.shortDescription,
         image: p.images?.length ? p.images.slice(0, 4).map((u: string) => SITE_URL + u) : undefined,
         url: `${SITE_URL}/product/${p.slug}/`,
         offers: {
