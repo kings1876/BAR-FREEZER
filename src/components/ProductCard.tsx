@@ -82,7 +82,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
           <div>
             <span className="text-[10px] text-slate-500 block uppercase font-sans">Volume</span>
-            <span className="font-medium text-slate-900">{product.capacityLitres ? `${product.capacityLitres}L` : '—'}</span>
+            <span className="font-medium text-slate-900">{product.capacityLitres ? `${product.capacityLitres}L` : (product.capacityLabel || 'On request')}</span>
           </div>
           <div>
             <span className="text-[10px] text-slate-500 block uppercase font-sans">Temp</span>

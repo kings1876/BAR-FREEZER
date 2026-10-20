@@ -185,8 +185,8 @@ export const ProductDetailPage: React.FC = () => {
                   <span className="font-mono font-bold text-slate-900">{product.widthMm && product.depthMm && product.heightMm ? `${product.widthMm}x${product.depthMm}x${product.heightMm}mm` : '—'}</span>
                 </div>
                 <div>
-                  <span className="text-slate-500 text-[10px] uppercase block">Gross Volume</span>
-                  <span className="font-mono font-bold text-slate-900">{product.capacityLitres ? `${product.capacityLitres} Litres` : '—'}</span>
+                  <span className="text-slate-500 text-[10px] uppercase block">{product.capacityKind && product.capacityKind !== 'gross' ? 'Capacity' : 'Gross Volume'}</span>
+                  <span className="font-mono font-bold text-slate-900">{product.capacityLitres ? `${product.capacityLitres} Litres${product.capacityKind === 'combined' ? ' (combined)' : ''}` : (product.capacityLabel || 'On request')}</span>
                 </div>
                 <div>
                   <span className="text-slate-500 text-[10px] uppercase block">Operating Temp</span>

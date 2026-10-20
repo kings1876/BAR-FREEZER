@@ -137,5 +137,27 @@
  },
  "PPB/18": {
   "stated": 900
+ },
+ "PG-65A-CC": {
+  "stated": 65
+ },
+ "KURF12-2-N": {
+  "fridge": 121,
+  "freezer": 136
+ },
+ "KURF15-2-N": {
+  "fridge": 171,
+  "freezer": 191
+ },
+ "SURF18-3": {
+  "fridge": 333,
+  "freezer": 154
+ },
+ "LG-330TD": {
+  "gross": 293
+ },
+ "SURF15-2": {
+  "fridge": 178,
+  "freezer": 190
  }
 }

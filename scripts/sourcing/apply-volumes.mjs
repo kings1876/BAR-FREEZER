@@ -5,7 +5,7 @@ import fs from 'fs';
 const FILE = 'src/config/products.generated.json';
 const g = JSON.parse(fs.readFileSync(FILE, 'utf8'));
 const arr = Array.isArray(g) ? g : g.products;
-const cl = JSON.parse(fs.readFileSync('.volumes-classified.json', 'utf8'));
+const cl = fs.existsSync('.volumes-classified.json') ? JSON.parse(fs.readFileSync('.volumes-classified.json', 'utf8')) : [];
 const byId = new Map(arr.map((p) => [p.id, p]));
 
 // model -> manual decision after reading the supplier text
@@ -46,5 +46,19 @@ for (const r of cl) {
   Object.assign(p, set);
   n++;
 }
+// manual entries apply even without the classified cache
+for (const p of arr) {
+  if (p.capacityLitres) continue;
+  const man = MANUAL[p.model];
+  if (!man || man.skip) continue;
+  if (man.fridge) Object.assign(p, { capacityLitres: man.fridge + man.freezer, capacityKind: 'combined', capacityNote: `fridge ${man.fridge} litres, freezer ${man.freezer} litres` });
+  else if (man.gross) Object.assign(p, { capacityLitres: man.gross, capacityKind: 'gross' });
+  else if (man.stated) Object.assign(p, { capacityLitres: man.stated, capacityKind: 'stated' });
+  n++;
+}
+const LABELS = JSON.parse(fs.readFileSync('scripts/sourcing/volumes-labels.json', 'utf8'));
+let nl = 0;
+for (const p of arr) { if (!p.capacityLitres && LABELS[p.model]) { p.capacityLabel = LABELS[p.model]; nl++; } }
+console.log('labels applied:', nl);
 fs.writeFileSync(FILE, JSON.stringify(g));
 console.log('volumes applied:', n, 'skipped:', skipped.join(','));

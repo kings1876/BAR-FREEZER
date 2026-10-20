@@ -17,6 +17,8 @@ export interface Product {
   heightMm: number;
   widthRange: string;
   capacityLitres: number;
+  capacityKind?: 'gross' | 'stated' | 'combined';
+  capacityLabel?: string;
   capacityRange: string;
   price: number | null;
   tradePrice: number | null;
