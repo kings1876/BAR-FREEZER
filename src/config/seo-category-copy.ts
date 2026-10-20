@@ -12,44 +12,44 @@ export const CATEGORY_COPY: Record<string, { h1: string; intro: string; guide?: 
     guide: { href: '/guides/bar-fridge-freezer-buying-guide/', label: 'Read the bar fridge and freezer buying guide' },
   },
   '/bar-fridges/wine-fridges/': {
-    h1: 'Wine Fridges & Wine Coolers',
+    h1: 'Wine Fridges for Sale in Australia',
     intro: 'Wine fridges hold bottles at a steady, cellar-style temperature. Choose a single zone model for one style of wine, or a dual zone model to store reds and whites at different temperatures. Check bottle capacity and bottle size before you buy.',
   },
   '/bar-fridges/kegerators-dispensers/': {
-    h1: 'Kegerators & Keg Fridges',
+    h1: 'Kegerators & Keg Fridges for Sale',
     intro: 'Kegerators and keg fridges chill and dispense draught beer. Compare single tap models for home bars with multi-tap commercial dispensers for venues, and check keg size and CO2 requirements.',
   },
   '/bar-fridges/outdoor-alfresco-fridges/': {
-    h1: 'Outdoor Bar Fridges & Alfresco Fridges',
+    h1: 'Outdoor Bar Fridges for Sale',
     intro: "Outdoor and alfresco bar fridges are designed for patios, BBQ areas and outdoor bars. Check each product's rated operating temperature and ventilation needs, and compare single, double and triple door models.",
   },
   '/bar-fridges/beer-beverage-fridges/': {
-    h1: 'Beer Fridges & Drink Fridges',
+    h1: 'Beer Fridges & Drink Fridges for Sale',
     intro: 'Beer fridges and beverage fridges keep drinks at serving temperature. Compare sub-zero beer fridges, beverage merchandisers and glass door models by capacity, width and brand.',
   },
   '/bar-fridges/under-bar-fridges/': {
-    h1: 'Under Bar & Under Bench Fridges',
+    h1: 'Under Bench & Under Bar Fridges for Sale',
     intro: 'Under bar and under bench fridges are designed to fit beneath a counter. Measure the opening and allow ventilation clearance, then compare single, double and triple door models with glass or solid doors.',
     guide: { href: '/guides/under-bench-fridge-buying-guide/', label: 'Read the under bench fridge buying guide' },
   },
   '/bar-fridges/under-bar-fridges/glass-door/': {
-    h1: 'Glass Door Bar Fridges',
+    h1: 'Glass Door Bar Fridges for Sale',
     intro: 'Glass door bar fridges display drinks while keeping them cold. Compare door counts, widths and capacities, and check the specifications for glass type and lighting.',
   },
   '/bar-freezers/chest-bench-freezers/': {
-    h1: 'Chest & Bench Freezers',
+    h1: 'Chest Freezers & Bench Freezers for Sale',
     intro: 'Chest and bench freezers suit bars and cafes that need deep frozen storage or a work surface above the freezer. Compare bar chest, sliding glass lid and bench-top models by capacity and size.',
   },
   '/bar-freezers/upright-commercial-freezers/': {
-    h1: 'Upright Commercial Freezers',
+    h1: 'Commercial Upright Freezers for Sale',
     intro: 'Upright commercial freezers store frozen stock vertically and take up less floor space than a chest freezer. Compare 1, 2 and 3 door models by capacity, width and brand.',
   },
   '/accessories-parts/ice-machines-storage/': {
-    h1: 'Commercial Ice Makers & Ice Machines',
+    h1: 'Commercial Ice Makers for Sale',
     intro: 'Ice makers and ice machines supply ice for drinks service. Compare under bar ice makers by daily output and bin capacity, and consider an insulated ice bin for storage.',
   },
   '/bar-freezers/glass-frosters-specialty/glass-frosters/': {
-    h1: 'Glass Frosters & Mug Chillers',
+    h1: 'Glass Frosters & Mug Chillers for Sale',
     intro: 'Glass frosters and mug chillers pre-chill glassware so beer is served in a frosted glass. Compare capacity and dimensions to fit your bar.',
   },
 };

@@ -4,6 +4,7 @@ import { CITIES, SITE } from '../config/site.js';
 import { PostcodeEstimator } from '../components/PostcodeEstimator';
 import { useRouter, Link } from '../context/RouterContext';
 import { CITY_META } from '../config/seo-pages';
+import { RelatedSearches } from '../components/RelatedSearches';
 
 export const DeliveryPage: React.FC = () => {
   const { routeMatch } = useRouter();
@@ -157,6 +158,7 @@ export const DeliveryPage: React.FC = () => {
           </div>
         </div>
 
+        {activeCity && <RelatedSearches path={`/delivery/${activeCity.slug}/`} noun={`fridges and freezers in ${activeCity.name}`} />}
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { useRouter, Link } from '../context/RouterContext';
 import { Product } from '../types';
 import { CATEGORY_COPY } from '../config/seo-category-copy';
 import { PagedGrid } from '../components/PagedGrid';
+import { RelatedSearches } from '../components/RelatedSearches';
 
 export const CategoryPage: React.FC = () => {
   const { currentPath, routeMatch } = useRouter();
@@ -282,6 +283,12 @@ export const CategoryPage: React.FC = () => {
                 </button>
               </div>
             )}
+
+            <RelatedSearches
+              path={currentPath}
+              noun={(kwCopy && kwCopy.h1 ? String(kwCopy.h1).replace(/ for Sale.*$/i, '').replace(/ in Australia$/i, '') : pageTitle).toLowerCase()}
+              minPrice={(() => { const ps = categoryBaseProducts.map((p: any) => p.price).filter((n: any) => typeof n === 'number' && n > 0); return ps.length ? Math.min(...ps) : null; })()}
+            />
 
             {/* Quick Trade Quote Callout at bottom of category */}
             <div className="bg-slate-900 text-slate-100 p-6 rounded-xl border border-slate-800 mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">

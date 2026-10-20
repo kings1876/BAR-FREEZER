@@ -90,7 +90,7 @@ function productMeta(p: any) {
   if (kw && !isAcc) {
     const model = p.model && !String(p.brand).toLowerCase().includes(String(p.model).toLowerCase()) ? ' ' + p.model : '';
     const specs = [p.widthMm >= 300 ? `${p.widthMm}mm wide` : '', p.capacityLitres >= 20 ? `${p.capacityLitres}L` : '', p.tempRange ? String(p.tempRange).split(' (')[0] : ''].filter(Boolean).join(', ');
-    desc = `${p.brand}${model} ${kw.term}${specs ? ': ' + specs : ''}. Compare price and full specifications, delivered Australia-wide.`;
+    desc = `Buy the ${p.brand}${model} ${kw.term}${specs ? ': ' + specs : ''}. Compare price and specifications, delivered Australia-wide.`;
   } else {
     desc = String(p.shortDescription || p.name);
   }

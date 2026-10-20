@@ -4,6 +4,7 @@ import { BRANDS, PRODUCTS } from '../config/site.js';
 import { ProductCard } from '../components/ProductCard';
 import { useRouter, Link } from '../context/RouterContext';
 import { PagedGrid } from '../components/PagedGrid';
+import { RelatedSearches } from '../components/RelatedSearches';
 import { BRAND_META } from '../config/seo-brands';
 
 export const BrandPage: React.FC = () => {
@@ -103,6 +104,11 @@ export const BrandPage: React.FC = () => {
           </div>
         </div>
 
+        <RelatedSearches
+          path={`/brands/${brand.slug}/`}
+          noun={`${brand.name} fridges and freezers`}
+          minPrice={(() => { const ps = brandProducts.map((p: any) => p.price).filter((n: any) => typeof n === 'number' && n > 0); return ps.length ? Math.min(...ps) : null; })()}
+        />
       </div>
     </div>
   );
