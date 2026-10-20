@@ -131,7 +131,7 @@ function describe(p) {
   let p1 = pick(openers, seed + 'o');
   const body = [];
   if (dims) body.push(`It measures ${dims}`);
-  if (cap) body.push(`${dims ? 'with' : 'It has'} a gross capacity of ${cap}`);
+  if (cap) body.push(p.capacityKind === 'combined' ? `${dims ? 'with' : 'It has'} a combined capacity of ${cap} (${p.capacityNote})` : p.capacityKind === 'stated' ? `${dims ? 'with' : 'It has'} a stated capacity of ${cap}` : `${dims ? 'with' : 'It has'} a gross capacity of ${cap}`);
   if (iceOut) body.push(`${body.length ? 'and produces ' : 'It produces '}${iceOut} kg per 24 hours${iceType ? ` of ${iceType.toLowerCase()} ice` : ' of ice'}`);
   if (body.length) p1 += ' ' + body.join(' ') + '.';
   if (doors && !isAcc && !/ice maker/.test(termKey)) p1 += ` The cabinet has ${doors}${finish ? ` and a ${finish.toLowerCase()} finish` : ''}.`;
