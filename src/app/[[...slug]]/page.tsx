@@ -57,6 +57,21 @@ function findPath(nodes: any[], path: string): any {
 }
 
 // ---- Product titles: keyword-led, 60 characters or fewer, and unique across the site
+function dedupeWords(str: string): string {
+  let w = str.split(' ');
+  for (let k = 3; k >= 1; k--) {
+    for (let i = 0; i + 2 * k <= w.length; i++) {
+      if (w.slice(i, i + k).join(' ').toLowerCase() === w.slice(i + k, i + 2 * k).join(' ').toLowerCase()) { w = [...w.slice(0, i), ...w.slice(i + k)]; i = -1; }
+    }
+  }
+  return w.join(' ');
+}
+function wordTrim(t: string, n: number): string {
+  if (t.length <= n) return t;
+  const cut = t.slice(0, n);
+  const i = cut.lastIndexOf(' ');
+  return (i > 20 ? cut.slice(0, i) : cut).replace(/[\s,\-:(]+$/, '');
+}
 function baseProductTitle(p: any): string {
   const kw: any = (PRODUCT_KW as any)[p.id];
   const isAcc = p.primaryCategory === 'Accessories & Parts';
@@ -65,7 +80,7 @@ function baseProductTitle(p: any): string {
     const t = `${p.brand}${model} ${cap(kw.term)} | Bar Freezer`;
     if (t.length <= 60) return t;
   }
-  return `${trim(String(p.name), 46)} | Bar Freezer`;
+  return `${wordTrim(dedupeWords(String(p.name)), 46)} | Bar Freezer`;
 }
 let TITLE_COUNT: Map<string, number> | null = null;
 function titleCount(): Map<string, number> {
@@ -92,7 +107,7 @@ function productMeta(p: any) {
     const specs = [p.widthMm >= 300 ? `${p.widthMm}mm wide` : '', p.capacityLitres >= 20 ? `${p.capacityLitres}L` : '', p.tempRange ? String(p.tempRange).split(' (')[0] : ''].filter(Boolean).join(', ');
     desc = `Buy the ${p.brand}${model} ${kw.term}${specs ? ': ' + specs : ''}. Compare price and specifications, delivered Australia-wide.`;
   } else {
-    desc = String(p.shortDescription || p.name);
+    desc = 'Buy ' + dedupeWords(String(p.shortDescription || p.name));
   }
   if (tag && !desc.includes(tag)) desc = desc.replace(/\.$/, '') + ` (${tag}).`;
   return { title, description: padDesc(desc) };
