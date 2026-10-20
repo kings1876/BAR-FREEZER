@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ChevronRight, 
   ShoppingBag, 
@@ -37,6 +37,7 @@ export const ProductDetailPage: React.FC = () => {
   const [activePhoto, setActivePhoto] = useState(0);
 
   const productSlug = routeMatch.params.slug;
+  useEffect(() => { setActivePhoto(0); }, [productSlug]);
   const detail = useProductDetail();
   const baseProduct: any = PRODUCTS.find((p: any) => p.slug === productSlug) || PRODUCTS[0];
   const product = {
