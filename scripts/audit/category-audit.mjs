@@ -16,7 +16,7 @@ const kwSrc = fs.readFileSync('src/config/seo-keywords.ts', 'utf8');
 const kwPaths = [...kwSrc.matchAll(/['"](\/[a-z0-9/-]+\/)['"]\s*:/g)].map((m) => m[1]).filter((p) => p.startsWith(ROOT));
 const pages = [...new Set([...catPaths, ...kwPaths])];
 const catSlug = ROOT.split('/')[1];
-const products = light.filter((p) => p.categorySlug === catSlug || (p.categorySlug || '').startsWith(catSlug) || p.primaryCategory === 'Bar Freezers');
+const products = light.filter((p) => p.primaryCategory === ({ 'bar-freezers': 'Bar Freezers', 'bar-fridges': 'Bar Fridges & Coolers', 'accessories-parts': 'Accessories & Parts' })[catSlug]);
 
 const get = async (url, opt = {}) => {
   for (let t = 0; t < 3; t++) {

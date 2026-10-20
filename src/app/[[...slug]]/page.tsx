@@ -97,7 +97,9 @@ function productMeta(p: any) {
   if ((titleCount().get(title) || 0) > 1) {
     const group = (PRODUCTS as any[]).filter((q) => baseProductTitle(q) === title);
     const skuUnique = new Set(group.map((q) => String(q.sku))).size === group.length;
-    tag = skuUnique && p.sku ? String(p.sku) : String(p.slug).split('-').slice(-2).join('-').toUpperCase();
+    const COND: any = { refurbished: 'Refurbished', 'ex-display': 'Ex-Display', 'factory-second': 'Factory Second' };
+    const condUnique = new Set(group.map((q) => String(q.condition))).size === group.length;
+    tag = skuUnique && p.sku ? String(p.sku) : condUnique && COND[p.condition] ? COND[p.condition] : condUnique ? String(p.condition === 'new' ? 'New' : p.condition) : String(p.slug).split('-').slice(-2).join('-').toUpperCase();
     const t = title.replace(' | Bar Freezer', '');
     title = `${trim(t, 60 - 14 - tag.length - 1)} ${tag} | Bar Freezer`;
   }

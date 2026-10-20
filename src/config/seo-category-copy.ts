@@ -1,6 +1,7 @@
 // On-page H1 and opening copy for the highest-volume category pages (keywords: docs/keyword-map.md).
 // General buying information only; no unverified claims.
 import { FREEZER_COPY } from './seo-freezers';
+import { FRIDGE_COPY } from './seo-fridges';
 
 export const CATEGORY_COPY: Record<string, { h1: string; intro: string; guide?: { href: string; label: string } }> = {
   '/bar-fridges/': {
@@ -56,4 +57,4 @@ export const CATEGORY_COPY: Record<string, { h1: string; intro: string; guide?: 
   },
 };
 
-Object.assign(CATEGORY_COPY, FREEZER_COPY);
+Object.assign(CATEGORY_COPY, FREEZER_COPY, FRIDGE_COPY);

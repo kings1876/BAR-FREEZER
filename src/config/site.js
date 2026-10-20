@@ -154,7 +154,7 @@ export const CATEGORIES = [
         name: "Under Bar Fridges",
         slug: "under-bar-fridges",
         path: "/bar-fridges/under-bar-fridges/",
-        description: "Rapid pull-down commercial fridges built under standard 840mm-900mm bar heights.",
+        description: "Under bar fridges designed to fit beneath a counter. Measure the opening and allow ventilation.",
         types: [
           { name: "Single Door Under Bar", slug: "1-door", path: "/bar-fridges/under-bar-fridges/1-door/" },
           { name: "Double Door Under Bar", slug: "2-door", path: "/bar-fridges/under-bar-fridges/2-door/" },
@@ -167,7 +167,7 @@ export const CATEGORIES = [
         name: "Bottle Coolers (1-4 door)",
         slug: "bottle-coolers",
         path: "/bar-fridges/bottle-coolers/",
-        description: "High-capacity horizontal and vertical bottle cooling for speed-rail bar setups and beer bottle service.",
+        description: "Bottle coolers that keep bottles and cans cold behind the bar, in 1 to 4 door sizes.",
         types: [
           { name: "1 Door Bottle Cooler", slug: "1-door", path: "/bar-fridges/bottle-coolers/1-door/" },
           { name: "2 Door Bottle Cooler", slug: "2-door", path: "/bar-fridges/bottle-coolers/2-door/" },
@@ -179,7 +179,7 @@ export const CATEGORIES = [
         name: "Back Bar Fridges",
         slug: "back-bar-fridges",
         path: "/bar-fridges/back-bar-fridges/",
-        description: "Display glass and sliding door back bar chillers with Low-E glass and LED shelf strip lighting.",
+        description: "Back bar fridges with hinged or sliding glass doors that show stock behind the bar.",
         types: [
           { name: "Hinged Glass Back Bar", slug: "hinged-glass", path: "/bar-fridges/back-bar-fridges/hinged-glass/" },
           { name: "Sliding Glass Back Bar", slug: "sliding-glass", path: "/bar-fridges/back-bar-fridges/sliding-glass/" }
@@ -189,7 +189,7 @@ export const CATEGORIES = [
         name: "Beer & Beverage Fridges",
         slug: "beer-beverage-fridges",
         path: "/bar-fridges/beer-beverage-fridges/",
-        description: "Heavy refrigeration systems pulling beverages down to ice-cold +0.5°C to +2°C for crisp Australian lager service.",
+        description: "Beer fridges and beverage merchandisers that keep drinks at serving temperature.",
         types: [
           { name: "Sub-Zero Beer Fridges", slug: "sub-zero-beer", path: "/bar-fridges/beer-beverage-fridges/sub-zero-beer/" },
           { name: "Beverage Merchandisers", slug: "beverage-merchandisers", path: "/bar-fridges/beer-beverage-fridges/beverage-merchandisers/" }
@@ -199,7 +199,7 @@ export const CATEGORIES = [
         name: "Wine Fridges (Single & Dual Zone)",
         slug: "wine-fridges",
         path: "/bar-fridges/wine-fridges/",
-        description: "Vibration-free compressor cabinets with carbon filtration and dual-zone climate controls for reds and whites.",
+        description: "Wine fridges and cabinets in single zone and dual zone models. Compare bottle capacity.",
         types: [
           { name: "Single Zone Wine Cabinets", slug: "single-zone", path: "/bar-fridges/wine-fridges/single-zone/" },
           { name: "Dual Zone Wine Cabinets", slug: "dual-zone", path: "/bar-fridges/wine-fridges/dual-zone/" }
@@ -209,7 +209,7 @@ export const CATEGORIES = [
         name: "Kegerators & Beer Dispensers",
         slug: "kegerators-dispensers",
         path: "/bar-fridges/kegerators-dispensers/",
-        description: "Commercial draft beer dispensers supporting 1, 2, 3 or 4 kegs with stainless steel fonts and tap towers.",
+        description: "Kegerators and beer dispensers for home bars and venues. Check keg size and gas requirements.",
         types: [
           { name: "Single Tap Kegerators", slug: "single-tap", path: "/bar-fridges/kegerators-dispensers/single-tap/" },
           { name: "Multi-Tap Commercial Dispensers", slug: "multi-tap", path: "/bar-fridges/kegerators-dispensers/multi-tap/" }
@@ -219,7 +219,7 @@ export const CATEGORIES = [
         name: "Combination Fridge-Freezers",
         slug: "combination-fridge-freezers",
         path: "/bar-fridges/combination-fridge-freezers/",
-        description: "Dual compartment bar units offering chilled beer storage on one side and deep freezing on the other.",
+        description: "Combination bar units with a chilled section and a freezer section. Compare the capacity of each.",
         types: [
           { name: "Split Dual Temperature", slug: "split-dual-temp", path: "/bar-fridges/combination-fridge-freezers/split-dual-temp/" }
         ]
@@ -228,7 +228,7 @@ export const CATEGORIES = [
         name: "Outdoor / Alfresco Bar Fridges",
         slug: "outdoor-alfresco-fridges",
         path: "/bar-fridges/outdoor-alfresco-fridges/",
-        description: "304-grade stainless steel exterior fridges rated up to 43°C ambient temperature with heated glass doors.",
+        description: "Outdoor and alfresco bar fridges. Check the rated operating temperature in each specification.",
         types: [
           { name: "Single Door Alfresco", slug: "single-door", path: "/bar-fridges/outdoor-alfresco-fridges/single-door/" },
           { name: "Double Door Alfresco", slug: "double-door", path: "/bar-fridges/outdoor-alfresco-fridges/double-door/" },
