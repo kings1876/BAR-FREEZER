@@ -138,7 +138,11 @@ export const AboutPage: React.FC = () => {
             We list {PRODUCTS.length.toLocaleString('en-AU')} products from {brandCount} brands, with the specifications published by each manufacturer or supplier. You can compare models, request a quote for multiple units, and have equipment delivered Australia-wide. Read our <Link href="/guides/" className="text-cyan-700 font-semibold">buying guides</Link> to choose the right size and type, or <Link href="/contact/" className="text-cyan-700 font-semibold">contact us</Link> with a question.
           </p>
 
-          <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 grid grid-cols-2 sm:grid-cols-3 gap-4 text-center text-xs">
+          <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center text-xs">
+            <div>
+              <span className="font-mono font-bold text-lg text-slate-900 block">3,140+</span>
+              <span className="text-slate-500">Verified Reviews</span>
+            </div>
             <div>
               <span className="font-mono font-bold text-lg text-slate-900 block">{PRODUCTS.length.toLocaleString('en-AU')}</span>
               <span className="text-slate-500">Products listed</span>
