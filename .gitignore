@@ -11,3 +11,9 @@ coverage/
 next-env.d.ts
 data/
 tsconfig.tsbuildinfo
+
+# local audit output
+.crawl.json
+.crawl-lists.json
+.audit-*.json
+.next-start.log
