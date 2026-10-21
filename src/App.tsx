@@ -11,6 +11,7 @@ import { RouterProvider, useRouter } from './context/RouterContext';
 import { CartProvider, useCart } from './context/CartContext';
 import { ProductDetailProvider, ProductDetail } from './context/ProductDetailContext';
 import { Header } from './components/Header';
+import { Footer } from './components/Footer';
 const CartDrawer = dynamic(() => import('./components/CartDrawer').then((m) => m.CartDrawer), { ssr: false });
 const QuoteModal = dynamic(() => import('./components/QuoteModal').then((m) => m.QuoteModal), { ssr: false });
 import { MobileStickyBar } from './components/MobileStickyBar';
@@ -40,7 +41,7 @@ const PaymentMethodsPage = dynamic(() => import('./views/InfoPages').then((m) =>
 const FaqPage = dynamic(() => import('./views/InfoPages').then((m) => m.FaqPage));
 const ReturnsPage = dynamic(() => import('./views/InfoPages').then((m) => m.ReturnsPage));
 
-const MainContent: React.FC<{ footer?: React.ReactNode; below?: React.ReactNode }> = ({ footer, below }) => {
+const MainContent: React.FC<{ below?: React.ReactNode }> = ({ below }) => {
   const { routeMatch } = useRouter();
   const { notification } = useCart();
 
@@ -124,18 +125,18 @@ const MainContent: React.FC<{ footer?: React.ReactNode; below?: React.ReactNode 
       {/* Sticky Mobile Quick Action Bar (Under 15% mobile viewport cap) */}
       <MobileStickyBar />
 
-      {/* Global Trade Footer */}
-      {footer}
+      {/* Global Trade Footer (rendered with the app so its markup is not also sent as server data) */}
+      <Footer />
     </div>
   );
 };
 
-export default function App({ productDetail = null, footer = null, below = null }: { productDetail?: ProductDetail | null; footer?: React.ReactNode; below?: React.ReactNode }) {
+export default function App({ productDetail = null, below = null }: { productDetail?: ProductDetail | null; below?: React.ReactNode }) {
   return (
     <RouterProvider>
       <CartProvider>
         <ProductDetailProvider detail={productDetail}>
-          <MainContent footer={footer} below={below} />
+          <MainContent below={below} />
         </ProductDetailProvider>
       </CartProvider>
     </RouterProvider>

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import ClientApp from '../../App';
-import { Footer } from '../../components/Footer';
+import { ProductLinkList as LinkList, BuyingChecklist } from '../../components/ProductLinkList';
 import { CATEGORIES, BRANDS, VENUES, CITIES, PRODUCTS, POSTS, FAQS } from '../../config/site.js';
 import { allPaths } from '../../lib/routes';
 import { KEYWORD_META } from '../../config/seo-keywords';
@@ -233,23 +233,8 @@ function breadcrumb(slug: string[]) {
 }
 
 type LinkItem = { id: string; slug: string; name: string };
-// Plain anchors in a server component: crawlable, but nothing here is hydrated in the browser.
 function ProductLinkList({ title, aria, items }: { title: string; aria: string; items: LinkItem[] }) {
-  if (!items.length) return null;
-  return (
-    <div className="bg-slate-50 pb-12">
-      <nav aria-label={aria} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-base font-bold text-slate-900">{title}</h2>
-        <ul className="mt-3 columns-1 sm:columns-2 lg:columns-3 gap-6 text-xs text-slate-700 space-y-1">
-          {items.map((p) => (
-            <li key={p.id} className="break-inside-avoid">
-              <a href={`/product/${p.slug}/`} className="hover:text-cyan-700 hover:underline">{p.name}</a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </div>
-  );
+  return <LinkList title={title} aria={aria} items={items.map((p) => [p.slug, p.name] as [string, string])} />;
 }
 
 // The few products a page shows, supplied by the server so the client does not need the whole catalogue.
@@ -265,7 +250,7 @@ function pageData(slug: string[]): any {
   }
   if (a === 'brands' && b) {
     const brand: any = (BRANDS as any[]).find((x) => x.slug === b);
-    return brand ? { products: all.filter((p) => String(p.brand).toLowerCase() === brand.name.toLowerCase()).slice(0, 12) } : null;
+    return brand ? { products: all.filter((p) => String(p.brand).toLowerCase() === brand.name.toLowerCase()).slice(0, 4) } : null;
   }
   if (a === 'venues' && b) {
     const venue: any = (VENUES as any[]).find((x) => x.slug === b);
@@ -280,6 +265,24 @@ function pageData(slug: string[]): any {
     return { items: items.slice(0, 12), total: items.length };
   }
   return null;
+}
+
+// Links to the sub-categories a page relates to, with their full names as anchor text.
+function CategoryLinks({ heading, slugs }: { heading: string; slugs: string[] }) {
+  const found: { name: string; path: string }[] = [];
+  for (const root of CATEGORIES as any[]) for (const s of root.subcategories || []) if (slugs.includes(s.slug)) found.push({ name: s.name, path: `/${root.slug}/${s.slug}/` });
+  if (!found.length) return null;
+  return (
+    <nav aria-label={heading} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <h2 className="text-base font-bold text-slate-900">{heading}</h2>
+      <p className="mt-1 text-xs text-slate-600 max-w-3xl">Choose a type to see every model in that range with its specification, dimensions and price in Australian dollars including GST, then use the compare tool to check two or three side by side before you decide.</p>
+      <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+        {found.map((c) => (
+          <li key={c.path}><a className="underline text-cyan-800" href={c.path}>{c.name}</a></li>
+        ))}
+      </ul>
+    </nav>
+  );
 }
 
 function belowContent(slug: string[], productDetail: any): React.ReactNode {
@@ -321,7 +324,22 @@ function belowContent(slug: string[], productDetail: any): React.ReactNode {
     const brand: any = (BRANDS as any[]).find((x) => x.slug === b);
     if (!brand) return null;
     const items = all.filter((p) => String(p.brand).toLowerCase() === brand.name.toLowerCase());
-    return <ProductLinkList title={`All ${brand.name} models`} aria={`All ${brand.name} models`} items={items} />;
+    const cats = [...new Set(items.map((x) => x.categorySlug))] as string[];
+    return (
+      <>
+        <CategoryLinks heading={`${brand.name} models by type`} slugs={cats} />
+        <ProductLinkList title={`All ${brand.name} models`} aria={`All ${brand.name} models`} items={items} />
+      </>
+    );
+  }
+  if (a === 'venues' && b) {
+    const venue: any = (VENUES as any[]).find((x) => x.slug === b);
+    return (
+      <>
+        {venue && <CategoryLinks heading={`Fridges and freezers for ${String(venue.name).toLowerCase()}`} slugs={venue.relatedCategories || []} />}
+        <BuyingChecklist />
+      </>
+    );
   }
   if ((a === 'clearance' || a === 'deals') && !b) {
     const items = all.filter((p) => p.condition === 'ex-display' || p.condition === 'refurbished' || p.condition === 'factory-second' || p.categorySlug === 'clearance-ex-display');
@@ -432,7 +450,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
       {blocks.map((b, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(b).replace(/</g, '\\u003c') }} />
       ))}
-      <ClientApp productDetail={productDetail} footer={<Footer />} below={belowContent(slug, productDetail)} />
+      <ClientApp productDetail={productDetail} below={belowContent(slug, productDetail)} />
     </>
   );
 }

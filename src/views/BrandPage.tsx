@@ -100,7 +100,7 @@ export const BrandPage: React.FC = () => {
             Explore Other Commercial Refrigeration Brands
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
-            {BRANDS.filter((b: any) => b.slug !== brand.slug).slice(0, 12).map((other: any) => (
+            {BRANDS.filter((b: any) => b.slug !== brand.slug).slice(0, 6).map((other: any) => (
               <Link
                 key={other.slug}
                 href={`/brands/${other.slug}/`}

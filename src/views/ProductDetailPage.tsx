@@ -73,6 +73,10 @@ export const ProductDetailPage: React.FC = () => {
   if (product.tempRange) quickAnswers.push([`What temperature does it run at?`, `The stated operating range is ${String(product.tempRange).split(' (')[0]}.`]);
   if (product.refrigerant) quickAnswers.push([`Which refrigerant does it use?`, `The specification lists ${product.refrigerant}.`]);
   if (product.power) quickAnswers.push([`What power does it need?`, `The listed electrical supply is ${product.power}. Confirm it suits your outlet before you order.`]);
+  quickAnswers.push([`Which model or part number is this?`, `It is the ${product.brand} ${product.model}${product.sku && product.sku !== product.model ? `, product code ${product.sku}` : ''}, listed as ${product.condition === 'new' ? 'new' : String(product.condition).replace('-', ' ')}. Quote this number if you contact us about it.`]);
+  quickAnswers.push([`Does the price include GST?`, `Yes. The price shown includes 10% Australian GST, and the GST amount is listed under the price.`]);
+  quickAnswers.push([`Will it fit my equipment?`, `Check the specifications and dimensions on this page against your cabinet or space. If you are unsure, send us the model of the equipment it is for, together with this product code, and we will reply.`]);
+  quickAnswers.push([`How do I order the ${product.brand} ${product.model}?`, `Add it to the cart and check out online, or add it to a quote request if you want a delivered price or need several units. The delivery, warranty and returns terms are set out further down this page.`]);
   quickAnswers.push([`How do I get a price for several units?`, `Add the units to a quote request and include your delivery postcode. We reply with a delivered price.`]);
 
   const handleBundleToggle = (id: string) => {

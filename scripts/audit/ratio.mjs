@@ -1,6 +1,6 @@
 // Text-to-HTML ratio for a few live URLs, with and without script/style text counted.
 // Usage: node scripts/audit/ratio.mjs /path/ /other/
-const base = 'https://barfreezer.com.au';
+const base = process.env.BASE || 'https://barfreezer.com.au';
 for (const u of process.argv.slice(2)) {
   const h = await (await fetch(base + u)).text();
   const strip = (s) => s.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
