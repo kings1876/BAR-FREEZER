@@ -21,8 +21,8 @@ export const VenuePage: React.FC = () => {
       PRODUCTS.filter((p: any) => p.categorySlug === slug && p.condition === 'new' && p.images && p.images.length && p.price > 0)
     );
     const out: any[] = [];
-    for (let i = 0; out.length < 8 && pools.some((pl) => i < pl.length); i++) {
-      for (const pl of pools) if (pl[i] && out.length < 8) out.push(pl[i]);
+    for (let i = 0; out.length < 4 && pools.some((pl) => i < pl.length); i++) {
+      for (const pl of pools) if (pl[i] && out.length < 4) out.push(pl[i]);
     }
     return out;
   })();

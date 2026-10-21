@@ -169,6 +169,8 @@ export const Footer: React.FC = () => {
           </p>
         </div>
         <dl className="space-y-2 text-slate-400">
+          <div><dt className="inline font-semibold text-white">Delivery and payment: </dt><dd className="inline">we deliver Australia-wide, with freight quoted to your postcode. You can pay by bank transfer, PayID, Osko or cryptocurrency (BTC, USDT and ETH). Prices are in Australian dollars and include GST, and we supply a tax invoice with every order.</dd></div>
+          <div><dt className="inline font-semibold text-white">Need help choosing? </dt><dd className="inline">read our buying guides on bar fridge sizes, glass and solid doors, ventilation, kegerators and wine fridges, or send us your list for a quote.</dd></div>
           <div><dt className="inline font-semibold text-white">Bar freezers: </dt><dd className="inline">under bar, back bar, glass door display, chest, upright and glass froster models for ice, garnishes and frozen stock.</dd></div>
           <div><dt className="inline font-semibold text-white">Bar fridges: </dt><dd className="inline">under bar, bottle cooler, back bar, beer, wine, kegerator, combination and outdoor models for drinks service.</dd></div>
           <div><dt className="inline font-semibold text-white">Accessories and parts: </dt><dd className="inline">shelves, door seals and locks, castors and legs, ice machines, cleaners and spare parts.</dd></div>

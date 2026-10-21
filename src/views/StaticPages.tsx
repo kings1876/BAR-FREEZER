@@ -50,7 +50,15 @@ export const DealsPage: React.FC = () => {
           </p>
         </div>
 
-        <PagedGrid items={clearanceItems} render={(p: any) => <ProductCard key={p.id} product={p} />} />
+        <PagedGrid items={clearanceItems} pageSize={8} render={(p: any) => <ProductCard key={p.id} product={p} />} />
+        <nav aria-label="All ex-display and clearance models">
+          <h2 className="text-base font-bold text-slate-900">All ex-display and clearance models ({clearanceItems.length})</h2>
+          <ul className="mt-3 columns-1 sm:columns-2 gap-6 text-xs text-slate-700 space-y-1">
+            {clearanceItems.map((p: any) => (
+              <li key={p.id} className="break-inside-avoid"><Link href={`/product/${p.slug}/`} className="hover:text-cyan-700 hover:underline">{p.name}</Link></li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </div>
   );

@@ -42,7 +42,7 @@ export const HomePage: React.FC = () => {
   const selectedVenue = VENUES.find((v: any) => v.slug === activeVenueTab) || VENUES[0];
   const bestSellers = (() => {
     const pick = (cat: string, n: number) => PRODUCTS.filter((p: any) => p.categorySlug === cat && p.condition === 'new' && p.images && p.images.length && p.capacityLitres > 0).filter((_: any, i: number) => i % 7 === 0).slice(0, n);
-    return [...pick('under-bar-fridges', 2), ...pick('under-bar-freezers', 2), ...pick('wine-fridges', 1), ...pick('glass-door-display-freezers', 1), ...pick('kegerators-dispensers', 1), ...pick('outdoor-alfresco-fridges', 1)];
+    return [...pick('under-bar-fridges', 1), ...pick('under-bar-freezers', 1), ...pick('wine-fridges', 1), ...pick('kegerators-dispensers', 1)];
   })();
   const spotlight: any = PRODUCTS.find((p: any) => p.id === 'sk-rf7-ubf-2-sd') || PRODUCTS[0];
 

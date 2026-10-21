@@ -285,7 +285,7 @@ export const CategoryPage: React.FC = () => {
             {sortedProducts.length > 0 ? (
               <PagedGrid
                 items={sortedProducts}
-                pageSize={12}
+                pageSize={8}
                 resetKey={`${currentPath}|${sortBy}|${JSON.stringify(filters)}`}
                 className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
                 render={(product: any) => <ProductCard key={product.id} product={product} />}
