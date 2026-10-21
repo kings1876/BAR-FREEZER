@@ -30,8 +30,9 @@ const inSitemap = (p) => sitemap.includes(`${BASE}${p}<`) || sitemap.includes(`>
 
 function auditHtml(p, h, kind) {
   const issues = [];
-  const title = (h.match(/<title[^>]*>([^<]*)/) || [])[1] || '';
-  const desc = (h.match(/<meta name="description" content="([^"]*)"/) || [])[1] || '';
+  const dec = (x) => String(x).replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'");
+  const title = dec((h.match(/<title[^>]*>([^<]*)/) || [])[1] || '');
+  const desc = dec((h.match(/<meta name="description" content="([^"]*)"/) || [])[1] || '');
   const canon = (h.match(/<link rel="canonical" href="([^"]*)"/) || [])[1] || '';
   const robots = (h.match(/<meta name="robots" content="([^"]*)"/) || [])[1] || '';
   const h1s = [...h.matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/g)].map((m) => m[1].replace(/<[^>]+>/g, '').trim());
@@ -115,7 +116,7 @@ if (BATCH === 'pages') {
     const lightP = pr;
     if (!lightP.images || !lightP.images.length) a.issues.push('catalogue: no images');
     if (!(lightP.price > 0)) a.issues.push('catalogue: no price');
-    if (!lightP.capacityLitres && !/freezer|cabinet|display/i.test(lightP.name)) a.issues.push('catalogue: no capacity');
+    if (!lightP.capacityLitres && !lightP.capacityLabel && lightP.primaryCategory !== 'Accessories & Parts') a.issues.push('catalogue: no capacity');
     const mentions = (a.title + a.h1).toLowerCase();
     if (lightP.brand && !mentions.includes(String(lightP.brand).toLowerCase().split(' ')[0])) a.issues.push('brand missing from title/H1');
     return a;

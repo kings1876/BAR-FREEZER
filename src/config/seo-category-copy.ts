@@ -2,6 +2,7 @@
 // General buying information only; no unverified claims.
 import { FREEZER_COPY } from './seo-freezers';
 import { FRIDGE_COPY } from './seo-fridges';
+import { ACCESSORY_COPY } from './seo-accessories';
 
 export const CATEGORY_COPY: Record<string, { h1: string; intro: string; guide?: { href: string; label: string } }> = {
   '/bar-fridges/': {
@@ -57,4 +58,4 @@ export const CATEGORY_COPY: Record<string, { h1: string; intro: string; guide?: 
   },
 };
 
-Object.assign(CATEGORY_COPY, FREEZER_COPY, FRIDGE_COPY);
+Object.assign(CATEGORY_COPY, FREEZER_COPY, FRIDGE_COPY, ACCESSORY_COPY);

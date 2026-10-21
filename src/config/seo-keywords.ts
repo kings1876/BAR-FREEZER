@@ -3,6 +3,7 @@
 // Titles are final (60 characters or fewer); the page template does not add a suffix.
 import { FREEZER_META } from './seo-freezers';
 import { FRIDGE_META } from './seo-fridges';
+import { ACCESSORY_META } from './seo-accessories';
 
 export const KEYWORD_META: Record<string, { title: string; description: string }> = {
   '/bar-fridges/': {
@@ -55,4 +56,4 @@ export const KEYWORD_META: Record<string, { title: string; description: string }
   },
 };
 
-Object.assign(KEYWORD_META, FREEZER_META, FRIDGE_META);
+Object.assign(KEYWORD_META, FREEZER_META, FRIDGE_META, ACCESSORY_META);

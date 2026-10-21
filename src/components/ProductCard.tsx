@@ -75,6 +75,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Quick Specs Strip */}
+        {product.primaryCategory === 'Accessories & Parts' ? (
+          <div className="grid grid-cols-2 gap-2 py-2 px-2.5 bg-slate-50 rounded text-xs text-slate-600 font-mono">
+            <div>
+              <span className="text-[10px] text-slate-500 block uppercase font-sans">Brand</span>
+              <span className="font-medium text-slate-900 truncate block">{product.brand}</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-slate-500 block uppercase font-sans">Part no.</span>
+              <span className="font-medium text-slate-900 truncate block">{product.model || product.sku}</span>
+            </div>
+          </div>
+        ) : (
         <div className="grid grid-cols-3 gap-2 py-2 px-2.5 bg-slate-50 rounded text-xs text-slate-600 font-mono">
           <div>
             <span className="text-[10px] text-slate-500 block uppercase font-sans">Width</span>
@@ -89,6 +101,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <span className="font-medium text-slate-900">{product.tempRange ? product.tempRange.split(' ')[0] : '—'}</span>
           </div>
         </div>
+        )}
 
         {/* Stock & Delivery Promise */}
         <div className="text-xs text-slate-600 flex items-center gap-1.5 pt-1">

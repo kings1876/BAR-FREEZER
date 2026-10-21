@@ -109,7 +109,9 @@ function productMeta(p: any) {
     const specs = [p.widthMm >= 300 ? `${p.widthMm}mm wide` : '', p.capacityLitres >= 20 ? `${p.capacityLitres}L` : '', p.tempRange ? String(p.tempRange).split(' (')[0] : ''].filter(Boolean).join(', ');
     desc = `Buy the ${p.brand}${model} ${kw.term}${specs ? ': ' + specs : ''}. Compare price and specifications, delivered Australia-wide.`;
   } else {
-    desc = 'Buy ' + dedupeWords(String(p.shortDescription || p.name));
+    const nm = dedupeWords(String(p.name));
+    const named = p.brand && !nm.toLowerCase().includes(String(p.brand).toLowerCase()) ? `${p.brand} ${nm}` : nm;
+    desc = `Buy the ${wordTrim(named, 80)}. Compare price and specifications, delivered Australia-wide.`;
   }
   if (tag && !desc.includes(tag)) desc = desc.replace(/\.$/, '') + ` (${tag}).`;
   return { title, description: padDesc(desc) };

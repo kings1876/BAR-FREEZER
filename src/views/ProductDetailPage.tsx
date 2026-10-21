@@ -178,7 +178,24 @@ export const ProductDetailPage: React.FC = () => {
                 </div>
               )}
 
-              {/* Dimension Callout Strip */}
+              {/* Part callout strip for accessories and parts */}
+              {product.primaryCategory === 'Accessories & Parts' ? (
+                <div className="p-4 bg-slate-50 rounded-lg border border-slate-200/80 grid grid-cols-3 gap-2 text-center text-xs">
+                  <div>
+                    <span className="text-slate-500 text-[10px] uppercase block">Brand</span>
+                    <span className="font-mono font-bold text-slate-900">{product.brand}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 text-[10px] uppercase block">Part no.</span>
+                    <span className="font-mono font-bold text-slate-900">{product.model || product.sku}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 text-[10px] uppercase block">Condition</span>
+                    <span className="font-mono font-bold text-slate-900 capitalize">{product.condition || 'new'}</span>
+                  </div>
+                </div>
+              ) : (
+              <>
               <div className="p-4 bg-slate-50 rounded-lg border border-slate-200/80 grid grid-cols-3 gap-2 text-center text-xs">
                 <div>
                   <span className="text-slate-500 text-[10px] uppercase block">Dimensions</span>
@@ -193,6 +210,8 @@ export const ProductDetailPage: React.FC = () => {
                   <span className="font-mono font-bold text-cyan-700">{product.tempRange || '—'}</span>
                 </div>
               </div>
+              </>
+              )}
             </div>
 
             {/* Right 6 Columns: Contiguous Purchase Module */}
