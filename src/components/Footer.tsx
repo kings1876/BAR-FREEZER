@@ -88,37 +88,33 @@ export const Footer: React.FC = () => {
         {/* Column 2: Equipment Categories */}
         <div className="space-y-3">
           <p className="text-xs font-bold uppercase tracking-wider text-white">Refrigeration</p>
-          <ul className="space-y-2 text-slate-400">
-            <li><a href="/bar-fridges/" className="hover:text-white transition-colors">All Bar Fridges</a></li>
-            <li><a href="/bar-freezers/" className="hover:text-white transition-colors">All Bar Freezers</a></li>
-            <li><a href="/accessories-parts/" className="hover:text-white transition-colors">Accessories &amp; Parts</a></li>
-            <li><a href="/bar-freezers/under-bar-freezers/" className="hover:text-white transition-colors">Underbar Freezers</a></li>
-            <li><a href="/bar-freezers/back-bar-freezers/" className="hover:text-white transition-colors">Back Bar Freezers</a></li>
-            <li><a href="/bar-freezers/glass-door-display-freezers/" className="hover:text-white transition-colors">Glass Display Freezers</a></li>
-            <li><a href="/bar-freezers/glass-frosters-specialty/" className="hover:text-white transition-colors">Glass & Beer Mug Frosters</a></li>
-            <li><a href="/bar-freezers/chest-bench-freezers/" className="hover:text-white transition-colors">Chest & Bench Freezers</a></li>
-            <li><a href="/bar-freezers/upright-commercial-freezers/" className="hover:text-white transition-colors">Upright Kitchen Freezers</a></li>
-            <li><a href="/bar-freezers/home-bar-outdoor-freezers/" className="hover:text-white transition-colors">Home Bar & Outdoor Freezers</a></li>
-            <li><a href="/bar-fridges/bottle-coolers/" className="hover:text-white transition-colors">Bottle Coolers</a></li>
-            <li><a href="/bar-fridges/kegerators-dispensers/" className="hover:text-white transition-colors">Kegerators &amp; Dispensers</a></li>
-            <li><a href="/bar-fridges/wine-fridges/" className="hover:text-white transition-colors">Wine Fridges</a></li>
-            <li><a href="/clearance/" className="text-rose-400 hover:text-rose-300 font-medium">Clearance & Ex-Display</a></li>
-            <li><a href="/deals/" className="hover:text-white transition-colors">Current Deals</a></li>
-          </ul>
+          <div className="space-y-2 text-slate-400">
+            <a href="/bar-fridges/" className="block hover:text-white transition-colors">All Bar Fridges</a>
+            <a href="/bar-freezers/" className="block hover:text-white transition-colors">All Bar Freezers</a>
+            <a href="/accessories-parts/" className="block hover:text-white transition-colors">Accessories &amp; Parts</a>
+            <a href="/bar-freezers/under-bar-freezers/" className="block hover:text-white transition-colors">Underbar Freezers</a>
+            <a href="/bar-freezers/back-bar-freezers/" className="block hover:text-white transition-colors">Back Bar Freezers</a>
+            <a href="/bar-freezers/glass-door-display-freezers/" className="block hover:text-white transition-colors">Glass Display Freezers</a>
+            <a href="/bar-freezers/glass-frosters-specialty/" className="block hover:text-white transition-colors">Glass & Beer Mug Frosters</a>
+            <a href="/bar-freezers/chest-bench-freezers/" className="block hover:text-white transition-colors">Chest & Bench Freezers</a>
+            <a href="/bar-freezers/upright-commercial-freezers/" className="block hover:text-white transition-colors">Upright Kitchen Freezers</a>
+            <a href="/bar-freezers/home-bar-outdoor-freezers/" className="block hover:text-white transition-colors">Home Bar & Outdoor Freezers</a>
+            <a href="/bar-fridges/bottle-coolers/" className="block hover:text-white transition-colors">Bottle Coolers</a>
+            <a href="/bar-fridges/kegerators-dispensers/" className="block hover:text-white transition-colors">Kegerators &amp; Dispensers</a>
+            <a href="/bar-fridges/wine-fridges/" className="block hover:text-white transition-colors">Wine Fridges</a>
+            <a href="/clearance/" className="block text-rose-400 hover:text-rose-300 font-medium">Clearance & Ex-Display</a>
+            <a href="/deals/" className="block hover:text-white transition-colors">Current Deals</a>
+          </div>
         </div>
 
         {/* Column 3: Australian Delivery Hubs */}
         <div className="space-y-3">
           <p className="text-xs font-bold uppercase tracking-wider text-white">Delivery Australia-Wide</p>
-          <ul className="space-y-1.5 text-slate-400 grid grid-cols-2 gap-x-2">
+          <div className="space-y-1.5 text-slate-400 grid grid-cols-2 gap-x-2">
             {CITIES.map((c: any) => (
-              <li key={c.slug}>
-                <a href={`/delivery/${c.slug}/`} className="hover:text-cyan-400 transition-colors inline-block py-1.5">
-                  {c.name}
-                </a>
-              </li>
+              <a key={c.slug} href={`/delivery/${c.slug}/`} className="hover:text-cyan-400 transition-colors inline-block py-1.5">{c.name}</a>
             ))}
-          </ul>
+          </div>
           <div className="pt-2">
             <a href="/delivery/" className="text-cyan-400 hover:text-cyan-300 font-semibold block">
               Delivery information &rarr;
@@ -129,19 +125,19 @@ export const Footer: React.FC = () => {
         {/* Column 4: Trade & Support */}
         <div className="space-y-3">
           <p className="text-xs font-bold uppercase tracking-wider text-white">Trade & Operations</p>
-          <ul className="space-y-2 text-slate-400">
-            <li><a href="/quote/" className="text-amber-400 hover:text-amber-300 font-semibold">Trade Pricing & Quotes</a></li>
-                        <li><a href="/warranty/" className="hover:text-white transition-colors">Warranty & Service Claims</a></li>
-            <li><a href="/finance/" className="hover:text-white transition-colors">Equipment Finance Enquiries</a></li>
-            <li><a href="/compare/" className="hover:text-white transition-colors">Side-by-Side Spec Compare</a></li>
-            <li><a href="/guides/" className="hover:text-white transition-colors">Buying Guides</a></li>
-            <li><a href="/reviews/" className="hover:text-white transition-colors">Trustpilot Customer Reviews</a></li>
-            <li><a href="/payment-methods/" className="hover:text-white transition-colors">Payment Methods</a></li>
-            <li><a href="/returns/" className="hover:text-white transition-colors">Returns & Australian Consumer Law</a></li>
-            <li><a href="/faq/" className="hover:text-white transition-colors">Equipment FAQs</a></li>
-            <li><a href="/about/" className="hover:text-white transition-colors">About Bar Freezer Australia</a></li>
-            <li><a href="/contact/" className="hover:text-white transition-colors">Contact Us</a></li>
-          </ul>
+          <div className="space-y-2 text-slate-400">
+            <a href="/quote/" className="block text-amber-400 hover:text-amber-300 font-semibold">Trade Pricing & Quotes</a>
+                        <a href="/warranty/" className="block hover:text-white transition-colors">Warranty & Service Claims</a>
+            <a href="/finance/" className="block hover:text-white transition-colors">Equipment Finance Enquiries</a>
+            <a href="/compare/" className="block hover:text-white transition-colors">Side-by-Side Spec Compare</a>
+            <a href="/guides/" className="block hover:text-white transition-colors">Buying Guides</a>
+            <a href="/reviews/" className="block hover:text-white transition-colors">Trustpilot Customer Reviews</a>
+            <a href="/payment-methods/" className="block hover:text-white transition-colors">Payment Methods</a>
+            <a href="/returns/" className="block hover:text-white transition-colors">Returns & Australian Consumer Law</a>
+            <a href="/faq/" className="block hover:text-white transition-colors">Equipment FAQs</a>
+            <a href="/about/" className="block hover:text-white transition-colors">About Bar Freezer Australia</a>
+            <a href="/contact/" className="block hover:text-white transition-colors">Contact Us</a>
+          </div>
         </div>
       </div>
 
@@ -168,19 +164,19 @@ export const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <p className="text-xs font-bold uppercase tracking-wider text-white">Brands</p>
-          <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-slate-400">
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-slate-400">
             {BRANDS.map((b: any) => (
-              <li key={b.slug}><a href={`/brands/${b.slug}/`} className="hover:text-white">{b.name}</a></li>
+              <a key={b.slug} href={`/brands/${b.slug}/`} className="hover:text-white">{b.name}</a>
             ))}
-          </ul>
+          </div>
         </div>
         <div>
           <p className="text-xs font-bold uppercase tracking-wider text-white">Venues</p>
-          <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-slate-400">
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-slate-400">
             {VENUES.map((v: any) => (
-              <li key={v.slug}><a href={v.path} className="hover:text-white">{v.name}</a></li>
+              <a key={v.slug} href={v.path} className="hover:text-white">{v.name}</a>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
 

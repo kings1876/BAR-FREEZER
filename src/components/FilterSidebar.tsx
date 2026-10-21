@@ -48,6 +48,8 @@ interface FilterSidebarProps {
   filteredCount: number;
   isMobileDrawerOpen?: boolean;
   setIsMobileDrawerOpen?: (open: boolean) => void;
+  /** Brand names present in the current list; other brands are left out of the Brand filter. */
+  availableBrands?: string[];
 }
 
 export const FilterSidebar: React.FC<FilterSidebarProps> = ({
@@ -56,8 +58,10 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   totalProductsCount,
   filteredCount,
   isMobileDrawerOpen = false,
-  setIsMobileDrawerOpen
+  setIsMobileDrawerOpen,
+  availableBrands
 }) => {
+  const brandList = availableBrands ? BRANDS.filter((b: any) => availableBrands.includes(b.name)) : BRANDS;
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     doors: true,
     brand: true,
@@ -169,7 +173,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         </button>
         {openSections.brand && (
           <div className="pt-2 max-h-48 overflow-y-auto space-y-1.5 text-xs text-slate-600 pr-1">
-            {BRANDS.map((b: any) => (
+            {brandList.map((b: any) => (
               <label key={b.name} className="flex items-center gap-2 cursor-pointer hover:text-slate-900">
                 <input
                   type="checkbox"

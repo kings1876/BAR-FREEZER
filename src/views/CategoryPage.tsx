@@ -243,6 +243,7 @@ export const CategoryPage: React.FC = () => {
             filteredCount={filteredProducts.length}
             isMobileDrawerOpen={isMobileDrawerOpen}
             setIsMobileDrawerOpen={setIsMobileDrawerOpen}
+            availableBrands={Array.from(new Set(categoryBaseProducts.map((p: any) => p.brand)))}
           />
 
           {/* Right Product Grid Area */}
