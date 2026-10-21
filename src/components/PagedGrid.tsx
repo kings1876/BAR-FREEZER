@@ -6,14 +6,18 @@ interface PagedGridProps<T> {
   pageSize?: number;
   className?: string;
   resetKey?: string | number;
+  /** Total number of items when `items` is only a preview; the button counts against this. */
+  totalCount?: number;
+  /** Called when the visitor asks for more, so a lazily loaded full list can start loading. */
+  onMore?: () => void;
 }
 
 // Renders the first page of items, then reveals more on demand. Keeps the initial HTML and DOM small on large categories.
-export function PagedGrid<T>({ items, render, pageSize = 12, className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6', resetKey }: PagedGridProps<T>) {
+export function PagedGrid<T>({ items, render, pageSize = 12, className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6', resetKey, totalCount, onMore }: PagedGridProps<T>) {
   const [count, setCount] = useState(pageSize);
   useEffect(() => { setCount(pageSize); }, [resetKey, pageSize]);
   const shown = items.slice(0, count);
-  const remaining = items.length - shown.length;
+  const remaining = (totalCount ?? items.length) - Math.min(count, totalCount ?? items.length);
   return (
     <>
       <h2 className="sr-only">Products</h2>
@@ -22,7 +26,7 @@ export function PagedGrid<T>({ items, render, pageSize = 12, className = 'grid g
         <div className="pt-6 text-center">
           <button
             type="button"
-            onClick={() => setCount((c) => c + pageSize)}
+            onClick={() => { if (onMore) onMore(); setCount((c) => c + pageSize); }}
             className="px-6 py-3 rounded-md bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider transition-colors"
           >
             Show {Math.min(pageSize, remaining)} more ({remaining} remaining)

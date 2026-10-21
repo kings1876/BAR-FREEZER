@@ -41,7 +41,7 @@ export const TradePage: React.FC = () => {
   // The first few popular products come from the server; the full table loads on the first interaction.
   const pageDetail = useProductDetail();
   const serverQuick: any[] = (pageDetail && pageDetail.data && pageDetail.data.quick) || [];
-  const catalogue = useCatalogue();
+  const [catalogue] = useCatalogue();
   const quickList: any[] = catalogue
     ? catalogue.filter((p: any) => p.primaryCategory !== 'Accessories & Parts' && p.condition === 'new' && p.capacityLitres > 0).filter((_: any, i: number) => i % 97 === 0).slice(0, 6)
     : serverQuick;

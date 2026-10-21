@@ -47,7 +47,7 @@ export const CategoryPage: React.FC = () => {
   // up front. The full table is fetched on the first interaction and then drives filtering, sorting and paging.
   const detail = useProductDetail();
   const serverData = detail && detail.data && detail.id === `data:${currentPath.replace(/^\/|\/$/g, '')}` ? detail.data : null;
-  const catalogue = useCatalogue(!serverData);
+  const [catalogue, loadCatalogueNow] = useCatalogue(!serverData);
   const categoryBaseProducts = useMemo(() => {
     if (catalogue) return categoryProducts(catalogue, rootSlug, activeSubCategory, activeType);
     return serverData ? serverData.preview : [];
@@ -280,6 +280,8 @@ export const CategoryPage: React.FC = () => {
               <PagedGrid
                 items={sortedProducts}
                 pageSize={4}
+                totalCount={catalogue ? undefined : baseTotal}
+                onMore={loadCatalogueNow}
                 resetKey={`${currentPath}|${sortBy}|${JSON.stringify(filters)}`}
                 className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
                 render={(product: any, i: number) => <ProductCard key={product.id} product={product} priority={i < 2} />}
