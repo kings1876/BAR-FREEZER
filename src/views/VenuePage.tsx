@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChevronRight, ArrowRight, ShieldCheck, CheckCircle2, Phone, FileText } from 'lucide-react';
 import { VENUES, CATEGORIES, SITE } from '../config/core.js';
-import { PRODUCTS } from '../config/products-data.js';
+import { useProductDetail } from '../context/ProductDetailContext';
 import { ProductCard } from '../components/ProductCard';
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
@@ -16,17 +16,8 @@ export const VenuePage: React.FC = () => {
 
   const copy = (VENUE_COPY as any)[venue.slug];
 
-  // Products from the venue's related categories: new, with photos, spread across the categories.
-  const relatedProducts = (() => {
-    const pools = (venue.relatedCategories as string[]).map((slug) =>
-      PRODUCTS.filter((p: any) => p.categorySlug === slug && p.condition === 'new' && p.images && p.images.length && p.price > 0)
-    );
-    const out: any[] = [];
-    for (let i = 0; out.length < 3 && pools.some((pl) => i < pl.length); i++) {
-      for (const pl of pools) if (pl[i] && out.length < 3) out.push(pl[i]);
-    }
-    return out;
-  })();
+  const pageDetail = useProductDetail();
+  const relatedProducts: any[] = (pageDetail && pageDetail.data && pageDetail.data.related) || [];
 
   return (
     <div className="bg-slate-50 min-h-screen py-8">

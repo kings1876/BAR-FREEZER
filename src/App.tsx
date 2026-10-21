@@ -29,7 +29,7 @@ const TradePage = dynamic(() => import('./views/TradePage').then((m) => m.TradeP
 const WarrantyPage = dynamic(() => import('./views/WarrantyPage').then((m) => m.WarrantyPage));
 const ComparePage = dynamic(() => import('./views/ComparePage').then((m) => m.ComparePage));
 const ReviewsPage = dynamic(() => import('./views/ReviewsPage').then((m) => m.ReviewsPage));
-const DealsPage = dynamic(() => import('./views/StaticPages').then((m) => m.DealsPage));
+const DealsPage = dynamic(() => import('./views/DealsPage').then((m) => m.DealsPage));
 const FinancePage = dynamic(() => import('./views/InfoPages').then((m) => m.FinancePage));
 const AboutPage = dynamic(() => import('./views/InfoPages').then((m) => m.AboutPage));
 const ContactPage = dynamic(() => import('./views/InfoPages').then((m) => m.ContactPage));

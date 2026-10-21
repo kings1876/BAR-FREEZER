@@ -18,7 +18,8 @@ import {
   Phone 
 } from 'lucide-react';
 import { SITE, CATEGORIES, BRANDS, VENUES, FAQS } from '../config/core.js';
-import { PRODUCTS } from '../config/products-data.js';
+import { PRODUCT_COUNTS } from '../config/products-counts.js';
+import { useProductDetail } from '../context/ProductDetailContext';
 import { POSTS } from '../config/posts-list.js';
 import { ProductCard } from '../components/ProductCard';
 import { ProductImage } from '../components/ProductImage';
@@ -42,11 +43,10 @@ export const HomePage: React.FC = () => {
   };
 
   const selectedVenue = VENUES.find((v: any) => v.slug === activeVenueTab) || VENUES[0];
-  const bestSellers = (() => {
-    const pick = (cat: string, n: number) => PRODUCTS.filter((p: any) => p.categorySlug === cat && p.condition === 'new' && p.images && p.images.length && p.capacityLitres > 0).filter((_: any, i: number) => i % 7 === 0).slice(0, n);
-    return [...pick('under-bar-fridges', 1), ...pick('under-bar-freezers', 1), ...pick('wine-fridges', 1), ...pick('kegerators-dispensers', 1)];
-  })();
-  const spotlight: any = PRODUCTS.find((p: any) => p.id === 'sk-rf7-ubf-2-sd') || PRODUCTS[0];
+  const pageDetail = useProductDetail();
+  const homeData: any = (pageDetail && pageDetail.data) || { featured: [] };
+  const bestSellers: any[] = homeData.featured || [];
+  const spotlight: any = homeData.spotlight || {};
 
   const toggleFaq = (idx: number) => {
     setOpenFaqIndex(openFaqIndex === idx ? null : idx);
@@ -220,7 +220,7 @@ export const HomePage: React.FC = () => {
               <Building className="w-8 h-8 text-amber-400 shrink-0" />
               <div>
                 <div className="text-sm font-bold text-white">Wide Range</div>
-                <div className="text-xs text-slate-400">{PRODUCTS.length.toLocaleString('en-AU')} products, {new Set(PRODUCTS.map((p: any) => p.brand)).size} brands</div>
+                <div className="text-xs text-slate-400">{PRODUCT_COUNTS.total.toLocaleString('en-AU')} products, {PRODUCT_COUNTS.brands} brands</div>
               </div>
             </div>
 
@@ -375,7 +375,7 @@ export const HomePage: React.FC = () => {
               href="/bar-freezers/" 
               className="text-xs font-bold text-cyan-700 hover:text-cyan-800 flex items-center gap-1 uppercase tracking-wider"
             >
-              <span>Explore All Bar Freezers ({PRODUCTS.length} Models)</span>
+              <span>Explore All Bar Freezers ({PRODUCT_COUNTS.total} Models)</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -447,7 +447,7 @@ export const HomePage: React.FC = () => {
                 doors: "Ex-Display & Refurbished",
                 desc: "Condition is shown on each listing."
               }
-            ].map((cat) => ({ ...cat, temp: `${PRODUCTS.filter((p: any) => p.categorySlug === cat.slug).length} products` })).map((cat) => (
+            ].map((cat) => ({ ...cat, temp: `${(PRODUCT_COUNTS.bySlug as any)[cat.slug] || 0} products` })).map((cat) => (
               <Link
                 key={cat.slug}
                 href={cat.path}
@@ -621,7 +621,7 @@ export const HomePage: React.FC = () => {
                   {b.name}
                 </span>
                 <span className="text-[10px] text-slate-400 font-mono mt-0.5 block">
-                  {PRODUCTS.filter((p: any) => p.brand === b.name).length} products
+                  {(PRODUCT_COUNTS.byBrand as any)[b.name] || 0} products
                 </span>
               </Link>
             ))}
@@ -668,7 +668,7 @@ export const HomePage: React.FC = () => {
             <div className="lg:col-span-6 grid grid-cols-2 gap-4">
               <div className="p-6 bg-slate-50 rounded-lg border border-slate-200">
                 <div className="text-3xl sm:text-4xl font-extrabold font-mono text-slate-900 tabular-nums">
-                  {PRODUCTS.length.toLocaleString('en-AU')}
+                  {PRODUCT_COUNTS.total.toLocaleString('en-AU')}
                 </div>
                 <div className="text-xs font-semibold text-slate-700 uppercase tracking-wide mt-1">
                   Products Listed
@@ -688,7 +688,7 @@ export const HomePage: React.FC = () => {
 
               <div className="p-6 bg-slate-50 rounded-lg border border-slate-200">
                 <div className="text-3xl sm:text-4xl font-extrabold font-mono text-slate-900 tabular-nums">
-                  {new Set(PRODUCTS.map((p: any) => p.brand)).size}
+                  {PRODUCT_COUNTS.brands}
                 </div>
                 <div className="text-xs font-semibold text-slate-700 uppercase tracking-wide mt-1">
                   Brands

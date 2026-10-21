@@ -77,7 +77,8 @@ function baseProductTitle(p: any): string {
   const kw: any = (PRODUCT_KW as any)[p.id];
   const isAcc = p.primaryCategory === 'Accessories & Parts';
   if (kw && !isAcc) {
-    const shortModel = p.model ? String(p.model).replace(/-QA\d+$/, '') : '';
+    // "+" is dropped by crawlers when comparing titles, so W1 and W1+ would collide; spell it out.
+    const shortModel = p.model ? String(p.model).replace(/-QA\d+$/, '').replace(/\+$/, ' Plus') : '';
     const model = shortModel && !String(p.brand).toLowerCase().includes(shortModel.toLowerCase()) ? ' ' + shortModel : '';
     const t = `${p.brand}${model} ${cap(kw.term)} | Bar Freezer`;
     if (t.length <= 60) return t;
@@ -251,6 +252,36 @@ function ProductLinkList({ title, aria, items }: { title: string; aria: string; 
   );
 }
 
+// The few products a page shows, supplied by the server so the client does not need the whole catalogue.
+function pageData(slug: string[]): any {
+  const all = PRODUCTS as any[];
+  const [a, b] = slug;
+  if (!slug.length) {
+    const pick = (cat: string, n: number) => all.filter((p) => p.categorySlug === cat && p.condition === 'new' && p.images && p.images.length && p.capacityLitres > 0).filter((_, i) => i % 7 === 0).slice(0, n);
+    return {
+      spotlight: all.find((p) => p.id === 'sk-rf7-ubf-2-sd') || all[0],
+      featured: [...pick('under-bar-fridges', 1), ...pick('under-bar-freezers', 1), ...pick('wine-fridges', 1), ...pick('kegerators-dispensers', 1)],
+    };
+  }
+  if (a === 'brands' && b) {
+    const brand: any = (BRANDS as any[]).find((x) => x.slug === b);
+    return brand ? { products: all.filter((p) => String(p.brand).toLowerCase() === brand.name.toLowerCase()).slice(0, 12) } : null;
+  }
+  if (a === 'venues' && b) {
+    const venue: any = (VENUES as any[]).find((x) => x.slug === b);
+    if (!venue) return null;
+    const pools = (venue.relatedCategories as string[]).map((s) => all.filter((p) => p.categorySlug === s && p.condition === 'new' && p.images && p.images.length && p.price > 0));
+    const out: any[] = [];
+    for (let i = 0; out.length < 3 && pools.some((pl) => i < pl.length); i++) for (const pl of pools) if (pl[i] && out.length < 3) out.push(pl[i]);
+    return { related: out };
+  }
+  if ((a === 'clearance' || a === 'deals') && !b) {
+    const items = all.filter((p) => p.condition === 'ex-display' || p.condition === 'refurbished' || p.condition === 'factory-second' || p.categorySlug === 'clearance-ex-display');
+    return { items: items.slice(0, 12), total: items.length };
+  }
+  return null;
+}
+
 function belowContent(slug: string[], productDetail: any): React.ReactNode {
   const all = PRODUCTS as any[];
   const [a, b, c] = slug;
@@ -267,7 +298,24 @@ function belowContent(slug: string[], productDetail: any): React.ReactNode {
       return true;
     });
     const label = (type || sub || root).name;
-    return <ProductLinkList title={`All ${label} models (${items.length})`} aria={`All ${label} models`} items={items} />;
+    // Every sub-category and type is linked straight from its top-level category, keeping them within two clicks of the home page.
+    const typeNav = !b ? (
+      <nav aria-label={`${root.name} types`} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <h2 className="text-lg font-bold mb-3">Browse {root.name} by type</h2>
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-1 text-sm">
+          {root.subcategories.flatMap((s: any) => [
+            <li key={s.slug}><a className="font-semibold underline" href={`/${a}/${s.slug}/`}>{s.name}</a></li>,
+            ...(s.types || []).map((t: any) => <li key={`${s.slug}/${t.slug}`}><a className="underline" href={`/${a}/${s.slug}/${t.slug}/`}>{s.name}: {t.name}</a></li>),
+          ])}
+        </ul>
+      </nav>
+    ) : null;
+    return (
+      <>
+        {typeNav}
+        <ProductLinkList title={`All ${label} models (${items.length})`} aria={`All ${label} models`} items={items} />
+      </>
+    );
   }
   if (a === 'brands' && b) {
     const brand: any = (BRANDS as any[]).find((x) => x.slug === b);
@@ -375,6 +423,9 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
     const m = lookup(slug);
     if (m) blocks.push({ '@context': 'https://schema.org', '@type': slug.length === 1 && STATIC_META[slug[0]] ? 'WebPage' : 'CollectionPage', name: m.title, description: m.description, url: SITE_URL + '/' + slug.join('/') + '/' });
   }
+
+  const data = pageData(slug);
+  if (data) productDetail = { id: `data:${slug.join('/') || 'home'}`, data } as any;
 
   return (
     <>

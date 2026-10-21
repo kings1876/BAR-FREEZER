@@ -1,7 +1,8 @@
 import React from 'react';
 import { ShieldCheck, ChevronRight, ArrowRight, Award } from 'lucide-react';
 import { BRANDS } from '../config/core.js';
-import { PRODUCTS } from '../config/products-data.js';
+import { PRODUCT_COUNTS } from '../config/products-counts.js';
+import { useProductDetail } from '../context/ProductDetailContext';
 import { ProductCard } from '../components/ProductCard';
 import { useRouter, Link } from '../context/RouterContext';
 import { PagedGrid } from '../components/PagedGrid';
@@ -16,10 +17,12 @@ export const BrandPage: React.FC = () => {
   const brandSlug = routeMatch.params.brand;
   const brand = BRANDS.find((b: any) => b.slug === brandSlug) || BRANDS[0];
 
-  const brandProducts = PRODUCTS.filter((p: any) => p.brand.toLowerCase() === brand.name.toLowerCase());
+  const pageDetail = useProductDetail();
+  const brandProducts: any[] = (pageDetail && pageDetail.data && pageDetail.data.products) || [];
+  const brandTotal: number = (PRODUCT_COUNTS.byBrand as any)[brand.name] || brandProducts.length;
   const kinds = Array.from(new Set(brandProducts.map((p: any) => String(p.subCategory || '').replace(/s*(.*)s*$/, '').toLowerCase()).filter(Boolean))).slice(0, 5);
   const brandIntro = brandProducts.length
-    ? `Browse ${brandProducts.length} ${brand.name} products${kinds.length ? ' including ' + kinds.join(', ') : ''}. Compare sizes, specifications and prices, or request a quote for multiple units.`
+    ? `Browse ${brandTotal} ${brand.name} products${kinds.length ? ' including ' + kinds.join(', ') : ''}. Compare sizes, specifications and prices, or request a quote for multiple units.`
     : brand.description;
 
   return (
@@ -65,7 +68,7 @@ export const BrandPage: React.FC = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-slate-900">
-              {brand.name} Fridges & Freezers ({brandProducts.length} Models)
+              {brand.name} Fridges & Freezers ({brandTotal} Models)
             </h2>
             <span className="text-xs text-slate-500 font-mono">Delivery Australia-wide</span>
           </div>
@@ -107,7 +110,7 @@ export const BrandPage: React.FC = () => {
                   {other.name}
                 </span>
                 <span className="text-[10px] text-slate-500 font-mono mt-0.5 block">
-                  {PRODUCTS.filter((p: any) => p.brand === other.name).length} products
+                  {(PRODUCT_COUNTS.byBrand as any)[other.name] || 0} products
                 </span>
               </Link>
             ))}

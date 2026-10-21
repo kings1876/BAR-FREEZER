@@ -5,7 +5,7 @@ import fs from 'fs';
 
 const BASE = (process.argv[2] || 'https://barfreezer.com.au').replace(/\/$/, '');
 const sm = await (await fetch(BASE + '/sitemap.xml')).text();
-const urls = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].replace(BASE, ''));
+const urls = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].replace(/^https?:\/\/[^/]+/, ''));
 console.log('sitemap urls', urls.length);
 
 const dec = (x) => String(x).replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
