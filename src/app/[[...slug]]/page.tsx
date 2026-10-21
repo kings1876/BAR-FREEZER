@@ -250,7 +250,7 @@ function pageData(slug: string[]): any {
   }
   if (a === 'brands' && b) {
     const brand: any = (BRANDS as any[]).find((x) => x.slug === b);
-    return brand ? { products: all.filter((p) => String(p.brand).toLowerCase() === brand.name.toLowerCase()).slice(0, 4) } : null;
+    return brand ? { products: all.filter((p) => String(p.brand).toLowerCase() === brand.name.toLowerCase()).slice(0, 3) } : null;
   }
   if (a === 'venues' && b) {
     const venue: any = (VENUES as any[]).find((x) => x.slug === b);
@@ -290,8 +290,11 @@ function CategoryLinks({ heading, slugs, summary }: { heading: string; slugs: st
 function brandSummary(name: string, items: any[]): string {
   const prices = items.map((x) => Number(x.price)).filter((n) => n > 0);
   const types = new Set(items.map((x) => x.categorySlug)).size;
-  const range = prices.length ? ` Prices run from ${Math.min(...prices).toLocaleString('en-AU')} to ${Math.max(...prices).toLocaleString('en-AU')} including GST.` : '';
-  return `We list ${items.length} ${name} model${items.length === 1 ? '' : 's'} across ${types} product type${types === 1 ? '' : 's'}.${range}`;
+  const range = prices.length ? ` Prices run from $${Math.min(...prices).toLocaleString('en-AU')} to $${Math.max(...prices).toLocaleString('en-AU')} including GST.` : '';
+  const caps = items.map((x) => Number(x.capacityLitres)).filter((n) => n > 0);
+  const widths = items.map((x) => Number(x.widthMm)).filter((n) => n > 0);
+  const size = caps.length && widths.length ? ` Listed capacities range from ${Math.min(...caps)} to ${Math.max(...caps)} litres and widths from ${Math.min(...widths)} mm to ${Math.max(...widths)} mm, so check the space you have against the dimensions on each product page.` : '';
+  return `We list ${items.length} ${name} model${items.length === 1 ? '' : 's'} across ${types} product type${types === 1 ? '' : 's'}.${range}${size}`;
 }
 
 function belowContent(slug: string[], productDetail: any): React.ReactNode {
