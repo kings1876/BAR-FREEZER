@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Filter, X, ChevronDown, ChevronUp, RotateCcw } from 'lucide-react';
 import { BRANDS } from '../config/core.js';
-import { PRODUCTS } from '../config/products-data.js';
 
-const ANY_PRICED = PRODUCTS.some((p: any) => p.price != null);
+const ANY_PRICED = true; // every listed product carries a price or a quote request, so the price filter always applies
 
 export interface FilterState {
   doors: number[];
@@ -63,11 +62,12 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
 }) => {
   const brandList = availableBrands ? BRANDS.filter((b: any) => availableBrands.includes(b.name)) : BRANDS;
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
+    // Only the first group starts open; the others open on click, which keeps the category page's markup small.
     doors: true,
-    brand: true,
-    widthRange: true,
-    priceRange: true,
-    doorType: true,
+    brand: false,
+    widthRange: false,
+    priceRange: false,
+    doorType: false,
     use: false,
     finish: false,
     installation: false,

@@ -3,6 +3,7 @@ import ClientApp from '../../App';
 import { ProductLinkList as LinkList, BuyingChecklist } from '../../components/ProductLinkList';
 import { CATEGORIES, BRANDS, VENUES, CITIES, PRODUCTS, POSTS, FAQS } from '../../config/site.js';
 import { allPaths } from '../../lib/routes';
+import { categoryProducts } from '../../lib/category-filter';
 import { KEYWORD_META } from '../../config/seo-keywords';
 import { BRAND_META } from '../../config/seo-brands';
 import { CITY_META, VENUE_META } from '../../config/seo-pages';
@@ -240,7 +241,19 @@ function ProductLinkList({ title, aria, items }: { title: string; aria: string; 
 // The few products a page shows, supplied by the server so the client does not need the whole catalogue.
 function pageData(slug: string[]): any {
   const all = PRODUCTS as any[];
-  const [a, b] = slug;
+  const [a, b, c] = slug;
+  if (['bar-freezers', 'bar-fridges', 'accessories-parts'].includes(a)) {
+    const root: any = (CATEGORIES as any[]).find((x) => x.slug === a);
+    if (!root) return null;
+    const sub: any = b ? root.subcategories.find((s: any) => s.slug === b) : null;
+    const type: any = c && sub ? (sub.types || []).find((t: any) => t.slug === c) : null;
+    const list = categoryProducts(all, a, sub, type);
+    const prices = list.map((x) => x.price).filter((n: any) => typeof n === 'number' && n > 0);
+    return { preview: list.slice(0, 4), total: list.length, brands: Array.from(new Set(list.map((x) => x.brand))), minPrice: prices.length ? Math.min(...prices) : null };
+  }
+  if ((a === 'trade' || a === 'quote') && !b) {
+    return { quick: all.filter((x) => x.primaryCategory !== 'Accessories & Parts' && x.condition === 'new' && x.capacityLitres > 0).filter((_, i) => i % 97 === 0).slice(0, 6) };
+  }
   if (!slug.length) {
     const pick = (cat: string, n: number) => all.filter((p) => p.categorySlug === cat && p.condition === 'new' && p.images && p.images.length && p.capacityLitres > 0).filter((_, i) => i % 7 === 0).slice(0, n);
     return {

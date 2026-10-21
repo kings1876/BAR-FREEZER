@@ -1,7 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { SlidersHorizontal, ChevronRight, ArrowUpDown, RotateCcw, AlertCircle } from 'lucide-react';
 import { CATEGORIES } from '../config/core.js';
-import { PRODUCTS } from '../config/products-data.js';
+import { categoryProducts } from '../lib/category-filter';
+import { useCatalogue } from '../lib/use-catalogue';
+import { useProductDetail } from '../context/ProductDetailContext';
 import { ProductCard } from '../components/ProductCard';
 import { FilterSidebar, initialFilterState, FilterState } from '../components/FilterSidebar';
 import { useRouter, Link } from '../context/RouterContext';
@@ -41,30 +43,20 @@ export const CategoryPage: React.FC = () => {
 
   const kwCopy = (CATEGORY_COPY as any)[currentPath];
 
-  // Filter products based on route category and active faceted filters
+  // The server supplies the first products, the total and the brand list so the page does not load the whole catalogue
+  // up front. The full table is fetched on the first interaction and then drives filtering, sorting and paging.
+  const detail = useProductDetail();
+  const serverData = detail && detail.data && detail.id === `data:${currentPath.replace(/^\/|\/$/g, '')}` ? detail.data : null;
+  const catalogue = useCatalogue(!serverData);
   const categoryBaseProducts = useMemo(() => {
-    return PRODUCTS.filter((p: any) => {
-      // If root category matches
-      const matchesRoot = 
-        (rootSlug === 'bar-freezers' && p.primaryCategory === 'Bar Freezers') ||
-        (rootSlug === 'bar-fridges' && p.primaryCategory === 'Bar Fridges & Coolers') ||
-        (rootSlug === 'accessories-parts' && p.primaryCategory === 'Accessories & Parts');
-
-      if (!matchesRoot) return false;
-
-      // If subcategory is selected
-      if (activeSubCategory && p.categorySlug !== activeSubCategory.slug) {
-        return false;
-      }
-
-      // If specific type is selected
-      if (activeType && p.type.toLowerCase() !== activeType.name.toLowerCase() && !p.name.toLowerCase().includes(activeType.name.toLowerCase())) {
-        return false;
-      }
-
-      return true;
-    });
-  }, [rootSlug, activeSubCategory, activeType]);
+    if (catalogue) return categoryProducts(catalogue, rootSlug, activeSubCategory, activeType);
+    return serverData ? serverData.preview : [];
+  }, [catalogue, serverData, rootSlug, activeSubCategory, activeType]);
+  const baseTotal: number = catalogue ? categoryBaseProducts.length : serverData ? serverData.total : 0;
+  const brandNames: string[] = catalogue ? Array.from(new Set(categoryBaseProducts.map((p: any) => p.brand))) as string[] : serverData ? serverData.brands : [];
+  const minBasePrice: number | null = catalogue
+    ? (() => { const ps = categoryBaseProducts.map((p: any) => p.price).filter((n: any) => typeof n === 'number' && n > 0); return ps.length ? Math.min(...ps) : null; })()
+    : serverData ? serverData.minPrice : null;
 
   // Apply faceted filters & search
   const filteredProducts = useMemo(() => {
@@ -239,11 +231,11 @@ export const CategoryPage: React.FC = () => {
           <FilterSidebar
             filters={filters}
             setFilters={setFilters}
-            totalProductsCount={categoryBaseProducts.length}
-            filteredCount={filteredProducts.length}
+            totalProductsCount={baseTotal}
+            filteredCount={catalogue ? filteredProducts.length : baseTotal}
             isMobileDrawerOpen={isMobileDrawerOpen}
             setIsMobileDrawerOpen={setIsMobileDrawerOpen}
-            availableBrands={Array.from(new Set(categoryBaseProducts.map((p: any) => p.brand)))}
+            availableBrands={brandNames}
           />
 
           {/* Right Product Grid Area */}
@@ -257,11 +249,11 @@ export const CategoryPage: React.FC = () => {
                   className="lg:hidden flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-md transition-colors"
                 >
                   <SlidersHorizontal className="w-4 h-4 text-cyan-600" />
-                  <span>Filter Equipment ({filteredProducts.length})</span>
+                  <span>Filter Equipment ({catalogue ? filteredProducts.length : baseTotal})</span>
                 </button>
 
                 <span className="text-xs text-slate-500 font-mono">
-                  Showing <strong>{filteredProducts.length}</strong> of {categoryBaseProducts.length} commercial units
+                  Showing <strong>{catalogue ? filteredProducts.length : baseTotal}</strong> of {baseTotal} commercial units
                 </span>
               </div>
 
@@ -284,7 +276,7 @@ export const CategoryPage: React.FC = () => {
             </div>
 
             {/* Product Cards Grid */}
-            {sortedProducts.length > 0 ? (
+            {sortedProducts.length > 0 || !catalogue ? (
               <PagedGrid
                 items={sortedProducts}
                 pageSize={4}
@@ -325,7 +317,7 @@ export const CategoryPage: React.FC = () => {
             <RelatedSearches
               path={currentPath}
               noun={(kwCopy && kwCopy.h1 ? String(kwCopy.h1).replace(/ for Sale.*$/i, '').replace(/ in Australia$/i, '') : pageTitle).toLowerCase()}
-              minPrice={(() => { const ps = categoryBaseProducts.map((p: any) => p.price).filter((n: any) => typeof n === 'number' && n > 0); return ps.length ? Math.min(...ps) : null; })()}
+              minPrice={minBasePrice}
             />
 
             {/* Quick Trade Quote Callout at bottom of category */}

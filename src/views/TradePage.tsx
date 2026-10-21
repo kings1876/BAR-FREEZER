@@ -13,7 +13,8 @@ import {
   Send
 } from 'lucide-react';
 import { SITE, VENUES } from '../config/core.js';
-import { PRODUCTS } from '../config/products-data.js';
+import { useCatalogue } from '../lib/use-catalogue';
+import { useProductDetail } from '../context/ProductDetailContext';
 import { useCart } from '../context/CartContext';
 import { Link } from '../context/RouterContext';
 import { collectForm, sendEnquiry } from '../lib/enquiry-client';
@@ -37,8 +38,15 @@ export const TradePage: React.FC = () => {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
 
+  // The first few popular products come from the server; the full table loads on the first interaction.
+  const pageDetail = useProductDetail();
+  const serverQuick: any[] = (pageDetail && pageDetail.data && pageDetail.data.quick) || [];
+  const catalogue = useCatalogue();
+  const quickList: any[] = catalogue
+    ? catalogue.filter((p: any) => p.primaryCategory !== 'Accessories & Parts' && p.condition === 'new' && p.capacityLitres > 0).filter((_: any, i: number) => i % 97 === 0).slice(0, 6)
+    : serverQuick;
   const selectedProducts = selectedProductIds
-    .map((id) => PRODUCTS.find((p) => p.id === id))
+    .map((id) => (catalogue || serverQuick).find((p: any) => p.id === id) || serverQuick.find((p: any) => p.id === id))
     .filter(Boolean);
 
   const totalRetail = selectedProducts.reduce((sum, p: any) => sum + (p.price ?? 0), 0);
@@ -188,7 +196,7 @@ export const TradePage: React.FC = () => {
                   Quick add popular equipment:
                 </span>
                 <div className="flex flex-wrap gap-2">
-                  {PRODUCTS.filter((p: any) => !selectedProductIds.includes(p.id) && p.primaryCategory !== 'Accessories & Parts' && p.condition === 'new' && p.capacityLitres > 0).filter((_: any, i: number) => i % 97 === 0).slice(0, 6).map((p: any) => (
+                  {quickList.filter((p: any) => !selectedProductIds.includes(p.id)).map((p: any) => (
                     <button
                       key={p.id}
                       onClick={() => handleAddProductToQuote(p.id)}
