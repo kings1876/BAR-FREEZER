@@ -78,6 +78,7 @@ export const VenuePage: React.FC = () => {
         {copy && (
           <div className="bg-white rounded-xl border border-slate-200/90 p-6 sm:p-8 shadow-xs space-y-3">
             <h2 className="text-xl font-bold text-slate-900">What to look for in {venue.name.toLowerCase()} refrigeration</h2>
+            <p className="text-sm text-slate-600 leading-relaxed">Specifications are published as supplied by each manufacturer or supplier, so check each product page for dimensions, power, refrigerant and warranty before you order, and request a quote if you are fitting out more than one unit.</p>
             <ul className="list-disc pl-5 space-y-1.5 text-sm text-slate-700 leading-relaxed">
               {copy.tips.map((t: string, i: number) => <li key={i}>{t}</li>)}
             </ul>

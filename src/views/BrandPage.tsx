@@ -73,7 +73,7 @@ export const BrandPage: React.FC = () => {
             <PagedGrid items={brandProducts} pageSize={4} render={(p: any) => <ProductCard key={p.id} product={p} />} />
           ) : null}
           <p className="pt-6 text-sm text-slate-600 leading-relaxed">
-            When you compare {brand.name} models, check the stated width, depth and height, the capacity in litres, the door type, the climate class and the warranty on each product page. Measure your opening and delivery path first, and leave the ventilation clearance listed in the manual. You can compare models side by side, or <Link href="/quote/" className="text-cyan-700 font-semibold">request a quote</Link> for several units with your delivery postcode.
+            When you compare {brand.name} models, check the stated width, depth and height, the capacity in litres, the door type, the climate class and the warranty on each product page. Measure your opening and delivery path first, and leave the ventilation clearance listed in the manual. Specifications are published as supplied by the maker or supplier, and the full list of models below links to every product page. You can compare models side by side, or <Link href="/quote/" className="text-cyan-700 font-semibold">request a quote</Link> for several units with your delivery postcode.
           </p>
           {brandProducts.length > 0 ? (
             <nav aria-label={`All ${brand.name} models`} className="pt-6">

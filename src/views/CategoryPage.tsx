@@ -316,7 +316,7 @@ export const CategoryPage: React.FC = () => {
                   : rootSlug === 'bar-fridges'
                   ? 'Measure the space and check the stated width, depth and height, including legs or castors. Compare capacity, shelf spacing for tall bottles and the door type. Glass doors display stock while solid doors hold temperature more easily. Check the climate class if the fridge will sit in a warm room, garage or outdoor area, and leave the ventilation clearance listed in the manual.'
                   : 'Match the part number or model to your equipment before you order, and check the size, voltage and finish where they apply. If you are unsure which part fits, send us the model and serial number from the data plate and we will help you find the right item.'}
-                {' '}Prices include GST, delivery is quoted to your postcode, and you can <Link href="/quote/" className="text-cyan-700 font-semibold">request a quote</Link> for several units.
+                {' '}Specifications are published as supplied by the manufacturer or supplier, so open any product page to check dimensions, power, refrigerant and warranty before you order. Compare two or three models side by side with the compare tool if you are choosing between similar sizes. Prices include GST, delivery is quoted to your postcode, and you can <Link href="/quote/" className="text-cyan-700 font-semibold">request a quote</Link> for several units.
               </p>
             </section>
 
