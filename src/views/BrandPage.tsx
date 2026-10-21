@@ -70,7 +70,7 @@ export const BrandPage: React.FC = () => {
           </div>
 
           {brandProducts.length > 0 ? (
-            <PagedGrid items={brandProducts} pageSize={6} render={(p: any) => <ProductCard key={p.id} product={p} />} />
+            <PagedGrid items={brandProducts} pageSize={4} render={(p: any) => <ProductCard key={p.id} product={p} />} />
           ) : null}
           {brandProducts.length > 0 ? (
             <nav aria-label={`All ${brand.name} models`} className="pt-6">
