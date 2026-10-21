@@ -102,7 +102,12 @@ function productMeta(p: any) {
     const condUnique = new Set(group.map((q) => String(q.condition))).size === group.length;
     tag = condUnique && COND[p.condition] ? COND[p.condition] : skuUnique && p.sku ? String(p.sku) : condUnique ? String(p.condition === 'new' ? 'New' : p.condition) : String(p.slug).split('-').slice(-2).join('-').toUpperCase();
     const t = title.replace(' | Bar Freezer', '');
-    title = `${trim(t, 60 - 14 - tag.length - 1)} ${tag} | Bar Freezer`;
+    if (Object.values(COND).includes(tag)) {
+      const lead = `${tag} ${t}`;
+      title = lead.length + 14 <= 60 ? `${lead} | Bar Freezer` : wordTrim(lead, 60);
+    } else {
+      title = `${wordTrim(t, 60 - 14 - tag.length - 1)} ${tag} | Bar Freezer`;
+    }
   }
   let desc: string;
   if (kw && !isAcc) {
