@@ -91,7 +91,7 @@ export const Footer: React.FC = () => {
             <div className="flex items-center gap-2">
               <Phone className="w-3.5 h-3.5 text-amber-400 shrink-0" />
               <span className="text-white font-semibold">{SITE.phoneDisplay}</span>
-              <span className="text-[11px] text-slate-400">(Toll-free Trade line)</span>
+              
             </div>
             <div className="flex items-center gap-2">
               <Mail className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
@@ -99,7 +99,7 @@ export const Footer: React.FC = () => {
             </div>
             <div className="flex items-start gap-2 pt-1">
               <MapPin className="w-3.5 h-3.5 text-slate-500 shrink-0 mt-0.5" />
-              <span>{SITE.headOffice} (National Dispatch Coordination)</span>
+              <span>{SITE.headOffice}</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-3.5 h-3.5 text-slate-500 shrink-0" />
@@ -118,11 +118,11 @@ export const Footer: React.FC = () => {
             <li><Link href="/bar-freezers/glass-frosters-specialty/" className="hover:text-white transition-colors">Glass & Beer Mug Frosters</Link></li>
             <li><Link href="/bar-freezers/chest-bench-freezers/" className="hover:text-white transition-colors">Chest & Bench Freezers</Link></li>
             <li><Link href="/bar-freezers/upright-commercial-freezers/" className="hover:text-white transition-colors">Upright Kitchen Freezers</Link></li>
-            <li><Link href="/bar-freezers/home-bar-outdoor-freezers/" className="hover:text-white transition-colors">Alfresco & Outdoor (IPX4)</Link></li>
-            <li><Link href="/bar-fridges/bottle-coolers/" className="hover:text-white transition-colors">Speed Rail Bottle Coolers</Link></li>
-            <li><Link href="/bar-fridges/kegerators-dispensers/" className="hover:text-white transition-colors">Commercial Kegerators</Link></li>
-            <li><Link href="/bar-fridges/wine-fridges/" className="hover:text-white transition-colors">Dual-Zone Wine Cabinets</Link></li>
-            <li><Link href="/deals/" className="text-rose-400 hover:text-rose-300 font-medium">Clearance & Ex-Display Deals</Link></li>
+            <li><Link href="/bar-freezers/home-bar-outdoor-freezers/" className="hover:text-white transition-colors">Home Bar & Outdoor Freezers</Link></li>
+            <li><Link href="/bar-fridges/bottle-coolers/" className="hover:text-white transition-colors">Bottle Coolers</Link></li>
+            <li><Link href="/bar-fridges/kegerators-dispensers/" className="hover:text-white transition-colors">Kegerators &amp; Dispensers</Link></li>
+            <li><Link href="/bar-fridges/wine-fridges/" className="hover:text-white transition-colors">Wine Fridges</Link></li>
+            <li><Link href="/clearance/" className="text-rose-400 hover:text-rose-300 font-medium">Clearance & Ex-Display</Link></li>
           </ul>
         </div>
 
@@ -140,7 +140,7 @@ export const Footer: React.FC = () => {
           </ul>
           <div className="pt-2">
             <Link href="/delivery/" className="text-cyan-400 hover:text-cyan-300 font-semibold block">
-              Freight Rates & Regional Notes &rarr;
+              Delivery information &rarr;
             </Link>
           </div>
         </div>
@@ -149,18 +149,17 @@ export const Footer: React.FC = () => {
         <div className="space-y-3">
           <p className="text-xs font-bold uppercase tracking-wider text-white">Trade & Operations</p>
           <ul className="space-y-2 text-slate-400">
-            <li><Link href="/trade/" className="text-amber-400 hover:text-amber-300 font-semibold">Trade Account & Pricing</Link></li>
-            <li><Link href="/quote/" className="hover:text-white transition-colors">Multi-Product Quote Builder</Link></li>
-            <li><Link href="/warranty-service/" className="hover:text-white transition-colors">Warranty & Service Dispatch</Link></li>
+            <li><Link href="/quote/" className="text-amber-400 hover:text-amber-300 font-semibold">Trade Pricing & Quotes</Link></li>
+                        <li><Link href="/warranty/" className="hover:text-white transition-colors">Warranty & Service Claims</Link></li>
             <li><Link href="/finance/" className="hover:text-white transition-colors">Equipment Finance Enquiries</Link></li>
             <li><Link href="/compare/" className="hover:text-white transition-colors">Side-by-Side Spec Compare</Link></li>
-            <li><Link href="/guides/" className="hover:text-white transition-colors">Refrigeration Buying Guides</Link></li>
+            <li><Link href="/guides/" className="hover:text-white transition-colors">Buying Guides</Link></li>
             <li><Link href="/reviews/" className="hover:text-white transition-colors">Trustpilot Customer Reviews</Link></li>
             <li><Link href="/payment-methods/" className="hover:text-white transition-colors">Payment Methods</Link></li>
             <li><Link href="/returns/" className="hover:text-white transition-colors">Returns & Australian Consumer Law</Link></li>
             <li><Link href="/faq/" className="hover:text-white transition-colors">Equipment FAQs</Link></li>
             <li><Link href="/about/" className="hover:text-white transition-colors">About Bar Freezer Australia</Link></li>
-            <li><Link href="/contact/" className="hover:text-white transition-colors">Contact Our Engineers</Link></li>
+            <li><Link href="/contact/" className="hover:text-white transition-colors">Contact Us</Link></li>
           </ul>
         </div>
       </div>
@@ -169,9 +168,9 @@ export const Footer: React.FC = () => {
       <div className="border-t border-slate-800 bg-slate-900/30 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="max-w-md">
-            <p className="text-sm font-bold text-white">Australian Hospitality Trade Updates</p>
+            <p className="text-sm font-bold text-white">Product and Trade Updates</p>
             <p className="text-slate-400 text-xs mt-1">
-              Receive monthly notices on container arrivals, ex-display clearances, and tax deduction guides.
+              Occasional updates on new products, ex-display stock and buying guides.
             </p>
           </div>
 
@@ -211,11 +210,7 @@ export const Footer: React.FC = () => {
             <span>·</span>
             <Link href="/returns/" className="hover:text-white">Returns & Guarantees</Link>
             <span>·</span>
-            <Link href="/warranty-service/" className="hover:text-white">Commercial Warranty</Link>
-            <span>·</span>
-            <span>RCM Certified</span>
-            <span>·</span>
-            <span>MEPS Compliant</span>
+            <Link href="/warranty/" className="hover:text-white">Warranty</Link>
           </div>
         </div>
       </div>

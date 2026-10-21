@@ -275,6 +275,7 @@ export const CategoryPage: React.FC = () => {
             {sortedProducts.length > 0 ? (
               <PagedGrid
                 items={sortedProducts}
+                pageSize={24}
                 resetKey={`${currentPath}|${sortBy}|${JSON.stringify(filters)}`}
                 className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
                 render={(product: any) => <ProductCard key={product.id} product={product} />}
@@ -297,6 +298,19 @@ export const CategoryPage: React.FC = () => {
               </div>
             )}
 
+            {categoryBaseProducts.length > 0 && (
+              <nav aria-label={`All ${pageTitle} models`} className="mt-10">
+                <h2 className="text-base font-bold text-slate-900">All {pageTitle} models ({categoryBaseProducts.length})</h2>
+                <ul className="mt-3 columns-1 sm:columns-2 gap-6 text-xs text-slate-700 space-y-1">
+                  {categoryBaseProducts.map((p: any) => (
+                    <li key={p.id} className="break-inside-avoid">
+                      <Link href={`/product/${p.slug}/`} className="hover:text-cyan-700 hover:underline">{p.name}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )}
+
             <RelatedSearches
               path={currentPath}
               noun={(kwCopy && kwCopy.h1 ? String(kwCopy.h1).replace(/ for Sale.*$/i, '').replace(/ in Australia$/i, '') : pageTitle).toLowerCase()}
@@ -307,7 +321,7 @@ export const CategoryPage: React.FC = () => {
             <div className="bg-slate-900 text-slate-100 p-6 rounded-xl border border-slate-800 mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="space-y-1 text-center sm:text-left">
                 <h2 className="text-base font-bold text-white">Need multiple units or custom stainless benchwork?</h2>
-                <p className="text-xs text-slate-400">Our estimating desk supplies tailored equipment bundles with project discounts.</p>
+                <p className="text-xs text-slate-400">Send us your list for a delivered price on multiple units.</p>
               </div>
               <Link
                 href="/quote/"

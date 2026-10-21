@@ -117,7 +117,7 @@ export const Header: React.FC = () => {
               <Truck className="w-3.5 h-3.5 text-cyan-400" />
               <span>Australia-Wide Delivery</span>
             </Link>
-            <Link href="/warranty-service/" className="hidden sm:flex items-center gap-1 hover:text-white transition-colors">
+            <Link href="/warranty/" className="hidden sm:flex items-center gap-1 hover:text-white transition-colors">
               <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
               <span>Warranty Service</span>
             </Link>
@@ -385,7 +385,7 @@ export const Header: React.FC = () => {
 
           {/* 7. Trade & Quotes */}
           <Link 
-            href="/trade/" 
+            href="/quote/" 
             className="text-amber-400 hover:text-amber-300 font-semibold transition-colors py-1 whitespace-nowrap flex items-center gap-1"
           >
             <span>7. Trade & Quotes</span>
@@ -393,7 +393,7 @@ export const Header: React.FC = () => {
 
           {/* Hot Deals Badge Link */}
           <Link 
-            href="/deals/" 
+            href="/clearance/" 
             className="text-rose-400 hover:text-rose-300 text-xs font-bold uppercase tracking-wider flex items-center gap-1 px-2 py-0.5 rounded bg-rose-950/40 border border-rose-800/60"
           >
             <Flame className="w-3.5 h-3.5 text-rose-400" />
@@ -685,14 +685,14 @@ export const Header: React.FC = () => {
 
             <div className="grid grid-cols-2 gap-3 pt-2">
               <Link 
-                href="/trade/" 
+                href="/quote/" 
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg text-amber-400 font-bold text-center block"
               >
                 Trade Pricing & Quotes
               </Link>
               <Link 
-                href="/deals/" 
+                href="/clearance/" 
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-400 font-bold text-center block"
               >
@@ -707,7 +707,7 @@ export const Header: React.FC = () => {
               <Link href="/delivery/" onClick={() => setIsMobileMenuOpen(false)} className="block py-1.5">
                 Australia-Wide Freight & Lead Times
               </Link>
-              <Link href="/warranty-service/" onClick={() => setIsMobileMenuOpen(false)} className="block py-1.5">
+              <Link href="/warranty/" onClick={() => setIsMobileMenuOpen(false)} className="block py-1.5">
                 Warranty Service & Repair Claim
               </Link>
               <Link href="/finance/" onClick={() => setIsMobileMenuOpen(false)} className="block py-1.5">

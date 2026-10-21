@@ -59,6 +59,25 @@ export const ProductDetailPage: React.FC = () => {
     .map((altId) => PRODUCTS.find((p) => p.id === altId))
     .filter(Boolean);
 
+  // Neighbouring products in the same category: gives every product page more incoming internal links.
+  const relatedItems = (() => {
+    const same = PRODUCTS.filter((p: any) => p.categorySlug === product.categorySlug);
+    const idx = same.findIndex((p: any) => p.id === product.id);
+    if (idx < 0 || same.length < 2) return [] as any[];
+    return Array.from({ length: Math.min(8, same.length - 1) }, (_, k) => same[(idx + k + 1) % same.length]);
+  })();
+
+  // Plain-language answers built only from the product's own data.
+  const sp: any = product.specs || {};
+  const quickAnswers: [string, string][] = [];
+  const dims = product.widthMm && product.depthMm && product.heightMm ? `${product.widthMm} x ${product.depthMm} x ${product.heightMm} mm (width x depth x height)` : '';
+  if (dims) quickAnswers.push([`What size is the ${product.brand} ${product.model}?`, `It measures ${dims}. Check the opening and allow ventilation clearance before you order.`]);
+  if (product.capacityLitres) quickAnswers.push([`How much does it hold?`, `The listed capacity is ${product.capacityLitres} litres${product.capacityKind === 'combined' ? ' combined' : ''}.`]);
+  if (product.tempRange) quickAnswers.push([`What temperature does it run at?`, `The stated operating range is ${String(product.tempRange).split(' (')[0]}.`]);
+  if (product.refrigerant) quickAnswers.push([`Which refrigerant does it use?`, `The specification lists ${product.refrigerant}.`]);
+  if (product.power) quickAnswers.push([`What power does it need?`, `The listed electrical supply is ${product.power}. Confirm it suits your outlet before you order.`]);
+  quickAnswers.push([`How do I get a price for several units?`, `Add the units to a quote request and include your delivery postcode. We reply with a delivered price.`]);
+
   const handleBundleToggle = (id: string) => {
     setBundleChecked((prev) => ({ ...prev, [id]: !prev[id] }));
   };
@@ -711,6 +730,21 @@ export const ProductDetailPage: React.FC = () => {
           </div>
         </div>
 
+        {/* Quick answers */}
+        {quickAnswers.length > 1 && (
+          <section className="bg-white rounded-xl border border-slate-200/90 p-6 shadow-xs space-y-3">
+            <h2 className="text-lg font-bold text-slate-900">Quick answers about the {product.brand} {product.model}</h2>
+            <dl className="space-y-3 text-sm">
+              {quickAnswers.map(([q, a]) => (
+                <div key={q}>
+                  <dt className="font-semibold text-slate-900">{q}</dt>
+                  <dd className="text-slate-600">{a}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
+
         {/* Alternative Models */}
         {alternativeItems.length > 0 && (
           <div className="space-y-4 pt-4">
@@ -744,6 +778,19 @@ export const ProductDetailPage: React.FC = () => {
               ))}
             </div>
           </div>
+        )}
+
+        {relatedItems.length > 0 && (
+          <nav aria-label="More in this category" className="pt-2">
+            <h2 className="text-base font-bold text-slate-900">More in this category</h2>
+            <ul className="mt-2 columns-1 sm:columns-2 gap-6 text-xs text-slate-700 space-y-1">
+              {relatedItems.map((p: any) => (
+                <li key={p.id} className="break-inside-avoid">
+                  <Link href={`/product/${p.slug}/`} className="hover:text-cyan-700 hover:underline">{p.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         )}
 
       </div>
