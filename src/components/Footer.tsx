@@ -89,6 +89,9 @@ export const Footer: React.FC = () => {
         <div className="space-y-3">
           <p className="text-xs font-bold uppercase tracking-wider text-white">Refrigeration</p>
           <ul className="space-y-2 text-slate-400">
+            <li><a href="/bar-fridges/" className="hover:text-white transition-colors">All Bar Fridges</a></li>
+            <li><a href="/bar-freezers/" className="hover:text-white transition-colors">All Bar Freezers</a></li>
+            <li><a href="/accessories-parts/" className="hover:text-white transition-colors">Accessories &amp; Parts</a></li>
             <li><a href="/bar-freezers/under-bar-freezers/" className="hover:text-white transition-colors">Underbar Freezers</a></li>
             <li><a href="/bar-freezers/back-bar-freezers/" className="hover:text-white transition-colors">Back Bar Freezers</a></li>
             <li><a href="/bar-freezers/glass-door-display-freezers/" className="hover:text-white transition-colors">Glass Display Freezers</a></li>
@@ -100,6 +103,7 @@ export const Footer: React.FC = () => {
             <li><a href="/bar-fridges/kegerators-dispensers/" className="hover:text-white transition-colors">Kegerators &amp; Dispensers</a></li>
             <li><a href="/bar-fridges/wine-fridges/" className="hover:text-white transition-colors">Wine Fridges</a></li>
             <li><a href="/clearance/" className="text-rose-400 hover:text-rose-300 font-medium">Clearance & Ex-Display</a></li>
+            <li><a href="/deals/" className="hover:text-white transition-colors">Current Deals</a></li>
           </ul>
         </div>
 

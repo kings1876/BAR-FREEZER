@@ -268,13 +268,14 @@ function pageData(slug: string[]): any {
 }
 
 // Links to the sub-categories a page relates to, with their full names as anchor text.
-function CategoryLinks({ heading, slugs }: { heading: string; slugs: string[] }) {
+function CategoryLinks({ heading, slugs, summary }: { heading: string; slugs: string[]; summary?: string }) {
   const found: { name: string; path: string }[] = [];
   for (const root of CATEGORIES as any[]) for (const s of root.subcategories || []) if (slugs.includes(s.slug)) found.push({ name: s.name, path: `/${root.slug}/${s.slug}/` });
   if (!found.length) return null;
   return (
     <nav aria-label={heading} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <h2 className="text-base font-bold text-slate-900">{heading}</h2>
+      {summary && <p className="mt-1 text-xs text-slate-600 max-w-3xl">{summary}</p>}
       <p className="mt-1 text-xs text-slate-600 max-w-3xl">Choose a type to see every model in that range with its specification, dimensions and price in Australian dollars including GST, then use the compare tool to check two or three side by side before you decide.</p>
       <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm">
         {found.map((c) => (
@@ -283,6 +284,14 @@ function CategoryLinks({ heading, slugs }: { heading: string; slugs: string[] })
       </ul>
     </nav>
   );
+}
+
+// Facts counted from the catalogue: model count, number of types and the price range.
+function brandSummary(name: string, items: any[]): string {
+  const prices = items.map((x) => Number(x.price)).filter((n) => n > 0);
+  const types = new Set(items.map((x) => x.categorySlug)).size;
+  const range = prices.length ? ` Prices run from ${Math.min(...prices).toLocaleString('en-AU')} to ${Math.max(...prices).toLocaleString('en-AU')} including GST.` : '';
+  return `We list ${items.length} ${name} model${items.length === 1 ? '' : 's'} across ${types} product type${types === 1 ? '' : 's'}.${range}`;
 }
 
 function belowContent(slug: string[], productDetail: any): React.ReactNode {
@@ -327,11 +336,12 @@ function belowContent(slug: string[], productDetail: any): React.ReactNode {
     const cats = [...new Set(items.map((x) => x.categorySlug))] as string[];
     return (
       <>
-        <CategoryLinks heading={`${brand.name} models by type`} slugs={cats} />
+        <CategoryLinks heading={`${brand.name} models by type`} slugs={cats} summary={brandSummary(brand.name, items)} />
         <ProductLinkList title={`All ${brand.name} models`} aria={`All ${brand.name} models`} items={items} />
       </>
     );
   }
+  if (!slug.length || (a === 'reviews' && !b)) return <BuyingChecklist />;
   if (a === 'venues' && b) {
     const venue: any = (VENUES as any[]).find((x) => x.slug === b);
     return (
