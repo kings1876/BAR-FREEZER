@@ -100,7 +100,7 @@ function productMeta(p: any) {
     const skuUnique = new Set(group.map((q) => String(q.sku))).size === group.length;
     const COND: any = { refurbished: 'Refurbished', 'ex-display': 'Ex-Display', 'factory-second': 'Factory Second' };
     const condUnique = new Set(group.map((q) => String(q.condition))).size === group.length;
-    tag = skuUnique && p.sku ? String(p.sku) : condUnique && COND[p.condition] ? COND[p.condition] : condUnique ? String(p.condition === 'new' ? 'New' : p.condition) : String(p.slug).split('-').slice(-2).join('-').toUpperCase();
+    tag = condUnique && COND[p.condition] ? COND[p.condition] : skuUnique && p.sku ? String(p.sku) : condUnique ? String(p.condition === 'new' ? 'New' : p.condition) : String(p.slug).split('-').slice(-2).join('-').toUpperCase();
     const t = title.replace(' | Bar Freezer', '');
     title = `${trim(t, 60 - 14 - tag.length - 1)} ${tag} | Bar Freezer`;
   }
