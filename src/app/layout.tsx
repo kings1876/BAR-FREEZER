@@ -1,10 +1,5 @@
 import type { Metadata } from 'next';
-import { Plus_Jakarta_Sans, Space_Mono } from 'next/font/google';
 import './globals.css';
-
-// Self-hosted at build time by next/font: no render-blocking request to Google Fonts.
-const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], display: 'swap', variable: '--font-jakarta' });
-const mono = Space_Mono({ subsets: ['latin'], weight: ['400', '700'], display: 'swap', variable: '--font-space-mono' });
 
 const title = 'Bar Fridges & Bar Freezers Australia | Bar Freezer';
 const description =
@@ -29,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-AU" className={`scroll-smooth ${jakarta.variable} ${mono.variable}`}>
+    <html lang="en-AU" className="scroll-smooth">
       <body className="bg-slate-900 text-slate-100 font-sans antialiased min-h-screen selection:bg-amber-500 selection:text-slate-950">
         <a
           href="#main-content"
