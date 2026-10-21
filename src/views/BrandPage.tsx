@@ -13,6 +13,10 @@ export const BrandPage: React.FC = () => {
   const brand = BRANDS.find((b: any) => b.slug === brandSlug) || BRANDS[0];
 
   const brandProducts = PRODUCTS.filter((p: any) => p.brand.toLowerCase() === brand.name.toLowerCase());
+  const kinds = Array.from(new Set(brandProducts.map((p: any) => String(p.subCategory || '').replace(/s*(.*)s*$/, '').toLowerCase()).filter(Boolean))).slice(0, 5);
+  const brandIntro = brandProducts.length
+    ? `Browse ${brandProducts.length} ${brand.name} products${kinds.length ? ' including ' + kinds.join(', ') : ''}. Compare sizes, specifications and prices, or request a quote for multiple units.`
+    : brand.description;
 
   return (
     <div className="bg-slate-50 min-h-screen py-8">
@@ -33,8 +37,6 @@ export const BrandPage: React.FC = () => {
             <div>
               <div className="flex items-center gap-2 text-xs font-mono font-semibold text-cyan-700 uppercase tracking-wider">
                 <span>{brand.country}</span>
-                <span>·</span>
-                <span>{brand.tag}</span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
                 {((BRAND_META as any)['/brands/' + brand.slug + '/']?.title || '').split(' | ')[0] || `${brand.name} Commercial Refrigeration Australia`}
@@ -44,14 +46,14 @@ export const BrandPage: React.FC = () => {
             <div className="p-3 bg-amber-50 rounded-lg border border-amber-200/80 text-amber-900 flex items-center gap-2 self-start sm:self-center">
               <ShieldCheck className="w-5 h-5 text-amber-600 shrink-0" />
               <div className="text-xs">
-                <span className="font-bold block">{brand.warrantyYears} Years On-Site Warranty</span>
-                <span className="text-amber-700 text-[11px]">Authorized Australian Service Agents</span>
+                <span className="font-bold block">Warranty on every product</span>
+                <Link href="/warranty/" className="text-amber-700 text-[11px] underline">Read our warranty information</Link>
               </div>
             </div>
           </div>
 
           <p className="text-sm text-slate-600 max-w-3xl leading-relaxed">
-            {brand.description}
+            {brandIntro}
           </p>
         </div>
 
@@ -59,9 +61,9 @@ export const BrandPage: React.FC = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-slate-900">
-              {brand.name} Equipment in Stock ({brandProducts.length} Models)
+              {brand.name} Fridges & Freezers ({brandProducts.length} Models)
             </h2>
-            <span className="text-xs text-slate-500 font-mono">Dispatched from Australian Depots</span>
+            <span className="text-xs text-slate-500 font-mono">Delivery Australia-wide</span>
           </div>
 
           {brandProducts.length > 0 ? (
@@ -83,9 +85,9 @@ export const BrandPage: React.FC = () => {
 
         {/* Other Brands Grid */}
         <div className="pt-8 border-t border-slate-200 space-y-4">
-          <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide">
+          <h2 className="text-base font-bold text-slate-900 uppercase tracking-wide">
             Explore Other Commercial Refrigeration Brands
-          </h3>
+          </h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
             {BRANDS.filter((b: any) => b.slug !== brand.slug).slice(0, 12).map((other: any) => (
               <Link
@@ -97,7 +99,7 @@ export const BrandPage: React.FC = () => {
                   {other.name}
                 </span>
                 <span className="text-[10px] text-slate-500 font-mono mt-0.5 block">
-                  {other.warrantyYears}yr Warranty
+                  {PRODUCTS.filter((p: any) => p.brand === other.name).length} products
                 </span>
               </Link>
             ))}

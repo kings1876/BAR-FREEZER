@@ -14,9 +14,11 @@ const siteSrc = fs.readFileSync('src/config/site.js', 'utf8');
 const catPaths = [...siteSrc.matchAll(/path:\s*"(\/[^"]+)"/g)].map((m) => m[1]).filter((p) => p.startsWith(ROOT));
 const kwSrc = fs.readFileSync('src/config/seo-keywords.ts', 'utf8');
 const kwPaths = [...kwSrc.matchAll(/['"](\/[a-z0-9/-]+\/)['"]\s*:/g)].map((m) => m[1]).filter((p) => p.startsWith(ROOT));
-const pages = [...new Set([...catPaths, ...kwPaths])];
-const catSlug = ROOT.split('/')[1];
-const products = light.filter((p) => p.primaryCategory === ({ 'bar-freezers': 'Bar Freezers', 'bar-fridges': 'Bar Fridges & Coolers', 'accessories-parts': 'Accessories & Parts' })[catSlug]);
+const isBrand = ROOT.startsWith('/brands/');
+const pages = isBrand ? [ROOT] : [...new Set([...catPaths, ...kwPaths])];
+const catSlug = isBrand ? ROOT.split('/')[2] : ROOT.split('/')[1];
+const brandNames = { anvil: 'Anvil', fed: 'F.E.D.' };
+const products = isBrand ? light.filter((p) => String(p.brand).toLowerCase().replace(/[^a-z0-9]/g, '') === catSlug.replace(/[^a-z0-9]/g, '')) : light.filter((p) => p.primaryCategory === ({ 'bar-freezers': 'Bar Freezers', 'bar-fridges': 'Bar Fridges & Coolers', 'accessories-parts': 'Accessories & Parts' })[catSlug]);
 
 const get = async (url, opt = {}) => {
   for (let t = 0; t < 3; t++) {
