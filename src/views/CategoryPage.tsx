@@ -205,6 +205,16 @@ export const CategoryPage: React.FC = () => {
               ))}
             </div>
           )}
+          {!activeSubCategory && rootCategory.subcategories.some((s: any) => s.types && s.types.length > 0) && (
+            <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center gap-2">
+              <span className="text-xs font-semibold text-slate-500">Browse {rootCategory.name} by type:</span>
+              {rootCategory.subcategories.flatMap((s: any) => s.types || []).map((t: any) => (
+                <Link key={t.path} href={t.path} className="px-3 py-1.5 rounded-md text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">
+                  {t.name}
+                </Link>
+              ))}
+            </div>
+          )}
           {activeSubCategory && activeSubCategory.types && activeSubCategory.types.length > 0 && (
             <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center gap-2">
               <span className="text-xs font-semibold text-slate-500">Browse {activeSubCategory.name} by type:</span>
@@ -275,7 +285,7 @@ export const CategoryPage: React.FC = () => {
             {sortedProducts.length > 0 ? (
               <PagedGrid
                 items={sortedProducts}
-                pageSize={24}
+                pageSize={12}
                 resetKey={`${currentPath}|${sortBy}|${JSON.stringify(filters)}`}
                 className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
                 render={(product: any) => <ProductCard key={product.id} product={product} />}

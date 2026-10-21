@@ -160,6 +160,21 @@ export const Footer: React.FC = () => {
         </div>
       </div>
 
+      {/* About and categories (plain text for readers and crawlers) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="space-y-2">
+          <p className="text-xs font-bold uppercase tracking-wider text-white">About Bar Freezer Australia</p>
+          <p className="text-slate-400 leading-relaxed">
+            Bar Freezer Australia is an online supplier of bar fridges, bar freezers, kegerators, wine fridges, ice machines and refrigeration accessories for pubs, cafes, restaurants, venues and home bars. Every product page lists the specifications supplied by the manufacturer or supplier, so you can compare size, capacity, refrigerant and warranty before you buy. You can request a quote for several units, compare models side by side, and read our buying guides on sizing, ventilation and finishes.
+          </p>
+        </div>
+        <dl className="space-y-2 text-slate-400">
+          <div><dt className="inline font-semibold text-white">Bar freezers: </dt><dd className="inline">under bar, back bar, glass door display, chest, upright and glass froster models for ice, garnishes and frozen stock.</dd></div>
+          <div><dt className="inline font-semibold text-white">Bar fridges: </dt><dd className="inline">under bar, bottle cooler, back bar, beer, wine, kegerator, combination and outdoor models for drinks service.</dd></div>
+          <div><dt className="inline font-semibold text-white">Accessories and parts: </dt><dd className="inline">shelves, door seals and locks, castors and legs, ice machines, cleaners and spare parts.</dd></div>
+        </dl>
+      </div>
+
       {/* Brands and venues */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>

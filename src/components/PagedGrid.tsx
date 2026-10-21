@@ -9,7 +9,7 @@ interface PagedGridProps<T> {
 }
 
 // Renders the first page of items, then reveals more on demand. Keeps the initial HTML and DOM small on large categories.
-export function PagedGrid<T>({ items, render, pageSize = 48, className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6', resetKey }: PagedGridProps<T>) {
+export function PagedGrid<T>({ items, render, pageSize = 12, className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6', resetKey }: PagedGridProps<T>) {
   const [count, setCount] = useState(pageSize);
   useEffect(() => { setCount(pageSize); }, [resetKey, pageSize]);
   const shown = items.slice(0, count);
