@@ -228,7 +228,7 @@ export const CartDrawer: React.FC = () => {
                   <span>256-Bit SSL Encrypted</span>
                 </span>
                 <span>·</span>
-                <span>SilverChef Finance Approved</span>
+                <span>Finance enquiries welcome</span>
               </div>
             </div>
           )}

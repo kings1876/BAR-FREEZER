@@ -9,7 +9,7 @@ export const ComparePage: React.FC = () => {
   const { compareList, toggleCompare, addToCart, openQuoteForProduct } = useCart();
 
   // If compareList is empty, default to comparing 3 top benchmark underbar freezers
-  const sample = ['under-bar-fridges', 'wine-fridges', 'under-bar-freezers'].map((slug) => PRODUCTS.find((p: any) => p.categorySlug === slug && p.condition === 'new' && p.capacityLitres > 0 && p.widthMm > 0 && p.images && p.images.length)).filter(Boolean);
+  const sample = ['under-bar-fridges', 'wine-fridges', 'under-bar-freezers'].map((slug) => PRODUCTS.find((p: any) => p.categorySlug === slug && p.condition === 'new' && p.capacityLitres > 0 && p.widthMm > 0 && p.images && p.images.length)).filter(Boolean) as any[];
   const displayItems = compareList.length > 0 ? compareList : sample;
   const val = (v: any, unit = '') => (v === undefined || v === null || v === '' || v === 0 || v === '0' ? '—' : `${v}${unit}`);
 

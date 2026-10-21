@@ -92,7 +92,7 @@ export const QuoteModal: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-slate-900">Commercial Trade Quote Request</h3>
-                  <p className="text-xs text-slate-500">Tiered trade discounts, multi-unit project pricing & SilverChef leasing options</p>
+                  <p className="text-xs text-slate-500">Trade and multi-unit pricing, with finance enquiries welcome</p>
                 </div>
               </div>
 
@@ -241,7 +241,7 @@ export const QuoteModal: React.FC = () => {
                         onChange={(e) => setFinanceInterest(e.target.checked)}
                         className="rounded border-slate-300 text-amber-500 focus:ring-amber-500"
                       />
-                      <span>Include SilverChef Rent-Try-Buy weekly estimate</span>
+                      <span>I would like to ask about finance options</span>
                     </label>
                   </div>
                 </div>

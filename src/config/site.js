@@ -4,7 +4,14 @@
  * All navigation, taxonomy, products, venues, cities, FAQs, and guides are derived from here.
  */
 
-import productsData from './products.light.json';
+import productsTable from './products.client.json';
+
+// The client table stores column names once; rebuild the product objects here.
+const productsData = productsTable.rows.map((r) => {
+  const o = {};
+  productsTable.keys.forEach((k, i) => { if (r[i] !== null) o[k] = r[i]; });
+  return o;
+});
 import { EXTRA_POSTS } from './guides-extra.js';
 import { VENUE_COPY, VENUE_TAGLINE } from './venue-copy.js';
 

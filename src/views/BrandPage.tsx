@@ -71,6 +71,18 @@ export const BrandPage: React.FC = () => {
 
           {brandProducts.length > 0 ? (
             <PagedGrid items={brandProducts} render={(p: any) => <ProductCard key={p.id} product={p} />} />
+          ) : null}
+          {brandProducts.length > 0 ? (
+            <nav aria-label={`All ${brand.name} models`} className="pt-6">
+              <h2 className="text-base font-bold text-slate-900">All {brand.name} models</h2>
+              <ul className="mt-3 columns-1 sm:columns-2 lg:columns-3 gap-6 text-xs text-slate-700 space-y-1">
+                {brandProducts.map((p: any) => (
+                  <li key={p.id} className="break-inside-avoid">
+                    <Link href={`/product/${p.slug}/`} className="hover:text-cyan-700 hover:underline">{p.name}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           ) : (
             <div className="bg-white p-8 rounded-xl border border-slate-200 text-center space-y-3">
               <p className="text-sm text-slate-600">

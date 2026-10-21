@@ -107,7 +107,7 @@ export const Header: React.FC = () => {
             </Link>
             <span className="hidden lg:inline text-slate-600">|</span>
             <span className="hidden lg:inline text-slate-400">
-              Own stock in Sydney, Melbourne, Brisbane & Perth warehouses
+              Australia-wide delivery
             </span>
           </div>
 
@@ -418,9 +418,9 @@ export const Header: React.FC = () => {
                   <div>
                     <h2 className="text-xl font-bold text-white flex items-center gap-2">
                       <span>Commercial Bar Freezers</span>
-                      <span className="text-xs font-normal text-cyan-400 font-mono">43°C Tropical Ambient Rated</span>
+                      <span className="text-xs font-normal text-cyan-400 font-mono">Bar freezers for every venue</span>
                     </h2>
-                    <p className="text-xs text-slate-400 mt-0.5">Heavy-duty sub-zero cooling from single door compacts to 3-door upright hotel workhorses.</p>
+                    <p className="text-xs text-slate-400 mt-0.5">Under bar, back bar, display, chest and upright freezers, from single door compacts to 3-door uprights.</p>
                   </div>
                   <Link 
                     href="/bar-freezers/" 
@@ -545,9 +545,9 @@ export const Header: React.FC = () => {
                 <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
                   <div>
                     <h2 className="text-xl font-bold text-white">Leading Commercial & Trade Brands</h2>
-                    <p className="text-xs text-slate-400 mt-0.5">Genuine manufacturer stock with nationwide Australian on-site warranty coverage.</p>
+                    <p className="text-xs text-slate-400 mt-0.5">Compare sizes, capacity and prices, delivered Australia-wide.</p>
                   </div>
-                  <span className="text-xs text-amber-400 font-mono">23 Authorized Brands</span>
+                  <span className="text-xs text-amber-400 font-mono">22 brands</span>
                 </div>
 
                 <div className="grid grid-cols-6 gap-3">
@@ -711,7 +711,7 @@ export const Header: React.FC = () => {
                 Warranty Service & Repair Claim
               </Link>
               <Link href="/finance/" onClick={() => setIsMobileMenuOpen(false)} className="block py-1.5">
-                SilverChef & Commercial Equipment Finance
+                Equipment Finance Enquiries
               </Link>
               <Link href="/contact/" onClick={() => setIsMobileMenuOpen(false)} className="block py-1.5">
                 Contact Our Commercial Sales Team

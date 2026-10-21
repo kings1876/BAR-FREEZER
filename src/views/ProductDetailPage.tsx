@@ -427,7 +427,7 @@ export const ProductDetailPage: React.FC = () => {
                   />
                   <div className="flex-1 text-xs">
                     <span className="font-bold text-slate-900 block">{item.name}</span>
-                    <span className="text-slate-500 line-clamp-1 mt-0.5">{item.shortDescription}</span>
+                    <span className="text-slate-500 line-clamp-1 mt-0.5">{item.type}</span>
                     <span className="font-mono font-bold text-slate-900 block mt-1">+${item.price} AUD</span>
                   </div>
                 </label>

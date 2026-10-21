@@ -38,55 +38,24 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="bg-slate-950 text-slate-400 border-t border-slate-800 text-xs">
-      {/* Nationwide Logistics & Trust Matrix Strip */}
-      <div className="border-b border-slate-800/80 bg-slate-900/60 py-8 px-4 sm:px-6 lg:px-8">
+      {/* Trust strip */}
+      <div className="border-b border-slate-800/80 bg-slate-900/60 py-6 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded bg-cyan-950/60 border border-cyan-800/40 text-cyan-400 flex items-center justify-center shrink-0">
-              <Truck className="w-5 h-5" />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-white">Australia-Wide Direct Delivery</p>
-              <p className="mt-1 text-slate-400 leading-relaxed">
-                Stock dispatched from Sydney, Melbourne, Brisbane & Perth. Hydraulic tailgate delivery included.
-              </p>
-            </div>
+          <div>
+            <p className="text-sm font-bold text-white">Australia-wide delivery</p>
+            <p className="mt-1 text-slate-400 leading-relaxed">Freight is quoted to your postcode and confirmed with your order.</p>
           </div>
-
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded bg-amber-950/60 border border-amber-800/40 text-amber-400 flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-white">Up to 5 Years On-Site Warranty</p>
-              <p className="mt-1 text-slate-400 leading-relaxed">
-                140+ licensed commercial refrigeration mechanics across metro & regional Australia.
-              </p>
-            </div>
+          <div>
+            <p className="text-sm font-bold text-white">Warranty and service</p>
+            <p className="mt-1 text-slate-400 leading-relaxed">Warranty terms are listed on each product. Lodge a claim online.</p>
           </div>
-
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded bg-emerald-950/60 border border-emerald-800/40 text-emerald-400 flex items-center justify-center shrink-0">
-              <Award className="w-5 h-5" />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-white">43°C Tropical Ambient Rated</p>
-              <p className="mt-1 text-slate-400 leading-relaxed">
-                Engineered specifically for brutal Australian summer heat, high humidity, and open alfresco venues.
-              </p>
-            </div>
+          <div>
+            <p className="text-sm font-bold text-white">Compare before you buy</p>
+            <p className="mt-1 text-slate-400 leading-relaxed">Specifications from manufacturers and suppliers, side by side.</p>
           </div>
-
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded bg-indigo-950/60 border border-indigo-800/40 text-indigo-400 flex items-center justify-center shrink-0">
-              <Building className="w-5 h-5" />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-white">Hospitality Trade Pricing</p>
-              <p className="mt-1 text-slate-400 leading-relaxed">
-                SilverChef Rent-Try-Buy partner, Zip Business, and tiered multi-unit commercial discounts.
-              </p>
-            </div>
+          <div>
+            <p className="text-sm font-bold text-white">Trade pricing</p>
+            <p className="mt-1 text-slate-400 leading-relaxed">Request a quote for trade and multi-unit orders.</p>
           </div>
         </div>
       </div>
@@ -104,7 +73,7 @@ export const Footer: React.FC = () => {
           </div>
 
           <p className="text-slate-400 leading-relaxed">
-            Australia's premier commercial and home bar refrigeration specialist. Supplying pubs, hotels, cocktail bars, craft breweries, and luxury alfresco outdoor kitchens nationwide from our own stock.
+            Bar Freezer Australia supplies commercial and home bar refrigeration: bar fridges, bar freezers, kegerators, wine fridges, ice machines and accessories, delivered Australia-wide.
           </p>
 
           {/* Trustpilot Review Badge */}
@@ -183,7 +152,7 @@ export const Footer: React.FC = () => {
             <li><Link href="/trade/" className="text-amber-400 hover:text-amber-300 font-semibold">Trade Account & Pricing</Link></li>
             <li><Link href="/quote/" className="hover:text-white transition-colors">Multi-Product Quote Builder</Link></li>
             <li><Link href="/warranty-service/" className="hover:text-white transition-colors">Warranty & Service Dispatch</Link></li>
-            <li><Link href="/finance/" className="hover:text-white transition-colors">SilverChef Commercial Leasing</Link></li>
+            <li><Link href="/finance/" className="hover:text-white transition-colors">Equipment Finance Enquiries</Link></li>
             <li><Link href="/compare/" className="hover:text-white transition-colors">Side-by-Side Spec Compare</Link></li>
             <li><Link href="/guides/" className="hover:text-white transition-colors">Refrigeration Buying Guides</Link></li>
             <li><Link href="/reviews/" className="hover:text-white transition-colors">Trustpilot Customer Reviews</Link></li>

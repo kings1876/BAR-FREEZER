@@ -123,6 +123,14 @@ function productMeta(p: any) {
   return { title, description: padDesc(desc) };
 }
 
+// The page <title> differs from the on-page H1 (the H1 is the full post title).
+function guideTitleTag(t: string): string {
+  const before = t.includes(':') ? t.split(':')[0].trim() : '';
+  const shorter = t.replace(/ (for|in) (Australia|Australian [A-Za-z ]+|Pubs and Bars|Venues).*$/i, '').trim();
+  const cands = [`${t} | Bar Freezer`, before.length >= 20 ? `${before} | Bar Freezer` : '', before.length >= 20 ? before : '', shorter !== t ? `${shorter} | Bar Freezer` : '', shorter !== t ? shorter : ''];
+  for (const c of cands) if (c && c.length <= 60 && c.length >= 25 && c.toLowerCase() !== t.toLowerCase()) return c;
+  return trim(t, 60);
+}
 function lookup(slug: string[]): { title: string; description: string; image?: string; noindex?: boolean; full?: boolean } | null {
   if (!slug.length) return null;
   const path = '/' + slug.join('/') + '/';
@@ -150,7 +158,7 @@ function lookup(slug: string[]): { title: string; description: string; image?: s
   }
   if (a === 'guides' && b) {
     const x: any = (POSTS as any[]).find((y) => y.slug === b);
-    return x ? { title: x.title.length <= 60 ? x.title : (x.title.includes(':') && x.title.split(':')[0].length >= 20 ? x.title.split(':')[0] : trim(x.title, 60)), description: padDesc(x.excerpt || x.title), full: true } : null;
+    return x ? { title: guideTitleTag(x.title), description: padDesc(x.excerpt || x.title), full: true } : null;
   }
   if (slug.length === 1 && STATIC_META[a]) {
     const [t, d] = STATIC_META[a];
@@ -230,7 +238,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
     const full: any = (FULL_PRODUCTS as any[]).find((x) => x.slug === slug[1]);
     const kwd: any = (PRODUCT_KW as any)[full && full.id];
     const meta = full ? productMeta(full) : null;
-    if (full) productDetail = { h1: meta ? meta.title.replace(' | Bar Freezer', '') : undefined, term: kwd ? kwd.term : undefined, intro: meta ? meta.description : undefined, id: full.id, specs: full.specs, fullDescription: full.fullDescription, dimensionGuide: full.dimensionGuide, sourceUrl: full.sourceUrl, alternatives: full.alternatives, frequentlyBoughtTogether: full.frequentlyBoughtTogether };
+    if (full) productDetail = { h1: meta ? (meta.title.includes(' | Bar Freezer') ? meta.title.replace(' | Bar Freezer', '') : `${meta.title} for Sale`) : undefined, term: kwd ? kwd.term : undefined, intro: meta ? meta.description : undefined, id: full.id, images: full.images, features: full.features, shortDescription: full.shortDescription, specs: full.specs, fullDescription: full.fullDescription, dimensionGuide: full.dimensionGuide, sourceUrl: full.sourceUrl, alternatives: full.alternatives, frequentlyBoughtTogether: full.frequentlyBoughtTogether };
   }
   const bc = breadcrumb(slug);
   if (bc) blocks.push(bc);
@@ -245,8 +253,8 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
         sku: p.sku,
         mpn: p.model || undefined,
         brand: { '@type': 'Brand', name: p.brand },
-        description: productDetail && productDetail.fullDescription ? String(productDetail.fullDescription).split(/\n\n/).join(' ') : p.shortDescription,
-        image: p.images?.length ? p.images.slice(0, 4).map((u: string) => SITE_URL + u) : undefined,
+        description: productDetail && productDetail.fullDescription ? String(productDetail.fullDescription).split(/\n\n/).join(' ') : (productDetail && productDetail.shortDescription) || p.name,
+        image: (productDetail && productDetail.images && productDetail.images.length ? productDetail.images : p.images || []).slice(0, 4).map((u: string) => SITE_URL + u),
         url: `${SITE_URL}/product/${p.slug}/`,
         offers: {
           '@type': 'Offer',

@@ -116,7 +116,7 @@ export const PostcodeEstimator: React.FC<PostcodeEstimatorProps> = ({ productPri
         city: 'Darwin & NT',
         state: 'NT',
         deliveryTime: '4 - 6 Business Days',
-        cost: '$220.00 AUD (Tropical humidity test included)',
+        cost: '$220.00 AUD',
         depot: 'Berrimah Freight Terminal NT',
         tailgateIncluded: true
       });

@@ -11,7 +11,7 @@ fs.mkdirSync(tmpDir, { recursive: true });
 
 // Load the config without a bundler: copy site.js next to a stub that reads the generated JSON.
 let src = fs.readFileSync(path.join(root, 'src/config/site.js'), 'utf8');
-src = src.replace("import productsData from './products.light.json';", "import fs from 'fs'; const productsData = JSON.parse(fs.readFileSync(new URL('../src/config/products.light.json', import.meta.url),'utf8'));");
+src = src.replace("import productsTable from './products.client.json';", "import fs from 'fs'; const productsTable = JSON.parse(fs.readFileSync(new URL('../src/config/products.client.json', import.meta.url),'utf8'));");
 src = src.replace("import { EXTRA_POSTS } from './guides-extra.js';", "import { EXTRA_POSTS } from '../src/config/guides-extra.js';");
 src = src.replace("import { VENUE_COPY, VENUE_TAGLINE } from './venue-copy.js';", "import { VENUE_COPY, VENUE_TAGLINE } from '../src/config/venue-copy.js';");
 const tmpFile = path.join(tmpDir, '_gen-site.mjs');

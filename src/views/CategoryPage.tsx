@@ -6,6 +6,7 @@ import { FilterSidebar, initialFilterState, FilterState } from '../components/Fi
 import { useRouter, Link } from '../context/RouterContext';
 import { Product } from '../types';
 import { CATEGORY_COPY } from '../config/seo-category-copy';
+import { KEYWORD_META } from '../config/seo-keywords';
 import { PagedGrid } from '../components/PagedGrid';
 import { RelatedSearches } from '../components/RelatedSearches';
 
@@ -32,7 +33,7 @@ export const CategoryPage: React.FC = () => {
     : rootCategory.name;
 
   const pageDescription = activeType
-    ? `Commercial ${activeType.name} solutions with rapid Australian warehouse dispatch, 43°C tropical ambient ratings, and manufacturer warranties.`
+    ? `Compare ${activeType.name.toLowerCase()} by size, capacity and price. Check the specifications on each product, and request a quote for multiple units.`
     : activeSubCategory
     ? activeSubCategory.description
     : rootCategory.description;
@@ -162,12 +163,10 @@ export const CategoryPage: React.FC = () => {
         {/* Category Header Banner */}
         <div className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200/90 shadow-xs space-y-3">
           <div className="flex items-center gap-2 text-xs font-mono font-semibold text-cyan-700 uppercase tracking-wider">
-            <span>COMMERCIAL GRADE REFRIGERATION</span>
-            <span>·</span>
-            <span>43°C AMBIENT RATED</span>
+            <span>BAR FRIDGES, FREEZERS &amp; ACCESSORIES</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            {kwCopy ? kwCopy.h1 : pageTitle}
+            {(() => { const h = kwCopy ? kwCopy.h1 : pageTitle; const mt = (KEYWORD_META as any)[currentPath]?.title; return mt && String(mt).trim().toLowerCase() === String(h).trim().toLowerCase() ? (/australia/i.test(h) ? `${h}: Compare Models` : `${h} in Australia`) : h; })()}
           </h1>
           <p className="text-sm text-slate-600 max-w-3xl leading-relaxed">
             {kwCopy ? kwCopy.intro : pageDescription}
@@ -202,6 +201,20 @@ export const CategoryPage: React.FC = () => {
                   }`}
                 >
                   {sub.name}
+                </Link>
+              ))}
+            </div>
+          )}
+          {activeSubCategory && activeSubCategory.types && activeSubCategory.types.length > 0 && (
+            <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center gap-2">
+              <span className="text-xs font-semibold text-slate-500">Browse {activeSubCategory.name} by type:</span>
+              {activeSubCategory.types.map((t: any) => (
+                <Link
+                  key={t.slug}
+                  href={t.path}
+                  className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${activeType?.slug === t.slug ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+                >
+                  {t.name}
                 </Link>
               ))}
             </div>

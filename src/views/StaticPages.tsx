@@ -570,7 +570,9 @@ export const SearchPage: React.FC = () => {
         p.brand.toLowerCase().includes(q) ||
         String(p.sku).toLowerCase().includes(q) ||
         p.categorySlug.toLowerCase().includes(q) ||
-        String(p.shortDescription).toLowerCase().includes(q)
+        String(p.model || '').toLowerCase().includes(q) ||
+        String(p.type || '').toLowerCase().includes(q) ||
+        String(p.subCategory || '').toLowerCase().includes(q)
       )
     : [];
 

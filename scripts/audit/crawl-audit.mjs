@@ -4,7 +4,7 @@ import fs from 'fs';
 
 const BASE = (process.argv[2] || 'https://bar-freezer.vercel.app').replace(/\/$/, '');
 let s = fs.readFileSync('src/config/site.js', 'utf8')
-  .replace("import productsData from './products.light.json';", "import fs from 'fs'; const productsData = JSON.parse(fs.readFileSync('src/config/products.light.json','utf8'));")
+  .replace("import productsTable from './products.client.json';", "import fs from 'fs'; const productsTable = JSON.parse(fs.readFileSync(new URL('../src/config/products.client.json', import.meta.url),'utf8'));")
   .replace("import { EXTRA_POSTS } from './guides-extra.js';", "import { EXTRA_POSTS } from '../src/config/guides-extra.js';")
   .replace("import { VENUE_COPY, VENUE_TAGLINE } from './venue-copy.js';", "import { VENUE_COPY, VENUE_TAGLINE } from '../src/config/venue-copy.js';");
 fs.writeFileSync('data/_site-tmp.mjs', s);
