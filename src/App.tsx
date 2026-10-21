@@ -43,7 +43,12 @@ const ReturnsPage = dynamic(() => import('./views/InfoPages').then((m) => m.Retu
 
 const MainContent: React.FC<{ below?: React.ReactNode }> = ({ below }) => {
   const { routeMatch } = useRouter();
-  const { notification } = useCart();
+  const { notification, isCartOpen, isQuoteModalOpen } = useCart();
+  // The cart drawer and quote form are only loaded and mounted the first time they are opened, keeping them out of page load.
+  const [cartMounted, setCartMounted] = React.useState(false);
+  const [quoteMounted, setQuoteMounted] = React.useState(false);
+  React.useEffect(() => { if (isCartOpen) setCartMounted(true); }, [isCartOpen]);
+  React.useEffect(() => { if (isQuoteModalOpen) setQuoteMounted(true); }, [isQuoteModalOpen]);
 
   const renderRoute = () => {
     switch (routeMatch.routeType) {
@@ -116,8 +121,8 @@ const MainContent: React.FC<{ below?: React.ReactNode }> = ({ below }) => {
       </main>
 
       {/* Global Interactive Overlays */}
-      <CartDrawer />
-      <QuoteModal />
+      {cartMounted && <CartDrawer />}
+      {quoteMounted && <QuoteModal />}
 
       {/* Persistent Floating Trustpilot Badge (Desktop) */}
       <TrustpilotFloatingTab />

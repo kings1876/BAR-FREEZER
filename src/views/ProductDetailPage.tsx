@@ -27,6 +27,7 @@ import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
 import { Product } from '../types';
 import { useProductDetail } from '../context/ProductDetailContext';
+import { fmtNum } from '../lib/format';
 
 export const ProductDetailPage: React.FC = () => {
   const { routeMatch } = useRouter();
@@ -306,17 +307,17 @@ export const ProductDetailPage: React.FC = () => {
                 <div className="flex items-baseline justify-between">
                   <div>
                     <div className="text-3xl font-extrabold font-mono text-slate-900 tabular-nums">
-                      ${product.price.toLocaleString()} <span className="text-sm font-normal text-slate-500 font-sans">AUD</span>
+                      ${fmtNum(product.price)} <span className="text-sm font-normal text-slate-500 font-sans">AUD</span>
                     </div>
                     <div className="text-xs text-slate-500">
-                      Includes 10% Australian GST (${Math.round(product.price / 11).toLocaleString()} GST)
+                      Includes 10% Australian GST (${fmtNum(Math.round(product.price / 11))} GST)
                     </div>
                   </div>
                   
                   {product.msrp && (
                     <div className="text-right">
-                      <span className="text-xs text-slate-400 line-through font-mono">RRP ${product.msrp.toLocaleString()}</span>
-                      <span className="block text-xs font-semibold text-emerald-700">Save ${(product.msrp - product.price).toLocaleString()} AUD</span>
+                      <span className="text-xs text-slate-400 line-through font-mono">RRP ${fmtNum(product.msrp)}</span>
+                      <span className="block text-xs font-semibold text-emerald-700">Save ${fmtNum((product.msrp - product.price))} AUD</span>
                     </div>
                   )}
                 </div>
@@ -325,7 +326,7 @@ export const ProductDetailPage: React.FC = () => {
                 <div className="pt-2 border-t border-slate-200/80 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-1.5 text-amber-800">
                     <span className="font-semibold">Trade Discount Price:</span>
-                    <strong className="font-mono text-sm">{product.tradePrice != null ? `$${product.tradePrice.toLocaleString()} AUD` : 'On application'}</strong>
+                    <strong className="font-mono text-sm">{product.tradePrice != null ? `$${fmtNum(product.tradePrice)} AUD` : 'On application'}</strong>
                   </div>
                   <button
                     onClick={() => openQuoteForProduct(product)}
@@ -391,7 +392,7 @@ export const ProductDetailPage: React.FC = () => {
                     className="flex-1 h-11 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors flex items-center justify-center gap-2 shadow-sm focus-visible:outline-amber-500"
                   >
                     <ShoppingBag className="w-4 h-4 text-amber-400" />
-                    <span>{firmPrice ? `Add to Cart ($${((product.price as number) * quantity).toLocaleString()} AUD)` : 'Request a Quote to Confirm Price'}</span>
+                    <span>{firmPrice ? `Add to Cart ($${fmtNum(((product.price as number) * quantity))} AUD)` : 'Request a Quote to Confirm Price'}</span>
                   </button>
                 </div>
 
@@ -779,7 +780,7 @@ export const ProductDetailPage: React.FC = () => {
                     <ProductImage product={alt} className="w-full h-36" />
                     <div className="text-xs text-slate-500 font-mono">{alt.brand} · {alt.type}</div>
                     <h3 className="text-sm font-bold text-slate-900 line-clamp-1">{alt.name}</h3>
-                    <div className="text-sm font-mono font-bold text-slate-900">{alt.price != null ? `$${alt.price.toLocaleString()} AUD` : 'Price on application'}</div>
+                    <div className="text-sm font-mono font-bold text-slate-900">{alt.price != null ? `$${fmtNum(alt.price)} AUD` : 'Price on application'}</div>
                   </div>
                   <Link
                     href={`/product/${alt.slug}/`}

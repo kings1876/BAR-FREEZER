@@ -20,6 +20,7 @@ import { SITE, CATEGORIES, BRANDS, VENUES, CITIES } from '../config/core.js';
 import { PRODUCT_COUNTS } from '../config/products-counts.js';
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
+import { fmtNum } from '../lib/format';
 
 export const Header: React.FC = () => {
   const { cartCount, setIsCartOpen, setIsQuoteModalOpen, openQuoteForCart } = useCart();
@@ -217,7 +218,7 @@ export const Header: React.FC = () => {
                           </span>
                         </div>
                         <span className="text-sm font-mono font-bold text-white whitespace-nowrap">
-                          {p.price != null ? `$${p.price.toLocaleString()} AUD` : 'Get a quote'}
+                          {p.price != null ? `$${fmtNum(p.price)} AUD` : 'Get a quote'}
                         </span>
                       </Link>
                     ))}

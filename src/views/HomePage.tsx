@@ -25,6 +25,7 @@ import { ProductCard } from '../components/ProductCard';
 import { ProductImage } from '../components/ProductImage';
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
+import { fmtNum } from '../lib/format';
 
 export const HomePage: React.FC = () => {
   const { setIsQuoteModalOpen } = useCart();
@@ -183,7 +184,7 @@ export const HomePage: React.FC = () => {
                       </p>
                     </div>
                     <div className="text-right shrink-0">
-                      <span className="text-lg font-bold font-mono text-amber-400">${spotlight.price.toLocaleString()}</span>
+                      <span className="text-lg font-bold font-mono text-amber-400">${fmtNum(spotlight.price)}</span>
                       <span className="block text-[10px] text-slate-400">Incl. GST</span>
                     </div>
                   </div>
@@ -220,7 +221,7 @@ export const HomePage: React.FC = () => {
               <Building className="w-8 h-8 text-amber-400 shrink-0" />
               <div>
                 <div className="text-sm font-bold text-white">Wide Range</div>
-                <div className="text-xs text-slate-400">{PRODUCT_COUNTS.total.toLocaleString('en-AU')} products, {PRODUCT_COUNTS.brands} brands</div>
+                <div className="text-xs text-slate-400">{fmtNum(PRODUCT_COUNTS.total)} products, {PRODUCT_COUNTS.brands} brands</div>
               </div>
             </div>
 
@@ -668,7 +669,7 @@ export const HomePage: React.FC = () => {
             <div className="lg:col-span-6 grid grid-cols-2 gap-4">
               <div className="p-6 bg-slate-50 rounded-lg border border-slate-200">
                 <div className="text-3xl sm:text-4xl font-extrabold font-mono text-slate-900 tabular-nums">
-                  {PRODUCT_COUNTS.total.toLocaleString('en-AU')}
+                  {fmtNum(PRODUCT_COUNTS.total)}
                 </div>
                 <div className="text-xs font-semibold text-slate-700 uppercase tracking-wide mt-1">
                   Products Listed

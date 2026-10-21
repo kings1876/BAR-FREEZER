@@ -17,6 +17,7 @@ import { PRODUCTS } from '../config/products-data.js';
 import { useCart } from '../context/CartContext';
 import { Link } from '../context/RouterContext';
 import { collectForm, sendEnquiry } from '../lib/enquiry-client';
+import { fmtNum } from '../lib/format';
 
 export const TradePage: React.FC = () => {
   const { cart, addToCart, setIsQuoteModalOpen } = useCart();
@@ -144,10 +145,10 @@ export const TradePage: React.FC = () => {
                           </span>
                         </div>
                         <div className="col-span-2 text-right font-mono text-slate-900">
-                          {p.price != null ? `${p.price.toLocaleString()} AUD` : 'On application'}
+                          {p.price != null ? `${fmtNum(p.price)} AUD` : 'On application'}
                         </div>
                         <div className="col-span-3 text-right font-mono font-bold text-emerald-800">
-                          {p.tradePrice != null ? `$${p.tradePrice.toLocaleString()} AUD` : 'Quote'}
+                          {p.tradePrice != null ? `$${fmtNum(p.tradePrice)} AUD` : 'Quote'}
                         </div>
                         <div className="col-span-1 text-center">
                           <button
@@ -174,7 +175,7 @@ export const TradePage: React.FC = () => {
                     <div className="text-right">
                       <span className="text-slate-500 block text-[11px]">Listed total:</span>
                       <span className="text-lg font-mono font-bold text-slate-900">
-                        ${totalRetail.toLocaleString()} AUD <span className="text-xs font-normal text-slate-500">Incl. GST</span>
+                        ${fmtNum(totalRetail)} AUD <span className="text-xs font-normal text-slate-500">Incl. GST</span>
                       </span>
                     </div>
                   </div>
@@ -355,7 +356,7 @@ export const TradePage: React.FC = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Estimated Total:</span>
-                  <span className="font-mono font-bold text-emerald-700">${totalTrade.toLocaleString()} AUD</span>
+                  <span className="font-mono font-bold text-emerald-700">${fmtNum(totalTrade)} AUD</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Response SLA:</span>

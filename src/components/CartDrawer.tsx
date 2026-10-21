@@ -3,6 +3,7 @@ import { X, ShoppingBag, Trash2, Plus, Minus, ArrowRight, ShieldCheck, FileText,
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
 import { ProductImage } from './ProductImage';
+import { fmtNum } from '../lib/format';
 
 export const CartDrawer: React.FC = () => {
   const { 
@@ -65,7 +66,7 @@ export const CartDrawer: React.FC = () => {
                 <div className="flex items-center justify-between text-slate-700 mb-1.5">
                   <span className="flex items-center gap-1.5">
                     <Truck className="w-3.5 h-3.5 text-cyan-600" />
-                    <span>Add <strong>${amountToFreeDelivery.toLocaleString()} AUD</strong> for Free Metro Delivery</span>
+                    <span>Add <strong>${fmtNum(amountToFreeDelivery)} AUD</strong> for Free Metro Delivery</span>
                   </span>
                   <span className="font-mono text-slate-500">{Math.round((subtotal / freeDeliveryThreshold) * 100)}%</span>
                 </div>
@@ -159,10 +160,10 @@ export const CartDrawer: React.FC = () => {
                       {/* Price */}
                       <div className="text-right">
                         <div className="text-xs font-bold font-mono text-slate-900">
-                          ${((product.price ?? 0) * quantity).toLocaleString()} AUD
+                          ${fmtNum(((product.price ?? 0) * quantity))} AUD
                         </div>
                         <div className="text-[10px] text-slate-500">
-                          ${(product.price ?? 0).toLocaleString()} ea
+                          ${fmtNum((product.price ?? 0))} ea
                         </div>
                       </div>
                     </div>
@@ -179,11 +180,11 @@ export const CartDrawer: React.FC = () => {
               <div className="space-y-1.5 text-xs">
                 <div className="flex justify-between text-slate-600">
                   <span>Subtotal (Excl. Freight)</span>
-                  <span className="font-mono">${subtotal.toLocaleString()} AUD</span>
+                  <span className="font-mono">${fmtNum(subtotal)} AUD</span>
                 </div>
                 <div className="flex justify-between text-slate-500 text-[11px]">
                   <span>Includes 10% Australian GST</span>
-                  <span className="font-mono">${gstAmount.toLocaleString()} AUD</span>
+                  <span className="font-mono">${fmtNum(gstAmount)} AUD</span>
                 </div>
                 <div className="flex justify-between text-slate-600">
                   <span>Estimated Metro Delivery</span>
@@ -194,7 +195,7 @@ export const CartDrawer: React.FC = () => {
                 <div className="pt-2 border-t border-slate-200 flex justify-between items-baseline text-sm font-bold text-slate-900">
                   <span>Total (AUD)</span>
                   <span className="text-lg font-mono">
-                    ${(subtotal + (qualifiesForFreeDelivery ? 0 : 89)).toLocaleString()} AUD
+                    ${fmtNum((subtotal + (qualifiesForFreeDelivery ? 0 : 89)))} AUD
                   </span>
                 </div>
               </div>

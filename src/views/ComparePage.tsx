@@ -4,6 +4,7 @@ import { PRODUCTS } from '../config/products-data.js';
 import { ProductImage } from '../components/ProductImage';
 import { useCart } from '../context/CartContext';
 import { Link } from '../context/RouterContext';
+import { fmtNum } from '../lib/format';
 
 export const ComparePage: React.FC = () => {
   const { compareList, toggleCompare, addToCart, openQuoteForProduct } = useCart();
@@ -78,7 +79,7 @@ export const ComparePage: React.FC = () => {
                       </h2>
 
                       <div className="text-lg font-mono font-bold text-amber-400">
-                        {item.price != null ? `$${item.price.toLocaleString()} AUD` : 'Price on application'}
+                        {item.price != null ? `$${fmtNum(item.price)} AUD` : 'Price on application'}
                       </div>
 
                       <div className="flex flex-col gap-1.5 pt-1">
@@ -106,7 +107,7 @@ export const ComparePage: React.FC = () => {
                 <td className="p-3 font-semibold text-slate-900 bg-slate-50/80 sticky left-0">Trade Price (Excl. Tax)</td>
                 {displayItems.map((item) => (
                   <td key={item.id} className="p-3 font-mono font-bold text-emerald-800">
-                    {item.tradePrice != null ? `$${item.tradePrice.toLocaleString()} AUD` : 'Request a quote'}
+                    {item.tradePrice != null ? `$${fmtNum(item.tradePrice)} AUD` : 'Request a quote'}
                   </td>
                 ))}
               </tr>

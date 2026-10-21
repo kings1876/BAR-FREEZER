@@ -4,6 +4,7 @@ import { SITE, VENUES } from '../config/core.js';
 import { useCart } from '../context/CartContext';
 import { Product } from '../types';
 import { sendEnquiry } from '../lib/enquiry-client';
+import { fmtNum } from '../lib/format';
 
 export const QuoteModal: React.FC = () => {
   const { isQuoteModalOpen, setIsQuoteModalOpen, quoteProducts, cart } = useCart();
@@ -108,7 +109,7 @@ export const QuoteModal: React.FC = () => {
                       <div key={p.id} className="flex items-center justify-between py-1 border-b border-slate-200/60 last:border-0">
                         <span className="font-medium text-slate-900 line-clamp-1 pr-2">{p.name}</span>
                         <span className="font-mono text-slate-600 whitespace-nowrap">
-                          {p.price != null ? `MSRP $${p.price.toLocaleString()} AUD` : 'Price on application'}
+                          {p.price != null ? `MSRP $${fmtNum(p.price)} AUD` : 'Price on application'}
                         </span>
                       </div>
                     ))}

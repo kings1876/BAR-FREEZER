@@ -23,6 +23,7 @@ import { makeOrderNumber } from '../lib/order';
 import { waOrderLink, whatsappEnabled } from '../lib/whatsapp';
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
+import { fmtNum } from '../lib/format';
 
 /**
  * Commercial Financing Page (/finance/)
@@ -103,7 +104,7 @@ export const AboutPage: React.FC = () => {
           </p>
 
           <p className="text-sm text-slate-700 leading-relaxed">
-            We list {PRODUCT_COUNTS.total.toLocaleString('en-AU')} products from {brandCount} brands, with the specifications published by each manufacturer or supplier. You can compare models, request a quote for multiple units, and have equipment delivered Australia-wide. Read our <Link href="/guides/" className="text-cyan-700 font-semibold">buying guides</Link> to choose the right size and type, or <Link href="/contact/" className="text-cyan-700 font-semibold">contact us</Link> with a question.
+            We list {fmtNum(PRODUCT_COUNTS.total)} products from {brandCount} brands, with the specifications published by each manufacturer or supplier. You can compare models, request a quote for multiple units, and have equipment delivered Australia-wide. Read our <Link href="/guides/" className="text-cyan-700 font-semibold">buying guides</Link> to choose the right size and type, or <Link href="/contact/" className="text-cyan-700 font-semibold">contact us</Link> with a question.
           </p>
 
           <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center text-xs">
@@ -112,7 +113,7 @@ export const AboutPage: React.FC = () => {
               <span className="text-slate-500">Verified Reviews</span>
             </div>
             <div>
-              <span className="font-mono font-bold text-lg text-slate-900 block">{PRODUCT_COUNTS.total.toLocaleString('en-AU')}</span>
+              <span className="font-mono font-bold text-lg text-slate-900 block">{fmtNum(PRODUCT_COUNTS.total)}</span>
               <span className="text-slate-500">Products listed</span>
             </div>
             <div>
@@ -443,7 +444,7 @@ export const CheckoutPage: React.FC = () => {
                   disabled={sending || cart.length === 0}
                   className="w-full py-3 bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-md transition-colors shadow-sm"
                 >
-                  {sending ? 'Sending…' : `Place Order Request (${grandTotal.toLocaleString()} AUD)`}
+                  {sending ? 'Sending…' : `Place Order Request (${fmtNum(grandTotal)} AUD)`}
                 </button>
                 {whatsappEnabled() && (
                   <button
@@ -466,9 +467,9 @@ export const CheckoutPage: React.FC = () => {
                   <div key={product.id} className="pt-2 flex justify-between">
                     <div>
                       <span className="font-bold text-slate-900 block">{product.name}</span>
-                      <span className="text-slate-500 font-mono">Qty: {quantity} x ${product.price.toLocaleString()}</span>
+                      <span className="text-slate-500 font-mono">Qty: {quantity} x ${fmtNum(product.price)}</span>
                     </div>
-                    <span className="font-mono font-bold text-slate-900">${(product.price * quantity).toLocaleString()}</span>
+                    <span className="font-mono font-bold text-slate-900">${fmtNum((product.price * quantity))}</span>
                   </div>
                 ))}
               </div>
@@ -476,11 +477,11 @@ export const CheckoutPage: React.FC = () => {
               <div className="pt-4 border-t border-slate-200 space-y-2">
                 <div className="flex justify-between text-slate-600">
                   <span>Subtotal:</span>
-                  <span className="font-mono">${subtotal.toLocaleString()} AUD</span>
+                  <span className="font-mono">${fmtNum(subtotal)} AUD</span>
                 </div>
                 <div className="flex justify-between text-slate-500 text-[11px]">
                   <span>10% Australian GST:</span>
-                  <span className="font-mono">${gstAmount.toLocaleString()} AUD</span>
+                  <span className="font-mono">${fmtNum(gstAmount)} AUD</span>
                 </div>
                 <div className="flex justify-between text-slate-600">
                   <span>Freight Delivery:</span>
@@ -488,7 +489,7 @@ export const CheckoutPage: React.FC = () => {
                 </div>
                 <div className="flex justify-between text-sm font-bold text-slate-900 pt-2 border-t border-slate-200">
                   <span>Total Payable:</span>
-                  <span className="text-base font-mono">${grandTotal.toLocaleString()} AUD</span>
+                  <span className="text-base font-mono">${fmtNum(grandTotal)} AUD</span>
                 </div>
               </div>
             </div>

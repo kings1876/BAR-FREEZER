@@ -1,5 +1,6 @@
 import React from 'react';
 import SEARCHES from '../config/seo-searches.json';
+import { fmtNum } from '../lib/format';
 
 interface Props {
   path: string;
@@ -20,7 +21,7 @@ export const RelatedSearches: React.FC<Props> = ({ path, minPrice, noun = 'produ
       <h2 id="popular-searches" className="text-base font-bold text-slate-900">Popular searches for {noun}</h2>
       {hasCheap && minPrice ? (
         <p className="text-sm text-slate-600">
-          Looking for cheap {noun}? Prices on this page start from ${minPrice.toLocaleString()} AUD including GST. Use the sort menu to put the lowest prices first and compare models side by side.
+          Looking for cheap {noun}? Prices on this page start from ${fmtNum(minPrice)} AUD including GST. Use the sort menu to put the lowest prices first and compare models side by side.
         </p>
       ) : null}
       <ul className="flex flex-wrap gap-2 text-xs text-slate-700">

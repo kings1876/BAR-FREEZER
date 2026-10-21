@@ -4,6 +4,7 @@ import { Product } from '../types';
 import { ProductImage } from './ProductImage';
 import { useCart } from '../context/CartContext';
 import { Link } from '../context/RouterContext';
+import { fmtNum } from '../lib/format';
 
 interface ProductCardProps {
   product: Product;
@@ -129,10 +130,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, priority = fa
           ) : (
           <div>
             <div className="text-lg sm:text-xl font-bold font-mono text-slate-900 tabular-nums">
-              ${product.price.toLocaleString()} <span className="text-xs font-normal text-slate-500 font-sans">AUD</span>
+              ${fmtNum(product.price)} <span className="text-xs font-normal text-slate-500 font-sans">AUD</span>
             </div>
             <div className="text-[11px] text-slate-500">
-              Incl. GST{product.tradePrice != null && <> · <span className="text-amber-700 font-medium">Trade: ${product.tradePrice.toLocaleString()}</span></>}
+              Incl. GST{product.tradePrice != null && <> · <span className="text-amber-700 font-medium">Trade: ${fmtNum(product.tradePrice)}</span></>}
             </div>
           </div>
           )}

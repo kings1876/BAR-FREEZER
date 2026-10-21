@@ -328,7 +328,8 @@ function belowContent(slug: string[], productDetail: any): React.ReactNode {
     return (
       <>
         {typeNav}
-        <ProductLinkList title={`All ${label} models (${items.length})`} aria={`All ${label} models`} items={items} />
+        {/* Top-level categories link to their sub-categories; the models themselves are listed on those pages and on the brand pages. */}
+        {b ? <ProductLinkList title={`All ${label} models (${items.length})`} aria={`All ${label} models`} items={items} /> : <BuyingChecklist />}
       </>
     );
   }

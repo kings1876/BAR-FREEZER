@@ -33,13 +33,11 @@ export function ProductLinkList({ title, aria, items }: { title: string; aria: s
         <p className="mt-1 text-xs text-slate-600 max-w-3xl">
           Each model below links to its own page with the full specification, dimensions, capacity, power details and price in Australian dollars including GST. Open two or more and use the compare tool to see them side by side, or send a quote request if you need several units delivered.
         </p>
-        <ul className="mt-3 columns-1 sm:columns-2 lg:columns-3 gap-6 text-xs text-slate-700 space-y-1">
+        <div className="mt-3 columns-1 sm:columns-2 lg:columns-3 gap-6 text-xs">
           {items.map(([slug, name]) => (
-            <li key={slug} className="break-inside-avoid">
-              <a href={`/product/${slug}/`} className="hover:text-cyan-700 hover:underline">{name}</a>
-            </li>
+            <a key={slug} href={`/product/${slug}/`} className="block break-inside-avoid py-0.5 text-slate-700 hover:text-cyan-700 hover:underline">{name}</a>
           ))}
-        </ul>
+        </div>
       </nav>
       <BuyingChecklist />
     </div>
