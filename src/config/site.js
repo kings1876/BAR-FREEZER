@@ -1009,35 +1009,35 @@ export const ACCESSORY_PRODUCTS = [];
 export const FAQS = [
   {
     question: "Do you deliver bar freezers and fridges Australia-wide?",
-    answer: "Yes. We maintain fully stocked warehouses in Sydney, Melbourne, Brisbane, and Perth, with daily freight connections to Adelaide, Canberra, Hobart, Darwin, and regional hubs across all states and territories. Standard metro delivery is $89 flat rate (or completely free for commercial orders over $3,500). Tailgate lifter service is included where required so you never have to manually unload heavy commercial equipment."
+    answer: "Yes. We deliver bar fridges, bar freezers and commercial refrigeration to capital cities and regional areas across Australia. Delivery time and freight depend on the product and your postcode, and are confirmed with your order or quote. Use the postcode estimator on the delivery page for a guide."
   },
   {
-    question: "What is an Australian '43°C Tropical Ambient Rating' and why does it matter?",
-    answer: "Standard domestic freezers from overseas big-box retailers are only tested to European 'Climate Class 3' (up to 25°C ambient). During an Australian summer, temperatures under a commercial bar counter or on an outdoor alfresco patio frequently exceed 38°C to 42°C. A Climate Class 5 (43°C Tropical Rated) bar freezer has oversized condenser coils, dual-speed evaporator fans, and heavy polyurethane insulation engineered specifically to pull down and hold -20°C in harsh Australian conditions without burning out the compressor."
+    question: "What does the climate class or ambient rating on a fridge mean?",
+    answer: "The climate class shows the room temperature a fridge or freezer is designed to work in. A higher class suits hotter rooms, which matters under a bar counter, in a garage or on an outdoor patio. Check the climate class or ambient rating in each product specification and choose a model that suits where it will sit."
   },
   {
     question: "What electrical power plug do commercial bar freezers need?",
-    answer: "Over 95% of our underbar freezers and back bar coolers run on standard Australian single-phase 240V electricity with a regular 10-Amp 3-pin plug (the same socket you have in any home or cafe). Large multi-door walk-in style units will specify 15-Amp or 3-phase power on their product specifications table."
+    answer: "Most under bar fridges and freezers run on standard Australian 240V power with a 10 amp plug. Larger upright and multi-door units may need a higher-rated circuit. The electrical supply is listed in each product specification, so check it against your power outlet before you order."
   },
   {
     question: "What ventilation clearance is required under a bar counter?",
-    answer: "Units with 'front-breathing' or 'front-venting' kickplates take air in through the front louvre and exhaust warm air out through the same front grille. These require zero clearance on the sides and rear, allowing completely flush built-in installation. Standard back-venting units require at least 50mm of rear air clearance and 20mm on each side. Every product page on Bar Freezer includes our 'Will it fit?' dimension guide with exact cutout specifications."
+    answer: "It depends on the model. Front-breathing units draw air in and out through the front grille and can sit flush in cabinetry. Rear-breathing units need clearance at the back and sides for airflow. Follow the clearances in the manufacturer manual and measure your opening before you buy."
   },
   {
-    question: "Can I get trade pricing and commercial finance?",
-    answer: "Yes! Australian hospitality operators, builders, architects, refrigeration mechanics, and venue managers can request trade quote pricing directly through our online quote builder or by calling 1300 858 290. We also partner with SilverChef (Rent-Try-Buy with 100% tax-deductible payments) and Zip Business for commercial leasing."
+    question: "Can I get trade pricing and finance?",
+    answer: "Yes. Request a quote with your ABN and delivery postcode and we will reply with trade or multi-unit pricing. If you want finance, tell us in your quote request and we will let you know what options are available. Finance is provided by third parties and is subject to approval."
   },
   {
     question: "How does the warranty work if an issue occurs?",
-    answer: "All our commercial units are backed by Australian on-site manufacturer warranties (ranging from 2 to 5 years). In the event of a fault, you simply submit a claim on our /warranty-service/ page or phone our priority trade line. A qualified local commercial refrigeration mechanic in your city or regional town is dispatched directly to your venue to inspect and repair the machine on-site."
+    answer: "Manufacturer warranty terms are listed on each product page. If something goes wrong, submit a claim on our warranty page with the model and serial number from the data plate and a description of the fault, and we will contact you with the next steps. Your rights under the Australian Consumer Law apply as well."
   },
   {
     question: "What is the difference between a glass froster and a standard bar freezer?",
-    answer: "A standard bar freezer holds steady at -18°C for long-term food or ice storage. A commercial glass froster is engineered with high-velocity internal convection and drops temperatures down to -22°C to -25°C. When a damp beer stein or martini coupe is placed inside, it flash-freezes the surface moisture into an opaque frost shell in under 90 seconds, keeping drinks icy cold for 20-30 minutes without melting ice into the beverage."
+    answer: "A glass froster chills glasses and mugs so drinks are served in a frosted glass. A standard bar freezer stores frozen stock such as ice, garnishes and food. Choose a froster if you want frosted glassware and a bar freezer if you need frozen storage."
   },
   {
-    question: "What is R290 refrigerant and why is it mandatory for commercial bars?",
-    answer: "R290 is a natural high-purity propane hydrocarbon refrigerant. Under Australian government MEPS greenhouse regulations, old ozone-depleting gases (like R404A and R134a) are being phased out. R290 has zero Ozone Depletion Potential (ODP) and an ultra-low Global Warming Potential (GWP < 3). More importantly for venue owners, R290 units consume up to 40% less electricity, saving thousands of dollars per year on commercial venue power bills."
+    question: "What is R290 refrigerant?",
+    answer: "R290 is propane, a hydrocarbon refrigerant used in many modern commercial refrigeration units. The refrigerant used is listed in each product specification where the manufacturer provides it. Ask us if you want to compare refrigerants between models."
   }
 ];
 

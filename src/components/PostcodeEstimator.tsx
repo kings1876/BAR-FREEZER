@@ -182,9 +182,8 @@ export const PostcodeEstimator: React.FC<PostcodeEstimatorProps> = ({ productPri
             <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
             <span>Transit: <strong>{estimate.deliveryTime}</strong></span>
           </div>
-          <div className="text-[11px] text-slate-500 pt-1 border-t border-slate-100 flex items-center justify-between">
-            <span>{estimate.depot}</span>
-            <span className="text-emerald-700 font-medium">✓ Hydraulic Tailgate Lifter Included</span>
+          <div className="text-[11px] text-slate-500 pt-1 border-t border-slate-100">
+            <span>Estimate only. Delivery time and freight are confirmed with your order.</span>
           </div>
         </div>
       )}

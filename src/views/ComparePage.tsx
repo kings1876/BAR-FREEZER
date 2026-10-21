@@ -9,7 +9,9 @@ export const ComparePage: React.FC = () => {
   const { compareList, toggleCompare, addToCart, openQuoteForProduct } = useCart();
 
   // If compareList is empty, default to comparing 3 top benchmark underbar freezers
-  const displayItems = compareList.length > 0 ? compareList : PRODUCTS.slice(0, 3);
+  const sample = ['under-bar-fridges', 'wine-fridges', 'under-bar-freezers'].map((slug) => PRODUCTS.find((p: any) => p.categorySlug === slug && p.condition === 'new' && p.capacityLitres > 0 && p.widthMm > 0 && p.images && p.images.length)).filter(Boolean);
+  const displayItems = compareList.length > 0 ? compareList : sample;
+  const val = (v: any, unit = '') => (v === undefined || v === null || v === '' || v === 0 || v === '0' ? '—' : `${v}${unit}`);
 
   return (
     <div className="bg-slate-50 min-h-screen py-8">
@@ -29,10 +31,10 @@ export const ComparePage: React.FC = () => {
               <span>TECHNICAL SPECIFICATION MATRIX</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
-              Side-by-Side Commercial Refrigeration Comparison
+              Compare Bar Fridges and Freezers Side by Side
             </h1>
             <p className="text-xs text-slate-500 mt-1">
-              Compare dimensions, energy ratings, pull-down temperatures, and warranty coverage across models.
+              Compare capacity, dimensions, temperature range, doors, refrigerant and warranty across models. Add products to compare from any category page.
             </p>
           </div>
 
@@ -71,9 +73,9 @@ export const ComparePage: React.FC = () => {
                         <ProductImage product={item} className="h-28" />
                       </div>
 
-                      <h4 className="text-xs font-bold text-white line-clamp-2 leading-snug">
+                      <h2 className="text-xs font-bold text-white line-clamp-2 leading-snug">
                         {item.name}
-                      </h4>
+                      </h2>
 
                       <div className="text-lg font-mono font-bold text-amber-400">
                         {item.price != null ? `$${item.price.toLocaleString()} AUD` : 'Price on application'}
@@ -113,7 +115,7 @@ export const ComparePage: React.FC = () => {
                 <td className="p-3 font-semibold text-slate-900 bg-slate-50/80 sticky left-0">Gross Usable Capacity</td>
                 {displayItems.map((item) => (
                   <td key={item.id} className="p-3 font-mono font-semibold">
-                    {item.capacityLitres} Litres
+                    {item.capacityLitres ? `${item.capacityLitres} Litres` : (item.capacityLabel || '—')}
                   </td>
                 ))}
               </tr>
@@ -122,7 +124,7 @@ export const ComparePage: React.FC = () => {
                 <td className="p-3 font-semibold text-slate-900 bg-slate-50/80 sticky left-0">External Dimensions (W x D x H)</td>
                 {displayItems.map((item) => (
                   <td key={item.id} className="p-3 font-mono">
-                    {item.widthMm}mm W x {item.depthMm}mm D x {item.heightMm}mm H
+                    {item.widthMm && item.depthMm && item.heightMm ? `${item.widthMm} x ${item.depthMm} x ${item.heightMm} mm` : '—'}
                   </td>
                 ))}
               </tr>
@@ -131,7 +133,7 @@ export const ComparePage: React.FC = () => {
                 <td className="p-3 font-semibold text-slate-900 bg-slate-50/80 sticky left-0">Operating Temperature</td>
                 {displayItems.map((item) => (
                   <td key={item.id} className="p-3 font-mono font-bold text-cyan-800">
-                    {item.tempRange}
+                    {val(item.tempRange)}
                   </td>
                 ))}
               </tr>
@@ -140,34 +142,25 @@ export const ComparePage: React.FC = () => {
                 <td className="p-3 font-semibold text-slate-900 bg-slate-50/80 sticky left-0">Door Config & Style</td>
                 {displayItems.map((item) => (
                   <td key={item.id} className="p-3">
-                    {item.doorCount}x {item.doorType} ({item.doorStyle})
+                    {item.doorCount ? `${item.doorCount} x ${item.doorType} (${item.doorStyle})` : '—'}
                   </td>
                 ))}
               </tr>
 
               <tr className="divide-x divide-slate-100 hover:bg-slate-50">
-                <td className="p-3 font-semibold text-slate-900 bg-slate-50/80 sticky left-0">Ambient Rating</td>
-                {displayItems.map((item) => (
-                  <td key={item.id} className="p-3 font-medium text-emerald-800">
-                    {item.ambientRating || "43°C Tropical Rated"}
-                  </td>
-                ))}
-              </tr>
-
-              <tr className="divide-x divide-slate-100 hover:bg-slate-50">
-                <td className="p-3 font-semibold text-slate-900 bg-slate-50/80 sticky left-0">Power Connection</td>
+                <td className="p-3 font-semibold text-slate-900 bg-slate-50/80 sticky left-0">Power</td>
                 {displayItems.map((item) => (
                   <td key={item.id} className="p-3 font-mono">
-                    {item.plugType || "10A Standard 3-Pin Plug"}
+                    {val(item.power)}
                   </td>
                 ))}
               </tr>
 
               <tr className="divide-x divide-slate-100 hover:bg-slate-50">
-                <td className="p-3 font-semibold text-slate-900 bg-slate-50/80 sticky left-0">Refrigerant Gas</td>
+                <td className="p-3 font-semibold text-slate-900 bg-slate-50/80 sticky left-0">Refrigerant</td>
                 {displayItems.map((item) => (
                   <td key={item.id} className="p-3 font-mono text-cyan-700">
-                    {item.refrigerant || "R290 Eco Hydrocarbon"}
+                    {val(item.refrigerant)}
                   </td>
                 ))}
               </tr>
@@ -176,16 +169,16 @@ export const ComparePage: React.FC = () => {
                 <td className="p-3 font-semibold text-slate-900 bg-slate-50/80 sticky left-0">Net Weight</td>
                 {displayItems.map((item) => (
                   <td key={item.id} className="p-3 font-mono">
-                    {item.weightKg} kg
+                    {val(item.weightKg, ' kg')}
                   </td>
                 ))}
               </tr>
 
               <tr className="divide-x divide-slate-100 hover:bg-slate-50">
-                <td className="p-3 font-semibold text-slate-900 bg-slate-50/80 sticky left-0">Australian Warranty</td>
+                <td className="p-3 font-semibold text-slate-900 bg-slate-50/80 sticky left-0">Warranty</td>
                 {displayItems.map((item) => (
                   <td key={item.id} className="p-3 font-semibold text-amber-800">
-                    {item.warrantyYears} Years On-Site
+                    {item.warrantyYears ? `${item.warrantyYears} years` : (item.warrantyText || 'See product page')}
                   </td>
                 ))}
               </tr>

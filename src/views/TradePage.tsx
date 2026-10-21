@@ -20,7 +20,7 @@ import { collectForm, sendEnquiry } from '../lib/enquiry-client';
 export const TradePage: React.FC = () => {
   const { cart, addToCart, setIsQuoteModalOpen } = useCart();
 
-  const [selectedProductIds, setSelectedProductIds] = useState<string[]>(PRODUCTS.slice(0, 2).map((p: any) => p.id));
+  const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
   const [businessName, setBusinessName] = useState('');
   const [abn, setAbn] = useState('');
   const [contactName, setContactName] = useState('');
@@ -80,31 +80,29 @@ export const TradePage: React.FC = () => {
         {/* Header Hero */}
         <div className="bg-slate-900 text-white rounded-xl border border-slate-800 p-6 sm:p-10 shadow-lg space-y-4">
           <div className="flex items-center gap-2 text-xs font-mono font-semibold text-amber-400 uppercase tracking-wider">
-            <span>DIRECT B2B & TRADE ESTIMATING DESK</span>
-            <span>·</span>
-            <span>ABN DISCOUNTS</span>
+            <span>QUOTES &amp; TRADE PRICING</span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
-            Commercial Hospitality Trade Pricing & Quotes
+            Request a Quote for Bar Fridges and Freezers
           </h1>
 
           <p className="text-sm sm:text-base text-slate-300 max-w-3xl leading-relaxed">
-            Australian hotel groups, pub venues, cocktail bars, catering businesses, builders, and refrigeration contractors receive tiered commercial discounts, instant 30-day trade credit (subject to approval), and dedicated logistics coordination.
+            Build a list of the bar fridges, freezers, kegerators and ice machines you need, then send it to us for a delivered price. Trade and multi-unit pricing is confirmed in your quote. Include your ABN and delivery postcode so we can quote accurately.
           </p>
 
           <div className="flex flex-wrap items-center gap-6 text-xs text-slate-400 pt-3 border-t border-slate-800">
             <span className="flex items-center gap-1.5 text-white">
               <Percent className="w-4 h-4 text-amber-400 shrink-0" />
-              <span>Up to 18% Off RRP for Multi-Unit Orders</span>
+              <span>Multi-unit and trade pricing on request</span>
             </span>
             <span className="flex items-center gap-1.5 text-white">
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>Dedicated Account Manager & Fit-out Advice</span>
+              <span>Fit-out advice for venues</span>
             </span>
             <span className="flex items-center gap-1.5 text-white">
-              <Clock className="w-4 h-4 text-cyan-400 shrink-0" />
-              <span>2-Hour Quote Turnaround Guaranteed</span>
+              <Truck className="w-4 h-4 text-cyan-400 shrink-0" />
+              <span>Delivery quoted to your postcode</span>
             </span>
           </div>
         </div>
@@ -119,7 +117,7 @@ export const TradePage: React.FC = () => {
               Multi-Product Trade Quote Builder
             </h2>
             <p className="text-xs text-slate-500 mt-1">
-              Add multiple bar freezers, backbar fridges, or ice makers to generate an official commercial proposal.
+              Add the bar fridges, freezers or ice makers you are considering. We reply with a delivered price.
             </p>
           </div>
 
@@ -130,7 +128,7 @@ export const TradePage: React.FC = () => {
                 <div className="bg-slate-900 text-white p-3 text-xs font-semibold grid grid-cols-12 gap-2">
                   <div className="col-span-6">Equipment Model & Specs</div>
                   <div className="col-span-2 text-right">RRP (Inc. GST)</div>
-                  <div className="col-span-3 text-right">Estimated Trade Price</div>
+                  <div className="col-span-3 text-right">Trade price</div>
                   <div className="col-span-1 text-center">Action</div>
                 </div>
 
@@ -144,8 +142,8 @@ export const TradePage: React.FC = () => {
                             {p.brand} · SKU: {p.sku} · {p.tempRange} · {p.power}
                           </span>
                         </div>
-                        <div className="col-span-2 text-right font-mono text-slate-500 line-through">
-                          {p.price != null ? `$${p.price.toLocaleString()} AUD` : 'On application'}
+                        <div className="col-span-2 text-right font-mono text-slate-900">
+                          {p.price != null ? `${p.price.toLocaleString()} AUD` : 'On application'}
                         </div>
                         <div className="col-span-3 text-right font-mono font-bold text-emerald-800">
                           {p.tradePrice != null ? `$${p.tradePrice.toLocaleString()} AUD` : 'Quote'}
@@ -168,21 +166,14 @@ export const TradePage: React.FC = () => {
                   </div>
                 )}
 
-                {/* Subtotals & Trade Discount Banner */}
+                {/* Listed total */}
                 {selectedProducts.length > 0 && (
                   <div className="bg-slate-50 p-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-                    <div>
-                      <span className="text-slate-500">Retail Total: </span>
-                      <span className="font-mono line-through">${totalRetail.toLocaleString()} AUD</span>
-                      <span className="text-slate-400 mx-2">|</span>
-                      <span className="text-emerald-700 font-bold">
-                        Estimated Trade Savings: ${tradeSavings.toLocaleString()} AUD
-                      </span>
-                    </div>
+                    <span className="text-slate-500">Trade and multi-unit pricing is confirmed in your quote.</span>
                     <div className="text-right">
-                      <span className="text-slate-500 block text-[11px]">Proposed Commercial Total:</span>
+                      <span className="text-slate-500 block text-[11px]">Listed total:</span>
                       <span className="text-lg font-mono font-bold text-slate-900">
-                        ${totalTrade.toLocaleString()} AUD <span className="text-xs font-normal text-slate-500">Incl. GST</span>
+                        ${totalRetail.toLocaleString()} AUD <span className="text-xs font-normal text-slate-500">Incl. GST</span>
                       </span>
                     </div>
                   </div>
@@ -192,17 +183,17 @@ export const TradePage: React.FC = () => {
               {/* Quick Add Available Equipment */}
               <div className="space-y-2">
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-700 block">
-                  Quick Add Additional Benchmark Equipment:
+                  Quick add popular equipment:
                 </span>
                 <div className="flex flex-wrap gap-2">
-                  {PRODUCTS.filter((p: any) => !selectedProductIds.includes(p.id)).slice(0, 6).map((p: any) => (
+                  {PRODUCTS.filter((p: any) => !selectedProductIds.includes(p.id) && p.primaryCategory !== 'Accessories & Parts' && p.condition === 'new' && p.capacityLitres > 0).filter((_: any, i: number) => i % 97 === 0).slice(0, 6).map((p: any) => (
                     <button
                       key={p.id}
                       onClick={() => handleAddProductToQuote(p.id)}
                       className="px-3 py-1.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-medium flex items-center gap-1.5 transition-colors"
                     >
                       <Plus className="w-3.5 h-3.5 text-cyan-700" />
-                      <span>{p.brand} {p.type} ({p.capacityLitres}L)</span>
+                      <span>{p.brand} {p.model} ({p.capacityLitres}L)</span>
                     </button>
                   ))}
                 </div>
@@ -237,7 +228,7 @@ export const TradePage: React.FC = () => {
                     <input
                       type="text"
                       required
-                      placeholder="e.g. 88 642 901 328"
+                      placeholder="e.g. 12 345 678 901"
                       value={abn}
                       onChange={(e) => setAbn(e.target.value)}
                       className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
@@ -324,7 +315,7 @@ export const TradePage: React.FC = () => {
                 <div className="flex items-center justify-between pt-4">
                   <span className="text-slate-500 text-[11px] flex items-center gap-1">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Official Tax Invoices supplied for Australian business expensing</span>
+                    <span>Tax invoices are supplied for Australian business purchases</span>
                   </span>
 
                   {error && <div role="alert" className="mr-4 p-3 rounded border border-red-200 bg-red-50 text-red-800">{error}</div>}

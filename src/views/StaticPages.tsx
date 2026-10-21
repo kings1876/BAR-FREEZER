@@ -29,8 +29,9 @@ import { useRouter, Link } from '../context/RouterContext';
  * Clearance, Ex-Display & Deals Page (/deals/)
  */
 export const DealsPage: React.FC = () => {
+  // Ex-display, refurbished and factory-second stock. Sale prices are not shown; ask for a quote on any unit.
   const clearanceItems = PRODUCTS.filter(
-    (p: any) => p.condition === 'ex-display' || p.condition === 'factory-second' || p.categorySlug === 'clearance-ex-display' || p.price < 2000
+    (p: any) => p.condition === 'ex-display' || p.condition === 'refurbished' || p.condition === 'factory-second' || p.categorySlug === 'clearance-ex-display'
   );
 
   return (
@@ -39,13 +40,13 @@ export const DealsPage: React.FC = () => {
         <div className="bg-rose-950 text-white rounded-xl border border-rose-900 p-6 sm:p-10 shadow-lg space-y-3">
           <div className="flex items-center gap-2 text-xs font-mono font-semibold text-rose-400 uppercase tracking-wider">
             <Flame className="w-4 h-4 text-rose-400" />
-            <span>DISCOUNTED WAREHOUSE CLEARANCE & SECONDS</span>
+            <span>EX-DISPLAY, REFURBISHED &amp; CLEARANCE STOCK</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Commercial Bar Freezers & Coolers Clearance
+            Ex-Display &amp; Clearance Fridges and Freezers
           </h1>
           <p className="text-sm text-slate-300 max-w-3xl leading-relaxed">
-            Showroom ex-display models, carton-damaged factory seconds, and overstock commercial inventory. Every unit is pressure-tested by licensed technicians and covered by full Australian warranty.
+            Browse ex-display and refurbished commercial fridges and freezers. Each listing shows its condition, so read the description and warranty details before you order, or <Link href="/quote/" className="underline hover:text-white">request a quote</Link> to confirm availability and freight.
           </p>
         </div>
 
@@ -66,64 +67,44 @@ export const FinancePage: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="bg-slate-900 text-white rounded-xl border border-slate-800 p-6 sm:p-10 shadow-lg space-y-3">
           <div className="flex items-center gap-2 text-xs font-mono font-semibold text-amber-400 uppercase tracking-wider">
-            <span>HOSPITALITY EQUIPMENT LEASING</span>
+            <span>EQUIPMENT FINANCE ENQUIRIES</span>
           </div>
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
-            Preserve Your Working Capital with SilverChef & Zip
+            Equipment Finance for Bar Fridges and Freezers
           </h1>
           <p className="text-sm text-slate-300 leading-relaxed">
-            Opening or renovating an Australian bar or restaurant demands liquidity. Rather than tying up tens of thousands of dollars in commercial refrigeration purchases upfront, utilize 100% tax-deductible rental and lease solutions.
+            If you would rather spread the cost of commercial refrigeration, tell us when you request a quote. We will reply with the options available for your order. Finance is offered by third-party lenders and is subject to approval, so terms, rates and tax treatment depend on the lender and your business. Check them with your accountant.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-6 bg-white rounded-xl border border-slate-200 space-y-3 flex flex-col justify-between">
             <div>
-              <span className="text-xs font-mono font-bold uppercase text-cyan-700">SilverChef Partner</span>
-              <h3 className="text-lg font-bold text-slate-900 mt-1">Rent-Try-Buy</h3>
+              <h2 className="text-lg font-bold text-slate-900">Ask about finance</h2>
               <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                12-month flexible agreement with low weekly payments. 100% tax deductible as an operating expense. Option to purchase with a 75% rental rebate after 12 months.
+                Add a note to your quote request saying you would like finance, and include the equipment and delivery postcode. We will come back with what is available.
               </p>
             </div>
             <button
               onClick={() => setIsQuoteModalOpen(true)}
               className="w-full py-2 bg-slate-900 text-white text-xs font-semibold rounded hover:bg-slate-800"
             >
-              Apply via Quote Desk
+              Request a quote with finance
             </button>
           </div>
 
           <div className="p-6 bg-white rounded-xl border border-slate-200 space-y-3 flex flex-col justify-between">
             <div>
-              <span className="text-xs font-mono font-bold uppercase text-amber-700">Commercial Credit</span>
-              <h3 className="text-lg font-bold text-slate-900 mt-1">Zip Business</h3>
+              <h2 className="text-lg font-bold text-slate-900">Pay now instead</h2>
               <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                Up to $150k line of credit for Australian businesses with interest-free terms available. Buy your refrigeration equipment today and pay over manageable monthly terms.
-              </p>
-            </div>
-            <a
-              href="https://zip.co/au/business"
-              target="_blank"
-              rel="noreferrer"
-              className="w-full py-2 bg-slate-100 text-slate-800 text-xs font-semibold rounded text-center hover:bg-slate-200"
-            >
-              Learn More at Zip
-            </a>
-          </div>
-
-          <div className="p-6 bg-white rounded-xl border border-slate-200 space-y-3 flex flex-col justify-between">
-            <div>
-              <span className="text-xs font-mono font-bold uppercase text-emerald-700">Small Orders</span>
-              <h3 className="text-lg font-bold text-slate-900 mt-1">Afterpay for Home Bars</h3>
-              <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                Split orders up to $2,000 into 4 equal fortnightly payments with zero interest. Ideal for alfresco bar fridges, man cave accessories, and beer dispensers.
+                You can pay by bank transfer, PayID, Osko or cryptocurrency once your order is confirmed. See the payment methods page for details.
               </p>
             </div>
             <Link
-              href="/bar-freezers/"
+              href="/payment-methods/"
               className="w-full py-2 bg-slate-100 text-slate-800 text-xs font-semibold rounded text-center hover:bg-slate-200"
             >
-              Browse Equipment
+              View payment methods
             </Link>
           </div>
         </div>
@@ -136,44 +117,39 @@ export const FinancePage: React.FC = () => {
  * About Bar Freezer Australia (/about/)
  */
 export const AboutPage: React.FC = () => {
+  const brandCount = new Set((PRODUCTS as any[]).map((p) => p.brand)).size;
   return (
     <div className="bg-slate-50 min-h-screen py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="bg-white rounded-xl border border-slate-200/90 p-6 sm:p-10 shadow-xs space-y-4">
           <div className="flex items-center gap-2 text-xs font-mono font-semibold text-cyan-700 uppercase tracking-wider">
             <span>ABOUT BAR FREEZER AUSTRALIA</span>
-            <span>·</span>
-            <span>ESTABLISHED TRADE SUPPLIER</span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            Australia's Specialist Commercial Bar Refrigeration Stockist
+            About Bar Freezer Australia: Commercial and Home Bar Refrigeration
           </h1>
 
           <p className="text-sm text-slate-700 leading-relaxed">
-            Bar Freezer (barfreezer.com.au) was founded with one clear mission: to supply Australian hospitality operators, pub groups, boutique mixology bars, and luxury home entertainers with commercial-grade refrigeration that actually withstands the brutal Australian climate.
+            Bar Freezer (barfreezer.com.au) is an Australian online supplier of bar fridges, bar freezers, kegerators, wine fridges, ice machines and refrigeration accessories for pubs, cafes, restaurants, venues and home bars.
           </p>
 
           <p className="text-sm text-slate-700 leading-relaxed">
-            Unlike online equipment brokers who drop-ship products from third-party distribution hubs, we hold our own stock in dedicated warehouses across Sydney, Melbourne, Brisbane, and Perth. Every single unit we dispatch has been tested to meet strict Australian MEPS energy efficiency standards and RCM electrical safety compliance.
+            We list {PRODUCTS.length.toLocaleString('en-AU')} products from {brandCount} brands, with the specifications published by each manufacturer or supplier. You can compare models, request a quote for multiple units, and have equipment delivered Australia-wide. Read our <Link href="/guides/" className="text-cyan-700 font-semibold">buying guides</Link> to choose the right size and type, or <Link href="/contact/" className="text-cyan-700 font-semibold">contact us</Link> with a question.
           </p>
 
-          <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center text-xs">
+          <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 grid grid-cols-2 sm:grid-cols-3 gap-4 text-center text-xs">
             <div>
-              <span className="font-mono font-bold text-lg text-slate-900 block">3,140+</span>
-              <span className="text-slate-500">Verified Reviews</span>
+              <span className="font-mono font-bold text-lg text-slate-900 block">{PRODUCTS.length.toLocaleString('en-AU')}</span>
+              <span className="text-slate-500">Products listed</span>
             </div>
             <div>
-              <span className="font-mono font-bold text-lg text-slate-900 block">4 Hubs</span>
-              <span className="text-slate-500">SYD, MEL, BNE, PER</span>
+              <span className="font-mono font-bold text-lg text-slate-900 block">{brandCount}</span>
+              <span className="text-slate-500">Brands</span>
             </div>
             <div>
-              <span className="font-mono font-bold text-lg text-slate-900 block">43°C</span>
-              <span className="text-slate-500">Tropical Ambients</span>
-            </div>
-            <div>
-              <span className="font-mono font-bold text-lg text-slate-900 block">100%</span>
-              <span className="text-slate-500">Australian Owned</span>
+              <span className="font-mono font-bold text-lg text-slate-900 block">Australia-wide</span>
+              <span className="text-slate-500">Delivery</span>
             </div>
           </div>
         </div>
@@ -289,7 +265,7 @@ export const ContactPage: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-white p-6 rounded-xl border border-slate-200 space-y-4 text-xs">
-            <h3 className="text-base font-bold text-slate-900">National Sales & Trade Hotline</h3>
+            <h2 className="text-base font-bold text-slate-900">National Sales & Trade Hotline</h2>
             
             <div className="space-y-3 text-slate-700">
               <div className="flex items-start gap-3">
@@ -321,7 +297,7 @@ export const ContactPage: React.FC = () => {
           <div className="bg-white p-6 rounded-xl border border-slate-200">
             {!submitted ? (
               <form onSubmit={handleContact} className="space-y-4 text-xs">
-                <h3 className="text-base font-bold text-slate-900">Send an Online Inquiry</h3>
+                <h2 className="text-base font-bold text-slate-900">Send an Online Inquiry</h2>
                 <div>
                   <label className="block font-semibold text-slate-700 mb-1">Your Name *</label>
                   <input type="text" required placeholder="Name" className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900" />

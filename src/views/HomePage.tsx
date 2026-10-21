@@ -40,7 +40,10 @@ export const HomePage: React.FC = () => {
   };
 
   const selectedVenue = VENUES.find((v: any) => v.slug === activeVenueTab) || VENUES[0];
-  const bestSellers = PRODUCTS.slice(0, 8);
+  const bestSellers = (() => {
+    const pick = (cat: string, n: number) => PRODUCTS.filter((p: any) => p.categorySlug === cat && p.condition === 'new' && p.images && p.images.length && p.capacityLitres > 0).filter((_: any, i: number) => i % 7 === 0).slice(0, n);
+    return [...pick('under-bar-fridges', 2), ...pick('under-bar-freezers', 2), ...pick('wine-fridges', 1), ...pick('glass-door-display-freezers', 1), ...pick('kegerators-dispensers', 1), ...pick('outdoor-alfresco-fridges', 1)];
+  })();
   const spotlight: any = PRODUCTS.find((p: any) => p.id === 'sk-rf7-ubf-2-sd') || PRODUCTS[0];
 
   const toggleFaq = (idx: number) => {
@@ -85,7 +88,7 @@ export const HomePage: React.FC = () => {
 
                 <div className="hidden sm:flex items-center gap-2 text-xs font-mono font-medium text-cyan-400">
                   <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                  <span>OWN AUSTRALIAN WAREHOUSE STOCK</span>
+                  <span>AUSTRALIA-WIDE DELIVERY</span>
                 </div>
               </div>
 
@@ -96,7 +99,7 @@ export const HomePage: React.FC = () => {
 
               {/* Lead copy */}
               <p className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
-                Direct trade warehouse stock of underbar freezers, glass frosters, backbar chillers, and keg systems. Built for 43°C Australian summer conditions and backed by nationwide on-site warranty.
+                Shop under bar freezers, glass frosters, back bar fridges, kegerators and more from leading commercial refrigeration brands. Compare sizes and prices, or request a quote for trade and multi-unit orders.
               </p>
 
               {/* Hero Search */}
@@ -140,15 +143,15 @@ export const HomePage: React.FC = () => {
               <div className="flex flex-wrap items-center gap-6 text-xs text-slate-400 pt-3 border-t border-slate-800/80">
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Own Warehouse Stock</span>
+                  <span>Australia-wide delivery</span>
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Up to 5yr On-Site Warranty</span>
+                  <span>Warranty claims lodged online</span>
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>SilverChef Lease Partner</span>
+                  <span>Trade and multi-unit quotes</span>
                 </span>
               </div>
             </div>
@@ -207,23 +210,23 @@ export const HomePage: React.FC = () => {
               <Truck className="w-8 h-8 text-cyan-400 shrink-0" />
               <div>
                 <div className="text-sm font-bold text-white">Australia-Wide Delivery</div>
-                <div className="text-xs text-slate-400">Depots in SYD, MEL, BNE, PER</div>
+                <div className="text-xs text-slate-400">Freight quoted to your postcode</div>
               </div>
             </div>
 
             <div className="flex flex-col md:flex-row items-center gap-3">
               <Building className="w-8 h-8 text-amber-400 shrink-0" />
               <div>
-                <div className="text-sm font-bold text-white">Owner's Own Stock</div>
-                <div className="text-xs text-slate-400">No drop-shipping delays</div>
+                <div className="text-sm font-bold text-white">Wide Range</div>
+                <div className="text-xs text-slate-400">{PRODUCTS.length.toLocaleString('en-AU')} products, {new Set(PRODUCTS.map((p: any) => p.brand)).size} brands</div>
               </div>
             </div>
 
             <div className="flex flex-col md:flex-row items-center gap-3">
               <ShieldCheck className="w-8 h-8 text-emerald-400 shrink-0" />
               <div>
-                <div className="text-sm font-bold text-white">On-Site Warranty Service</div>
-                <div className="text-xs text-slate-400">Up to 5 years commercial cover</div>
+                <div className="text-sm font-bold text-white">Warranty &amp; Service</div>
+                <div className="text-xs text-slate-400">Claims lodged online</div>
               </div>
             </div>
 
@@ -231,7 +234,7 @@ export const HomePage: React.FC = () => {
               <Award className="w-8 h-8 text-indigo-400 shrink-0" />
               <div>
                 <div className="text-sm font-bold text-white">Trade & Venue Pricing</div>
-                <div className="text-xs text-slate-400">SilverChef Rent-Try-Buy partner</div>
+                <div className="text-xs text-slate-400">Quotes for multi-unit orders</div>
               </div>
             </div>
           </div>
@@ -382,67 +385,67 @@ export const HomePage: React.FC = () => {
                 title: "Under Bar Freezers",
                 slug: "under-bar-freezers",
                 path: "/bar-freezers/under-bar-freezers/",
-                temp: "-18°C to -22°C",
+                temp: "",
                 doors: "1, 2, 3 Door & Drawers",
-                desc: "Standard 840-860mm height to slide flush beneath bar benchtops."
+                desc: "Fits beneath the counter for ice and frozen stock."
               },
               {
                 title: "Back Bar Freezers",
                 slug: "back-bar-freezers",
                 path: "/bar-freezers/back-bar-freezers/",
-                temp: "-15°C to -20°C",
+                temp: "",
                 doors: "Glass & Solid Doors",
-                desc: "Display craft spirits and chilled glassware at bartender eye level."
+                desc: "Sits behind the bar within easy reach of staff."
               },
               {
                 title: "Glass Display Freezers",
                 slug: "glass-door-display-freezers",
                 path: "/bar-freezers/glass-door-display-freezers/",
-                temp: "-18°C to -22°C",
+                temp: "",
                 doors: "Single & Double Glass",
-                desc: "Triple-glazed heated glass for zero condensation in humid venues."
+                desc: "Glass doors show frozen stock to customers and staff."
               },
               {
                 title: "Glass & Mug Frosters",
                 slug: "glass-frosters-specialty",
                 path: "/bar-freezers/glass-frosters-specialty/",
-                temp: "-22°C Sub-Zero",
-                doors: "Top Sliding & Wells",
-                desc: "Flash freeze beer steins and cocktail coupes in 90 seconds."
+                temp: "",
+                doors: "Frosters & Slush Machines",
+                desc: "Chills mugs and glasses for frosted beer service."
               },
               {
                 title: "Chest & Bench Freezers",
                 slug: "chest-bench-freezers",
                 path: "/bar-freezers/chest-bench-freezers/",
-                temp: "-16°C to -24°C",
+                temp: "",
                 doors: "Sliding Glass & Solid",
-                desc: "Deep sub-zero reserve storage for party ice and high-volume events."
+                desc: "Chest and bench freezers for bulk ice and frozen stock."
               },
               {
                 title: "Upright Kitchen Freezers",
                 slug: "upright-commercial-freezers",
                 path: "/bar-freezers/upright-commercial-freezers/",
-                temp: "-18°C to -22°C",
+                temp: "",
                 doors: "1, 2, 3 Upright Doors",
-                desc: "Gastronorm compatible deep cold chain storage for busy hotel kitchens."
+                desc: "Upright freezers for kitchens, bars and venues."
               },
               {
-                title: "Alfresco & Outdoor Rated",
+                title: "Home Bar & Outdoor",
                 slug: "home-bar-outdoor-freezers",
                 path: "/bar-freezers/home-bar-outdoor-freezers/",
-                temp: "-16°C in 43°C Ambient",
-                doors: "304 Marine Stainless",
-                desc: "IPX4 waterproof rating certified for open Australian BBQ kitchens."
+                temp: "",
+                doors: "Home Bar & Outdoor",
+                desc: "Home bar and outdoor freezers. Check the climate rating."
               },
               {
                 title: "Clearance & Ex-Display",
                 slug: "clearance-ex-display",
                 path: "/bar-freezers/clearance-ex-display/",
-                temp: "Certified Tested",
-                doors: "Factory Seconds",
-                desc: "Substantial savings on showroom floor units with 12-month warranty."
+                temp: "",
+                doors: "Ex-Display & Refurbished",
+                desc: "Condition is shown on each listing."
               }
-            ].map((cat) => (
+            ].map((cat) => ({ ...cat, temp: `${PRODUCTS.filter((p: any) => p.categorySlug === cat.slug).length} products` })).map((cat) => (
               <Link
                 key={cat.slug}
                 href={cat.path}
@@ -476,15 +479,15 @@ export const HomePage: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
               <span className="text-xs font-mono font-semibold text-amber-700 uppercase tracking-wider block">
-                HOSPITALITY BENCHMARKS
+                FEATURED RANGE
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
-                Australia's Best-Selling Bar Freezers & Coolers
+                Featured Bar Fridges and Freezers
               </h2>
             </div>
             <div className="flex items-center gap-3 text-xs text-slate-500">
               <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500" />
-              <span>All units in stock for immediate dispatch</span>
+              <span>Availability is confirmed when you order</span>
             </div>
           </div>
 
@@ -596,13 +599,13 @@ export const HomePage: React.FC = () => {
           <div className="flex items-center justify-between mb-6">
             <div>
               <span className="text-xs font-mono font-semibold text-cyan-400 uppercase tracking-wider block">
-                AUTHORIZED TRADE DISTRIBUTOR
+                BRANDS WE SUPPLY
               </span>
               <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-0.5">
-                Supplying Australia's Leading Commercial Refrigeration Brands
+                Commercial Refrigeration Brands We Supply
               </h2>
             </div>
-            <span className="text-xs text-slate-500 font-mono hidden sm:inline">100% Genuine Stock</span>
+            
           </div>
 
           <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-8 gap-3">
@@ -616,7 +619,7 @@ export const HomePage: React.FC = () => {
                   {b.name}
                 </span>
                 <span className="text-[10px] text-slate-400 font-mono mt-0.5 block">
-                  {b.warrantyYears}yr Warranty
+                  {PRODUCTS.filter((p: any) => p.brand === b.name).length} products
                 </span>
               </Link>
             ))}
@@ -631,30 +634,30 @@ export const HomePage: React.FC = () => {
             
             <div className="lg:col-span-6 space-y-4">
               <span className="text-xs font-mono font-semibold text-cyan-700 uppercase tracking-wider block">
-                THE BAR FREEZER DIFFERENCE
+                WHY BUY FROM US
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                Why Australian Hospitality Venues Choose Us Over Generic Retailers
+                Why Buy Bar Fridges and Freezers from Bar Freezer
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Most online catering equipment websites are brokers who drop-ship from overseas third-party warehouses. When a compressor trips on a packed Saturday evening, they leave you stranded with outsourced call centres.
+                Commercial refrigeration can be hard to compare online. We publish the model, part number and specifications supplied by each manufacturer or supplier, so you can check size, capacity, refrigerant and warranty before you buy.
               </p>
               <p className="text-sm text-slate-600 leading-relaxed">
-                At Bar Freezer, we import, warehouse, and maintain our own physical inventory in Sydney, Melbourne, Brisbane, and Perth. Our licensed refrigeration technicians verify every cabinet before dispatch and provide direct Australian on-site warranty support.
+                Use the compare tool to view models side by side, read our buying guides for sizing and ventilation, and request a quote for trade or multi-unit orders.
               </p>
 
               <div className="pt-2 space-y-2 text-xs text-slate-700">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Physical stock ready for immediate dispatch or warehouse collection</span>
+                  <span>Specifications from manufacturers and suppliers</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>43°C Tropical Class 5 ratings standard on all commercial lines</span>
+                  <span>Side-by-side comparison of models</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Accredited SilverChef Platinum Partner with instant 4-hour lease approvals</span>
+                  <span>Quotes for trade and multi-unit orders</span>
                 </div>
               </div>
             </div>
@@ -663,12 +666,12 @@ export const HomePage: React.FC = () => {
             <div className="lg:col-span-6 grid grid-cols-2 gap-4">
               <div className="p-6 bg-slate-50 rounded-lg border border-slate-200">
                 <div className="text-3xl sm:text-4xl font-extrabold font-mono text-slate-900 tabular-nums">
-                  4
+                  {PRODUCTS.length.toLocaleString('en-AU')}
                 </div>
                 <div className="text-xs font-semibold text-slate-700 uppercase tracking-wide mt-1">
-                  Distribution Hubs
+                  Products Listed
                 </div>
-                <p className="text-xs text-slate-500 mt-1">Sydney, Melbourne, Brisbane, Perth</p>
+                <p className="text-xs text-slate-500 mt-1">Bar fridges, freezers and accessories</p>
               </div>
 
               <div className="p-6 bg-slate-50 rounded-lg border border-slate-200">
@@ -683,22 +686,22 @@ export const HomePage: React.FC = () => {
 
               <div className="p-6 bg-slate-50 rounded-lg border border-slate-200">
                 <div className="text-3xl sm:text-4xl font-extrabold font-mono text-slate-900 tabular-nums">
-                  140+
+                  {new Set(PRODUCTS.map((p: any) => p.brand)).size}
                 </div>
                 <div className="text-xs font-semibold text-slate-700 uppercase tracking-wide mt-1">
-                  Warranty Mechanics
+                  Brands
                 </div>
-                <p className="text-xs text-slate-500 mt-1">Licensed technicians across all states</p>
+                <p className="text-xs text-slate-500 mt-1">Commercial and home bar refrigeration</p>
               </div>
 
               <div className="p-6 bg-slate-50 rounded-lg border border-slate-200">
                 <div className="text-3xl sm:text-4xl font-extrabold font-mono text-slate-900 tabular-nums">
-                  100%
+                  ABN
                 </div>
                 <div className="text-xs font-semibold text-slate-700 uppercase tracking-wide mt-1">
-                  Australian Owned
+                  Tax Invoices
                 </div>
-                <p className="text-xs text-slate-500 mt-1">ABN 88 642 901 328 · Trade Tax Invoices</p>
+                <p className="text-xs text-slate-500 mt-1">ABN 88 642 901 328</p>
               </div>
             </div>
 
@@ -712,7 +715,7 @@ export const HomePage: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
               <span className="text-xs font-mono font-semibold text-cyan-700 uppercase tracking-wider block">
-                EXPERT HOSPITALITY ENGINEERING
+                BUYING GUIDES
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
                 Commercial Refrigeration Buying & Sizing Guides
@@ -779,7 +782,7 @@ export const HomePage: React.FC = () => {
                 Fitting Out a New Pub, Cocktail Bar or Multi-Venue Group?
               </h2>
               <p className="text-sm text-slate-300 leading-relaxed">
-                Connect directly with our senior commercial refrigeration estimating desk. Receive custom trade package pricing, SilverChef lease estimates, site access planning, and dedicated container dispatch dates.
+                Send your equipment list to our sales team for trade and multi-unit pricing, delivery planning and finance enquiries.
               </p>
             </div>
 
@@ -845,7 +848,7 @@ export const HomePage: React.FC = () => {
           <div className="text-center pt-8 text-xs text-slate-500">
             Have a custom question about ventilation or 15A power requirements?{' '}
             <Link href="/contact/" className="text-cyan-700 font-bold hover:underline">
-              Speak with a refrigeration mechanic &rarr;
+              Ask our team &rarr;
             </Link>
           </div>
         </div>

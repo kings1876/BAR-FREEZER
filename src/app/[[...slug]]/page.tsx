@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import ClientApp from '../../App';
-import { CATEGORIES, BRANDS, VENUES, CITIES, PRODUCTS, POSTS } from '../../config/site.js';
+import { CATEGORIES, BRANDS, VENUES, CITIES, PRODUCTS, POSTS, FAQS } from '../../config/site.js';
 import { allPaths } from '../../lib/routes';
 import { KEYWORD_META } from '../../config/seo-keywords';
 import { BRAND_META } from '../../config/seo-brands';
@@ -18,19 +18,19 @@ const SITE_URL = 'https://barfreezer.com.au';
 
 const STATIC_META: Record<string, [string, string]> = {
   trade: ['Trade Pricing & Quotes', 'Trade pricing, multi-unit quotes and delivery for Australian pubs, bars, restaurants and venues buying commercial refrigeration.'],
-  quote: ['Multi-Product Quote Builder', 'Build a multi-product quote for bar freezers, bar fridges, kegerators and ice machines, and send it to our sales team.'],
-  finance: ['Equipment Finance & Leasing', 'Finance and leasing options for commercial bar refrigeration and hospitality equipment. Ask about your fit-out.'],
+  quote: ['Request a Quote for Bar Fridges', 'Request a quote for bar freezers, bar fridges, kegerators and ice machines. Send your list and delivery postcode for a delivered price.'],
+  finance: ['Equipment Finance Enquiries', 'Ask about finance for commercial bar fridges, freezers and hospitality equipment. Tell us when you request a quote; terms depend on the lender.'],
   'warranty-service': ['Service Dispatch & Warranty Claims', 'Request service dispatch or lodge a warranty claim for your commercial bar fridge, bar freezer or ice machine.'],
   warranty: ['Warranty Claims & Service', 'Lodge a warranty claim or request service for your commercial bar fridge, bar freezer or ice machine.'],
-  deals: ['Deals on Bar Fridges & Freezers', 'Current deals on bar freezers, bar fridges and accessories. Compare prices and models, delivered Australia-wide.'],
-  clearance: ['Clearance & Ex-Display Fridges', 'Clearance and ex-display bar fridges and bar freezers. Compare condition, price and specifications.'],
+  deals: ['Ex-Display & Clearance Fridges', 'Ex-display and refurbished bar fridges and bar freezers. Compare condition, price and specifications, delivered Australia-wide.'],
+  clearance: ['Clearance & Ex-Display Fridges', 'Ex-display and refurbished bar fridges and bar freezers. Compare condition, price and specifications, delivered Australia-wide.'],
   compare: ['Compare Bar Fridges & Freezers', 'Compare bar freezers and bar fridges side by side by size, capacity, doors and features before you buy.'],
   reviews: ['Customer Reviews', 'Read customer reviews of Bar Freezer Australia and the equipment we supply to bars, pubs and venues.'],
   about: ['About Bar Freezer Australia', 'About Bar Freezer Australia, an Australian supplier of commercial and home bar freezers, bar fridges and ice machines.'],
-  contact: ['Contact Us', 'Contact Bar Freezer Australia about product specifications, stock, delivery or quotes for bar fridges and freezers.'],
-  faq: ['FAQs', 'Answers to common questions about bar freezers, bar fridges, delivery and ordering from Bar Freezer Australia.'],
+  contact: ['Contact Bar Freezer Australia', 'Contact Bar Freezer Australia about product specifications, availability, delivery or quotes for bar fridges and freezers.'],
+  faq: ['Bar Fridge & Freezer FAQs', 'Answers to common questions about bar freezers, bar fridges, delivery and ordering from Bar Freezer Australia.'],
   returns: ['Returns & Australian Consumer Law', 'How returns and Australian Consumer Law consumer guarantees apply to bar fridges and freezers bought from us.'],
-  'payment-methods': ['Payment Methods', 'Pay by bank transfer, PayID, Osko or cryptocurrency (BTC, USDT, ETH). Payment details are emailed after your order request.'],
+  'payment-methods': ['Payment Methods: PayID, Osko, EFT', 'Pay by bank transfer, PayID, Osko or cryptocurrency (BTC, USDT, ETH). Payment details are emailed after your order request.'],
   cart: ['Shopping Cart', 'Review the bar fridges, bar freezers and accessories in your cart before you request an order.'],
   checkout: ['Checkout & Order Request', 'Enter your delivery details and choose a payment method to send your bar fridge or freezer order request.'],
   search: ['Search Bar Fridges & Freezers', 'Search bar freezers, bar fridges, kegerators, ice machines and accessories by name, brand or model.'],
@@ -39,7 +39,7 @@ const STATIC_META: Record<string, [string, string]> = {
 };
 
 // These URLs show the same page; point them at one canonical.
-const CANONICAL_OVERRIDE: Record<string, string> = { '/warranty-service/': '/warranty/' };
+const CANONICAL_OVERRIDE: Record<string, string> = { '/warranty-service/': '/warranty/', '/trade/': '/quote/', '/deals/': '/clearance/' };
 
 const SUFFIX = ' | Bar Freezer Australia';
 const trim = (t: string, n: number) => (t.length > n ? t.slice(0, n - 1).trimEnd() + '…' : t);
@@ -260,6 +260,12 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
         },
       });
     }
+  } else if (slug[0] === 'faq' && !slug[1]) {
+    blocks.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: (FAQS as any[]).map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
+    });
   } else if (slug[0] === 'guides' && slug[1]) {
     const post: any = (POSTS as any[]).find((x) => x.slug === slug[1]);
     if (post) {

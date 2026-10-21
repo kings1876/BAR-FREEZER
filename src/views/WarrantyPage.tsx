@@ -46,22 +46,20 @@ export const WarrantyPage: React.FC = () => {
         {/* Banner */}
         <div className="bg-slate-900 text-white rounded-xl border border-slate-800 p-6 sm:p-10 shadow-lg space-y-4">
           <div className="flex items-center gap-2 text-xs font-mono font-semibold text-emerald-400 uppercase tracking-wider">
-            <span>OFFICIAL AUSTRALIAN ON-SITE SERVICE NETWORK</span>
-            <span>·</span>
-            <span>140+ CERTIFIED MECHANICS</span>
+            <span>WARRANTY &amp; SERVICE CLAIMS</span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
-            Warranty Claim & Equipment Service Dispatch
+            Warranty Claim and Service Request
           </h1>
 
           <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-            Every commercial refrigeration unit sold through Bar Freezer Australia is protected by full Australian on-site parts and labour warranty. If your cabinet experiences a fault or requires priority servicing, submit your details below to dispatch a certified local technician to your venue.
+            Manufacturer warranty terms are listed on each product page. If your cabinet has a fault, send us the model and serial number from the data plate and a description of the problem. We will review your claim and contact you with the next steps.
           </p>
 
           <div className="pt-2 flex items-center gap-4 text-xs text-amber-400 font-semibold">
             <Phone className="w-4 h-4 shrink-0" />
-            <span>Priority Emergency Breakdown Hotline: {SITE.phoneDisplay} (Option 2)</span>
+            <span>Questions about a claim? Call {SITE.phoneDisplay}</span>
           </div>
         </div>
 
@@ -146,7 +144,7 @@ export const WarrantyPage: React.FC = () => {
               {/* Step 2: Venue Contact & Location */}
               <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-4">
                 <span className="font-bold text-slate-800 uppercase tracking-wider text-[11px] block">
-                  2. Venue Location for On-Site Technician
+                  2. Equipment Location
                 </span>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -253,7 +251,7 @@ export const WarrantyPage: React.FC = () => {
               <div className="pt-2 flex items-center justify-between">
                 <span className="text-slate-500 text-[11px] flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Licensed ARC refrigerant technicians dispatched</span>
+                  <span>We review every claim and reply by email or phone</span>
                 </span>
 
                 {error && <div role="alert" className="mr-4 p-3 rounded border border-red-200 bg-red-50 text-red-800">{error}</div>}
@@ -280,7 +278,7 @@ export const WarrantyPage: React.FC = () => {
                 </span>
                 <h3 className="text-2xl font-bold text-slate-900 mt-3">Warranty Ticket Lodged</h3>
                 <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                  Your claim for <strong>{brand} {modelNumber}</strong> has been assigned to our Australian warranty dispatch team. A service coordinator will contact you at <strong>{phone}</strong> to confirm technician arrival.
+                  Your claim for <strong>{brand} {modelNumber}</strong> has been received. We will contact you at <strong>{phone}</strong> or by email to confirm the next steps.
                 </p>
               </div>
 
