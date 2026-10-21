@@ -120,7 +120,8 @@ if (BATCH === 'pages') {
     if (!(lightP.price > 0)) a.issues.push('catalogue: no price');
     if (!lightP.capacityLitres && !lightP.capacityLabel && lightP.primaryCategory !== 'Accessories & Parts') a.issues.push('catalogue: no capacity');
     const mentions = (a.title + a.h1).toLowerCase();
-    if (lightP.brand && !mentions.includes(String(lightP.brand).toLowerCase().split(' ')[0])) a.issues.push('brand missing from title/H1');
+    const bn = String(lightP.brand || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (bn && !mentions.replace(/[^a-z0-9]/g, '').includes(bn) && !(bn === 'fed' && /fed|thermaster/.test(mentions))) a.issues.push('brand missing from title/H1');
     return a;
   });
   const counts = new Map();

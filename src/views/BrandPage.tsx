@@ -7,6 +7,9 @@ import { PagedGrid } from '../components/PagedGrid';
 import { RelatedSearches } from '../components/RelatedSearches';
 import { BRAND_META } from '../config/seo-brands';
 
+// Only countries of origin that could be confirmed; other brands show a neutral label.
+const VERIFIED_ORIGIN: Record<string, string> = { skope: 'New Zealand', tefcold: 'Denmark', vestfrost: 'Denmark', liebherr: 'Germany', electrolux: 'Sweden', hoshizaki: 'Japan', dometic: 'Sweden', foster: 'United Kingdom', polar: 'United Kingdom', williams: 'United Kingdom', bromic: 'Australia', fed: 'Australia', schmick: 'Australia', anvil: 'South Africa' };
+
 export const BrandPage: React.FC = () => {
   const { routeMatch } = useRouter();
   const brandSlug = routeMatch.params.brand;
@@ -36,7 +39,7 @@ export const BrandPage: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
             <div>
               <div className="flex items-center gap-2 text-xs font-mono font-semibold text-cyan-700 uppercase tracking-wider">
-                <span>{brand.country}</span>
+                <span>{VERIFIED_ORIGIN[brand.slug] || 'Commercial refrigeration'}</span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
                 {((BRAND_META as any)['/brands/' + brand.slug + '/']?.title || '').split(' | ')[0] || `${brand.name} Commercial Refrigeration Australia`}

@@ -76,7 +76,8 @@ function baseProductTitle(p: any): string {
   const kw: any = (PRODUCT_KW as any)[p.id];
   const isAcc = p.primaryCategory === 'Accessories & Parts';
   if (kw && !isAcc) {
-    const model = p.model && !String(p.brand).toLowerCase().includes(String(p.model).toLowerCase()) ? ' ' + p.model : '';
+    const shortModel = p.model ? String(p.model).replace(/-QAd+$/, '') : '';
+    const model = shortModel && !String(p.brand).toLowerCase().includes(shortModel.toLowerCase()) ? ' ' + shortModel : '';
     const t = `${p.brand}${model} ${cap(kw.term)} | Bar Freezer`;
     if (t.length <= 60) return t;
   }
