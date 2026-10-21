@@ -745,6 +745,18 @@ export const ProductDetailPage: React.FC = () => {
           </section>
         )}
 
+        {/* Delivery, warranty and returns */}
+        <section className="bg-white rounded-xl border border-slate-200/90 p-6 shadow-xs space-y-2">
+          <h2 className="text-lg font-bold text-slate-900">Delivery, warranty and returns</h2>
+          <p className="text-sm text-slate-600 leading-relaxed">
+            We deliver the {product.brand} {product.model} Australia-wide. Freight depends on the weight of the unit and your postcode, and is confirmed with your order or quote. Prices on this page are in Australian dollars and include GST, and we supply a tax invoice with every order.
+          </p>
+          <p className="text-sm text-slate-600 leading-relaxed">
+            {product.warrantyYears ? `The manufacturer warranty listed for this product is ${product.warrantyYears} years. ` : 'Warranty terms for this product are available on request. '}
+            If a fault develops, you can lodge a claim on our <Link href="/warranty/" className="text-cyan-700 font-semibold">warranty page</Link> with the model and serial number. Goods also come with consumer guarantees under the Australian Consumer Law, explained on our <Link href="/returns/" className="text-cyan-700 font-semibold">returns page</Link>.
+          </p>
+        </section>
+
         {/* Alternative Models */}
         {alternativeItems.length > 0 && (
           <div className="space-y-4 pt-4">

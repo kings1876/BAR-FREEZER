@@ -114,18 +114,15 @@ export const Header: React.FC = () => {
           {/* Quick links & Direct Contact */}
           <div className="flex items-center gap-4">
             <Link href="/delivery/" className="hover:text-white transition-colors flex items-center gap-1">
-              <Truck className="w-3.5 h-3.5 text-cyan-400" />
               <span>Australia-Wide Delivery</span>
             </Link>
             <Link href="/warranty/" className="hidden sm:flex items-center gap-1 hover:text-white transition-colors">
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
               <span>Warranty Service</span>
             </Link>
             <a 
               href={`tel:${SITE.phone.replace(/\s+/g, '')}`} 
               className="text-amber-400 font-semibold flex items-center gap-1 hover:text-amber-300 transition-colors"
             >
-              <Phone className="w-3 h-3" />
               <span>{SITE.phoneDisplay}</span>
             </a>
           </div>
@@ -323,7 +320,7 @@ export const Header: React.FC = () => {
               className="flex items-center gap-1 text-slate-200 hover:text-amber-400 transition-colors py-1 whitespace-nowrap focus-visible:outline-amber-500"
             >
               <span>1. Bar Freezers</span>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-amber-400 transition-transform duration-200 group-hover:rotate-180" />
+              <span aria-hidden="true" className="text-slate-400 group-hover:text-amber-400">&#9662;</span>
             </button>
           </div>
 
@@ -335,7 +332,7 @@ export const Header: React.FC = () => {
               className="flex items-center gap-1 text-slate-200 hover:text-amber-400 transition-colors py-1 whitespace-nowrap focus-visible:outline-amber-500"
             >
               <span>2. Bar Fridges & Coolers</span>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-amber-400 transition-transform duration-200 group-hover:rotate-180" />
+              <span aria-hidden="true" className="text-slate-400 group-hover:text-amber-400">&#9662;</span>
             </button>
           </div>
 
@@ -347,7 +344,7 @@ export const Header: React.FC = () => {
               className="flex items-center gap-1 text-slate-200 hover:text-amber-400 transition-colors py-1 whitespace-nowrap focus-visible:outline-amber-500"
             >
               <span>3. Shop by Venue</span>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-amber-400 transition-transform duration-200 group-hover:rotate-180" />
+              <span aria-hidden="true" className="text-slate-400 group-hover:text-amber-400">&#9662;</span>
             </button>
           </div>
 
@@ -359,7 +356,7 @@ export const Header: React.FC = () => {
               className="flex items-center gap-1 text-slate-200 hover:text-amber-400 transition-colors py-1 whitespace-nowrap focus-visible:outline-amber-500"
             >
               <span>4. Brands</span>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-amber-400 transition-transform duration-200 group-hover:rotate-180" />
+              <span aria-hidden="true" className="text-slate-400 group-hover:text-amber-400">&#9662;</span>
             </button>
           </div>
 
@@ -371,7 +368,7 @@ export const Header: React.FC = () => {
               className="flex items-center gap-1 text-slate-200 hover:text-amber-400 transition-colors py-1 whitespace-nowrap focus-visible:outline-amber-500"
             >
               <span>5. Accessories & Parts</span>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-amber-400 transition-transform duration-200 group-hover:rotate-180" />
+              <span aria-hidden="true" className="text-slate-400 group-hover:text-amber-400">&#9662;</span>
             </button>
           </div>
 
@@ -396,7 +393,6 @@ export const Header: React.FC = () => {
             href="/clearance/" 
             className="text-rose-400 hover:text-rose-300 text-xs font-bold uppercase tracking-wider flex items-center gap-1 px-2 py-0.5 rounded bg-rose-950/40 border border-rose-800/60"
           >
-            <Flame className="w-3.5 h-3.5 text-rose-400" />
             <span>Clearance Deals</span>
           </Link>
         </nav>

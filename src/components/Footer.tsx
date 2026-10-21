@@ -13,7 +13,7 @@ import {
   CreditCard,
   Building
 } from 'lucide-react';
-import { SITE, CATEGORIES, BRANDS, CITIES } from '../config/site.js';
+import { SITE, CATEGORIES, BRANDS, CITIES, VENUES } from '../config/site.js';
 import { Link } from '../context/RouterContext';
 import { sendEnquiry } from '../lib/enquiry-client';
 
@@ -89,20 +89,16 @@ export const Footer: React.FC = () => {
 
           <div className="space-y-1.5 text-slate-400 pt-1">
             <div className="flex items-center gap-2">
-              <Phone className="w-3.5 h-3.5 text-amber-400 shrink-0" />
               <span className="text-white font-semibold">{SITE.phoneDisplay}</span>
               
             </div>
             <div className="flex items-center gap-2">
-              <Mail className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
               <span className="font-mono text-slate-300">{SITE.email}</span>
             </div>
             <div className="flex items-start gap-2 pt-1">
-              <MapPin className="w-3.5 h-3.5 text-slate-500 shrink-0 mt-0.5" />
               <span>{SITE.headOffice}</span>
             </div>
             <div className="flex items-center gap-2">
-              <Clock className="w-3.5 h-3.5 text-slate-500 shrink-0" />
               <span>{SITE.tradingHours}</span>
             </div>
           </div>
@@ -160,6 +156,26 @@ export const Footer: React.FC = () => {
             <li><Link href="/faq/" className="hover:text-white transition-colors">Equipment FAQs</Link></li>
             <li><Link href="/about/" className="hover:text-white transition-colors">About Bar Freezer Australia</Link></li>
             <li><Link href="/contact/" className="hover:text-white transition-colors">Contact Us</Link></li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Brands and venues */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wider text-white">Brands</p>
+          <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-slate-400">
+            {BRANDS.map((b: any) => (
+              <li key={b.slug}><Link href={`/brands/${b.slug}/`} className="hover:text-white">{b.name}</Link></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wider text-white">Venues</p>
+          <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-slate-400">
+            {VENUES.map((v: any) => (
+              <li key={v.slug}><Link href={v.path} className="hover:text-white">{v.name}</Link></li>
+            ))}
           </ul>
         </div>
       </div>

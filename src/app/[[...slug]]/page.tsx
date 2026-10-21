@@ -127,7 +127,7 @@ function productMeta(p: any) {
 function guideTitleTag(t: string): string {
   const before = t.includes(':') ? t.split(':')[0].trim() : '';
   const shorter = t.replace(/ (for|in) (Australia|Australian [A-Za-z ]+|Pubs and Bars|Venues).*$/i, '').trim();
-  const cands = [`${t} | Bar Freezer`, before.length >= 20 ? `${before} | Bar Freezer` : '', before.length >= 20 ? before : '', shorter !== t ? `${shorter} | Bar Freezer` : '', shorter !== t ? shorter : ''];
+  const cands = [`${t} | Bar Freezer`, before.length >= 20 ? `${before} | Bar Freezer` : '', before.length >= 20 ? before : '', shorter !== t ? `${shorter} | Bar Freezer` : '', shorter !== t ? shorter : '', `${t.replace(/ (Buying Guide|Guide|Explained)( for .*)?$/i, '')} | Bar Freezer`];
   for (const c of cands) if (c && c.length <= 60 && c.length >= 25 && c.toLowerCase() !== t.toLowerCase()) return c;
   return trim(t, 60);
 }
