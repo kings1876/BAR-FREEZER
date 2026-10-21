@@ -343,7 +343,7 @@ Look for stainless steel or coated surfaces that resist corrosion, sealed door g
 
 ## Location and ventilation
 
-Place the fridge in shade where possible, away from direct sun and heat sources such as barbecues. Allow the clearance gaps in the manual, as poor ventilation raises running temperature and shortens life. Our [alfresco rated bar refrigeration guide](/guides/alfresco-outdoor-rated-bar-refrigeration-australian-summers/) explains how heat affects performance.
+Place the fridge in shade where possible, away from direct sun and heat sources such as barbecues. Allow the clearance gaps in the manual, as poor ventilation raises running temperature and shortens life. Our [alfresco rated bar refrigeration guide](/guides/alfresco-bar-fridge-guide-australia/) explains how heat affects performance.
 
 ## Freestanding or built-in
 

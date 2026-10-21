@@ -79,7 +79,7 @@ export const GuidesPage: React.FC = () => {
             </p>
 
             <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-              <span>Published by Bar Freezer Technical Engineering Desk</span>
+              <span>Published by Bar Freezer Australia</span>
               <button
                 onClick={() => window.print()}
                 className="flex items-center gap-1 text-slate-600 hover:text-slate-900 font-semibold"
@@ -109,7 +109,7 @@ export const GuidesPage: React.FC = () => {
           {/* Related Articles Footer */}
           <div className="bg-slate-900 text-white rounded-xl p-6 sm:p-8 space-y-4">
             <h2 className="text-base font-bold text-white uppercase tracking-wider">
-              More Australian Refrigeration Guides
+              More buying guides
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               {(() => {
@@ -147,23 +147,21 @@ export const GuidesPage: React.FC = () => {
         <nav aria-label="Breadcrumb" className="flex items-center text-xs text-slate-500 space-x-1 font-medium">
           <Link href="/" className="hover:text-slate-900">Home</Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <span className="text-slate-900 font-semibold">Buying Guides & Technical Advice</span>
+          <span className="text-slate-900 font-semibold">Bar Fridge and Freezer Buying Guides</span>
         </nav>
 
         {/* Header */}
         <div className="bg-white rounded-xl border border-slate-200/90 p-6 sm:p-10 shadow-xs space-y-3">
           <div className="flex items-center gap-2 text-xs font-mono font-semibold text-cyan-700 uppercase tracking-wider">
-            <span>HOSPITALITY REFRIGERATION ADVISORY</span>
-            <span>·</span>
-            <span>WRITTEN BY LICENSED MECHANICS</span>
+            <span>BUYING GUIDES</span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Commercial Bar Refrigeration Guides & Australian Standards
+            Bar Fridge and Freezer Buying Guides
           </h1>
 
           <p className="text-sm text-slate-600 max-w-3xl leading-relaxed">
-            Essential sizing rules, cabinetry ventilation calculations, MEPS greenhouse ratings, and hospitality financing comparisons to ensure you select the correct equipment for your venue.
+            Practical guides to sizing, ventilation, door types, outdoor use and finance, so you can choose the right bar fridge, freezer, kegerator or ice machine for your venue or home bar.
           </p>
         </div>
 

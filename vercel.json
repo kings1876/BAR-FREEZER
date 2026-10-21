@@ -5,11 +5,26 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=(), payment=()" },
-        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "geolocation=(), microphone=(), camera=(), payment=()"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        },
         {
           "key": "Content-Security-Policy",
           "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'self'; form-action 'self'; base-uri 'self'; object-src 'none'"
@@ -22,15 +37,92 @@
     },
     {
       "source": "/images/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
       "source": "/llms.txt",
-      "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }]
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
     },
     {
       "source": "/auth.md",
-      "headers": [{ "key": "Content-Type", "value": "text/markdown; charset=utf-8" }]
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/guides/underbar-freezer-sizing-guide-glass-vs-solid-doors/",
+      "destination": "/guides/under-bar-freezer-glass-vs-solid-door-guide/",
+      "permanent": true
+    },
+    {
+      "source": "/guides/underbar-freezer-sizing-guide-glass-vs-solid-doors",
+      "destination": "/guides/under-bar-freezer-glass-vs-solid-door-guide/",
+      "permanent": true
+    },
+    {
+      "source": "/guides/ventilation-clearance-requirements-built-in-bar-refrigeration/",
+      "destination": "/guides/bar-fridge-ventilation-clearance-guide/",
+      "permanent": true
+    },
+    {
+      "source": "/guides/ventilation-clearance-requirements-built-in-bar-refrigeration",
+      "destination": "/guides/bar-fridge-ventilation-clearance-guide/",
+      "permanent": true
+    },
+    {
+      "source": "/guides/glass-froster-vs-standard-freezer-bartenders-guide/",
+      "destination": "/guides/glass-froster-vs-bar-freezer-guide/",
+      "permanent": true
+    },
+    {
+      "source": "/guides/glass-froster-vs-standard-freezer-bartenders-guide",
+      "destination": "/guides/glass-froster-vs-bar-freezer-guide/",
+      "permanent": true
+    },
+    {
+      "source": "/guides/alfresco-outdoor-rated-bar-refrigeration-australian-summers/",
+      "destination": "/guides/alfresco-bar-fridge-guide-australia/",
+      "permanent": true
+    },
+    {
+      "source": "/guides/alfresco-outdoor-rated-bar-refrigeration-australian-summers",
+      "destination": "/guides/alfresco-bar-fridge-guide-australia/",
+      "permanent": true
+    },
+    {
+      "source": "/guides/silverchef-hospitality-lease-vs-outright-purchase/",
+      "destination": "/guides/commercial-refrigeration-finance-lease-vs-buy/",
+      "permanent": true
+    },
+    {
+      "source": "/guides/silverchef-hospitality-lease-vs-outright-purchase",
+      "destination": "/guides/commercial-refrigeration-finance-lease-vs-buy/",
+      "permanent": true
+    },
+    {
+      "source": "/guides/r290-hydrocarbon-refrigerant-meps-energy-standards/",
+      "destination": "/guides/r290-refrigerant-commercial-fridges-guide/",
+      "permanent": true
+    },
+    {
+      "source": "/guides/r290-hydrocarbon-refrigerant-meps-energy-standards",
+      "destination": "/guides/r290-refrigerant-commercial-fridges-guide/",
+      "permanent": true
     }
   ]
 }
