@@ -6,6 +6,7 @@
 
 import productsData from './products.light.json';
 import { EXTRA_POSTS } from './guides-extra.js';
+import { VENUE_COPY, VENUE_TAGLINE } from './venue-copy.js';
 
 
 export const SITE = {
@@ -341,7 +342,7 @@ export const BRANDS = [
   { name: "Schmick", slug: "schmick", country: "Australia", warrantyYears: 2, tag: "Tropical Rated Alfresco", description: "Designed in Australia specifically to run outside in 40°C+ heat with triple-glazed heated Low-E glass." }
 ];
 
-export const VENUES = [
+const VENUES_RAW = [
   {
     name: "Pubs & Hotels",
     slug: "pubs-hotels",
@@ -808,6 +809,16 @@ export const VENUES = [
     relatedCategories: ["beer-beverage-fridges", "under-bar-freezers", "door-locks-gaskets"]
   }
 ];
+
+// Venue copy lives in venue-copy.js so that no unverified statistics, prices or warranty claims are shown.
+export const VENUES = VENUES_RAW.map((v) => {
+  const c = VENUE_COPY[v.slug];
+  if (!c) return v;
+  const keys = ['small', 'medium', 'large'];
+  const setups = {};
+  c.setups.forEach((st, i) => { setups[keys[i]] = { name: st.name, summary: st.summary, equipment: st.equipment, budget: '', capacity: '' }; });
+  return { ...v, intro: c.intro, heroStat: VENUE_TAGLINE[v.slug] || '', setups };
+});
 
 export const CITIES = [
   {

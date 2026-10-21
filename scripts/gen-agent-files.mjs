@@ -13,6 +13,7 @@ fs.mkdirSync(tmpDir, { recursive: true });
 let src = fs.readFileSync(path.join(root, 'src/config/site.js'), 'utf8');
 src = src.replace("import productsData from './products.light.json';", "import fs from 'fs'; const productsData = JSON.parse(fs.readFileSync(new URL('../src/config/products.light.json', import.meta.url),'utf8'));");
 src = src.replace("import { EXTRA_POSTS } from './guides-extra.js';", "import { EXTRA_POSTS } from '../src/config/guides-extra.js';");
+src = src.replace("import { VENUE_COPY, VENUE_TAGLINE } from './venue-copy.js';", "import { VENUE_COPY, VENUE_TAGLINE } from '../src/config/venue-copy.js';");
 const tmpFile = path.join(tmpDir, '_gen-site.mjs');
 fs.writeFileSync(tmpFile, src);
 const cfg = await import('file:///' + tmpFile.replace(/\\/g, '/') + '?t=' + Date.now());

@@ -1,4 +1,4 @@
 Contact: mailto:sales@barfreezer.com.au
-Expires: 2027-10-21T00:46:07.157Z
+Expires: 2027-10-21T07:20:15.561Z
 Preferred-Languages: en
 Canonical: https://barfreezer.com.au/.well-known/security.txt

@@ -549,13 +549,15 @@ export const HomePage: React.FC = () => {
                 <div key={tierKey} className="bg-white rounded-lg p-5 border border-slate-200 shadow-xs flex flex-col justify-between">
                   <div>
                     <div className="flex items-center justify-between text-xs text-slate-500 font-mono mb-2">
-                      <span className="uppercase text-amber-700 font-bold">{tierKey} Venue</span>
-                      <span>{setup.capacity}</span>
+                      <span className="uppercase text-amber-700 font-bold">{tierKey} setup</span>
+                      {setup.capacity ? <span>{setup.capacity}</span> : null}
                     </div>
                     <h3 className="text-base font-bold text-slate-900">{setup.name}</h3>
-                    <div className="text-sm font-mono font-bold text-cyan-800 mt-1">
-                      {setup.budget}
-                    </div>
+                    {setup.budget ? (
+                      <div className="text-sm font-mono font-bold text-cyan-800 mt-1">
+                        {setup.budget}
+                      </div>
+                    ) : null}
                     <p className="text-xs text-slate-500 mt-2 mb-4 leading-relaxed">
                       {setup.summary}
                     </p>

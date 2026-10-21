@@ -5,6 +5,7 @@ import { ProductCard } from '../components/ProductCard';
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
 import { VENUE_META } from '../config/seo-pages';
+import { VENUE_COPY } from '../config/venue-copy';
 
 export const VenuePage: React.FC = () => {
   const { routeMatch } = useRouter();
@@ -12,11 +13,19 @@ export const VenuePage: React.FC = () => {
   const venueSlug = routeMatch.params.venue;
   const venue = VENUES.find((v: any) => v.slug === venueSlug) || VENUES[0];
 
-  // Related products based on venue's related categories
-  const relatedProducts = PRODUCTS.filter((p: any) => 
-    venue.relatedCategories.includes(p.categorySlug) || 
-    p.use === 'commercial'
-  ).slice(0, 4);
+  const copy = (VENUE_COPY as any)[venue.slug];
+
+  // Products from the venue's related categories: new, with photos, spread across the categories.
+  const relatedProducts = (() => {
+    const pools = (venue.relatedCategories as string[]).map((slug) =>
+      PRODUCTS.filter((p: any) => p.categorySlug === slug && p.condition === 'new' && p.images && p.images.length && p.price > 0)
+    );
+    const out: any[] = [];
+    for (let i = 0; out.length < 8 && pools.some((pl) => i < pl.length); i++) {
+      for (const pl of pools) if (pl[i] && out.length < 8) out.push(pl[i]);
+    }
+    return out;
+  })();
 
   return (
     <div className="bg-slate-50 min-h-screen py-8">
@@ -34,9 +43,7 @@ export const VenuePage: React.FC = () => {
         {/* Venue Header Banner */}
         <div className="bg-slate-900 text-white rounded-xl border border-slate-800 p-6 sm:p-10 shadow-lg space-y-4">
           <div className="flex items-center gap-2 text-xs font-mono font-semibold text-cyan-400 uppercase tracking-wider">
-            <span>HOSPITALITY FIT-OUT SOLUTIONS</span>
-            <span>·</span>
-            <span>{venue.heroStat}</span>
+            <span>COMMERCIAL REFRIGERATION FOR {venue.name.toUpperCase()}</span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
@@ -44,7 +51,7 @@ export const VenuePage: React.FC = () => {
           </h1>
 
           <p className="text-sm sm:text-base text-slate-300 max-w-3xl leading-relaxed">
-            {venue.intro}
+            {copy ? copy.intro : venue.intro}
           </p>
           <p className="text-xs text-slate-400">
             Browse <Link href="/bar-fridges/" className="underline hover:text-white">bar fridges</Link>, <Link href="/bar-freezers/" className="underline hover:text-white">bar freezers</Link>, <Link href="/bar-fridges/kegerators-dispensers/" className="underline hover:text-white">kegerators</Link> and <Link href="/accessories-parts/ice-machines-storage/" className="underline hover:text-white">ice machines</Link>.
@@ -55,7 +62,7 @@ export const VenuePage: React.FC = () => {
               onClick={() => setIsQuoteModalOpen(true)}
               className="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-md transition-colors"
             >
-              Get a Customized {venue.name} Fit-Out Quote
+              Request a {venue.name} Quote
             </button>
             <a
               href={`tel:${SITE.phone.replace(/\s+/g, '')}`}
@@ -67,72 +74,54 @@ export const VenuePage: React.FC = () => {
           </div>
         </div>
 
-        {/* 3 Recommended Setups (Small / Medium / Large) */}
-        <div className="space-y-6">
-          <div>
-            <span className="text-xs font-mono font-semibold text-cyan-700 uppercase tracking-wider block">
-              SCALABLE ARCHITECTURE
-            </span>
-            <h2 className="text-2xl font-bold text-slate-900 mt-1">
-              Recommended Equipment Blueprints for {venue.name}
-            </h2>
+        {/* What to look for */}
+        {copy && (
+          <div className="bg-white rounded-xl border border-slate-200/90 p-6 sm:p-8 shadow-xs space-y-3">
+            <h2 className="text-xl font-bold text-slate-900">What to look for in {venue.name.toLowerCase()} refrigeration</h2>
+            <ul className="list-disc pl-5 space-y-1.5 text-sm text-slate-700 leading-relaxed">
+              {copy.tips.map((t: string, i: number) => <li key={i}>{t}</li>)}
+            </ul>
           </div>
+        )}
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {Object.entries(venue.setups).map(([tierKey, setup]: [string, any]) => (
-              <div 
-                key={tierKey}
-                className="bg-white rounded-xl border border-slate-200/90 p-6 shadow-xs flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between text-xs text-slate-500 font-mono mb-2">
-                    <span className="uppercase font-bold text-amber-700">{tierKey} Venue Setup</span>
-                    <span>{setup.capacity}</span>
+        {/* Typical equipment */}
+        {copy && (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-slate-900">Typical equipment for {venue.name}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {copy.setups.map((setup: any) => (
+                <div key={setup.name} className="bg-white rounded-xl border border-slate-200/90 p-6 shadow-xs flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900">{setup.name}</h3>
+                    <p className="text-xs text-slate-600 mt-2 leading-relaxed">{setup.summary}</p>
+                    <ul className="mt-4 pt-4 border-t border-slate-100 space-y-2">
+                      {setup.equipment.map((item: string, idx: number) => (
+                        <li key={idx} className="flex items-start gap-2 text-xs text-slate-800">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-
-                  <h3 className="text-lg font-bold text-slate-900">{setup.name}</h3>
-                  <div className="text-sm font-mono font-bold text-cyan-800 mt-1">
-                    {setup.budget}
-                  </div>
-
-                  <p className="text-xs text-slate-600 mt-3 leading-relaxed">
-                    {setup.summary}
-                  </p>
-
-                  <div className="mt-5 pt-4 border-t border-slate-100 space-y-2">
-                    <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
-                      Core Refrigeration Package:
-                    </span>
-                    {setup.equipment.map((item: string, idx: number) => (
-                      <div key={idx} className="flex items-start gap-2 text-xs text-slate-800">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
+                  <div className="pt-6 mt-6 border-t border-slate-100">
+                    <button
+                      onClick={() => setIsQuoteModalOpen(true)}
+                      className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors"
+                    >
+                      Request a quote for this set
+                    </button>
                   </div>
                 </div>
-
-                <div className="pt-6 mt-6 border-t border-slate-100 space-y-2">
-                  <button
-                    onClick={() => setIsQuoteModalOpen(true)}
-                    className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors"
-                  >
-                    Request Quote for this Blueprint
-                  </button>
-                  <span className="block text-center text-[10px] text-slate-400 font-mono">
-                    SilverChef Financing & Tax Invoices Available
-                  </span>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Recommended Equipment in Stock */}
         <div className="space-y-4 pt-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-slate-900">
-              Popular Equipment for {venue.name} in Stock
+              Popular equipment for {venue.name}
             </h2>
             <Link href="/bar-freezers/" className="text-xs font-semibold text-cyan-700 hover:text-cyan-800">
               Browse All Equipment &rarr;
@@ -148,9 +137,9 @@ export const VenuePage: React.FC = () => {
 
         {/* Other Venues Switcher */}
         <div className="pt-8 border-t border-slate-200 space-y-4">
-          <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide">
-            Explore Refrigeration for Other Australian Venues
-          </h3>
+          <h2 className="text-base font-bold text-slate-900 uppercase tracking-wide">
+            Refrigeration for other Australian venues
+          </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {VENUES.filter((v: any) => v.slug !== venue.slug).map((other: any) => (
               <Link
@@ -162,7 +151,7 @@ export const VenuePage: React.FC = () => {
                   {other.name}
                 </span>
                 <span className="text-[10px] text-slate-400 line-clamp-1 mt-0.5 block">
-                  {other.heroStat}
+                  {(VENUE_META as any)[other.slug]?.primary || 'Commercial refrigeration'}
                 </span>
               </Link>
             ))}
