@@ -7,6 +7,7 @@ interface ProductImageProps {
   className?: string;
   priority?: boolean;
   imageIndex?: number;
+  sizes?: string;
 }
 
 /**
@@ -14,7 +15,7 @@ interface ProductImageProps {
  * Renders high-fidelity, scalable SVG schematics of Australian commercial refrigeration equipment
  * matching the user's requirement: "clean white 4:3 frame, object-fit contain".
  */
-export const ProductImage: React.FC<ProductImageProps> = ({ product, className = "h-48", priority = false, imageIndex = 0 }) => {
+export const ProductImage: React.FC<ProductImageProps> = ({ product, className = "h-48", priority = false, imageIndex = 0, sizes = '(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw' }) => {
   const isStainless = product.finish === 'stainless';
   const isBlack = product.finish === 'black';
   const isGlass = product.doorType === 'glass';
@@ -39,6 +40,9 @@ export const ProductImage: React.FC<ProductImageProps> = ({ product, className =
           width={1200}
           height={900}
           loading={priority ? "eager" : "lazy"}
+          {...(priority ? { fetchPriority: 'high' as const } : {})}
+          decoding="async"
+          {...(imageIndex === 0 && /.webp$/.test(product.images[0]) ? { srcSet: `${product.images[0].replace(/.webp$/, '-sm.webp')} 480w, ${product.images[0].replace(/.webp$/, '-md.webp')} 800w, ${product.images[0]} 1200w`, sizes } : {})}
           className="w-full h-full object-contain"
         />
       </div>

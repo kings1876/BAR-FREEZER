@@ -1,6 +1,6 @@
 import React from 'react';
 import { Star, CheckCircle2, ExternalLink } from 'lucide-react';
-import { SITE } from '../config/site.js';
+import { SITE } from '../config/core.js';
 import { Link } from '../context/RouterContext';
 
 interface TrustpilotBadgeProps {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChevronRight, ArrowRight, ShieldCheck, CheckCircle2, Phone, FileText } from 'lucide-react';
-import { VENUES, CATEGORIES, PRODUCTS, SITE } from '../config/site.js';
+import { VENUES, CATEGORIES, SITE } from '../config/core.js';
+import { PRODUCTS } from '../config/products-data.js';
 import { ProductCard } from '../components/ProductCard';
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';

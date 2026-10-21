@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Star, ShieldCheck, CheckCircle2, ChevronRight, ThumbsUp, Filter } from 'lucide-react';
-import { SITE } from '../config/site.js';
+import { SITE } from '../config/core.js';
 import { Link } from '../context/RouterContext';
 
 export const ReviewsPage: React.FC = () => {

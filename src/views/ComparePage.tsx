@@ -1,6 +1,6 @@
 import React from 'react';
 import { SlidersHorizontal, Trash2, ShoppingBag, FileText, Check, Plus, ChevronRight } from 'lucide-react';
-import { PRODUCTS } from '../config/site.js';
+import { PRODUCTS } from '../config/products-data.js';
 import { ProductImage } from '../components/ProductImage';
 import { useCart } from '../context/CartContext';
 import { Link } from '../context/RouterContext';

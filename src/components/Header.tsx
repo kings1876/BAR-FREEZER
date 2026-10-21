@@ -16,7 +16,8 @@ import {
   ArrowRight,
   SlidersHorizontal
 } from 'lucide-react';
-import { SITE, CATEGORIES, BRANDS, VENUES, PRODUCTS, CITIES } from '../config/site.js';
+import { SITE, CATEGORIES, BRANDS, VENUES, CITIES } from '../config/core.js';
+import { PRODUCT_COUNTS } from '../config/products-counts.js';
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
 
@@ -50,10 +51,14 @@ export const Header: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Autosuggest filtering
+  // Autosuggest filtering. The catalogue is only downloaded once someone starts typing in the search box.
   const queryClean = searchInput.trim().toLowerCase();
-  const suggestedProducts = queryClean.length >= 2
-    ? PRODUCTS.filter((p: any) => 
+  const [catalogue, setCatalogue] = useState<any[] | null>(null);
+  useEffect(() => {
+    if (queryClean.length >= 2 && !catalogue) import('../config/products-data.js').then((m) => setCatalogue(m.PRODUCTS as any[]));
+  }, [queryClean, catalogue]);
+  const suggestedProducts = queryClean.length >= 2 && catalogue
+    ? catalogue.filter((p: any) => 
         p.name.toLowerCase().includes(queryClean) ||
         p.brand.toLowerCase().includes(queryClean) ||
         p.sku.toLowerCase().includes(queryClean) ||
@@ -423,7 +428,7 @@ export const Header: React.FC = () => {
                     onClick={() => setActiveMegaMenu(null)}
                     className="text-xs font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1"
                   >
-                    <span>View All Bar Freezers ({PRODUCTS.filter((p: any) => p.primaryCategory === 'Bar Freezers').length} Models)</span>
+                    <span>View All Bar Freezers ({(PRODUCT_COUNTS.byCategory as any)['Bar Freezers']} Models)</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>

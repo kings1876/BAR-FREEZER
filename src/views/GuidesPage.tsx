@@ -1,7 +1,8 @@
 import React from 'react';
 import { ChevronRight, ArrowRight, Clock, Calendar, BookOpen, Share2, Printer } from 'lucide-react';
-import { POSTS } from '../config/site.js';
+import { POSTS } from '../config/posts-list.js';
 import { useRouter, Link } from '../context/RouterContext';
+import { useProductDetail } from '../context/ProductDetailContext';
 
 const renderInline = (text: string) => {
   const parts: React.ReactNode[] = [];
@@ -37,9 +38,11 @@ export const GuidesPage: React.FC = () => {
   const { routeMatch } = useRouter();
   const guideSlug = routeMatch.params.slug;
 
-  const currentGuide = guideSlug ? POSTS.find((p: any) => p.slug === guideSlug) : null;
+  const detail = useProductDetail();
+  const guideBody = detail && detail.guide && detail.guide.slug === guideSlug ? detail.guide : null;
+  const currentGuide: any = guideSlug ? { ...POSTS.find((p: any) => p.slug === guideSlug), content: guideBody ? guideBody.content : '', faqs: guideBody ? guideBody.faqs : [] } : null;
 
-  if (currentGuide) {
+  if (currentGuide && currentGuide.title) {
     // Individual Article View
     return (
       <div className="bg-slate-50 min-h-screen py-8">

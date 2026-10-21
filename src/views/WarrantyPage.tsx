@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ShieldCheck, Wrench, CheckCircle2, Phone, AlertCircle, Send, FileText } from 'lucide-react';
-import { BRANDS, SITE } from '../config/site.js';
+import { BRANDS, SITE } from '../config/core.js';
 import { Link } from '../context/RouterContext';
 import { collectForm, sendEnquiry } from '../lib/enquiry-client';
 

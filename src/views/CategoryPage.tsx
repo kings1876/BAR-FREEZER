@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { SlidersHorizontal, ChevronRight, ArrowUpDown, RotateCcw, AlertCircle } from 'lucide-react';
-import { CATEGORIES, PRODUCTS } from '../config/site.js';
+import { CATEGORIES } from '../config/core.js';
+import { PRODUCTS } from '../config/products-data.js';
 import { ProductCard } from '../components/ProductCard';
 import { FilterSidebar, initialFilterState, FilterState } from '../components/FilterSidebar';
 import { useRouter, Link } from '../context/RouterContext';
@@ -288,7 +289,7 @@ export const CategoryPage: React.FC = () => {
                 pageSize={4}
                 resetKey={`${currentPath}|${sortBy}|${JSON.stringify(filters)}`}
                 className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
-                render={(product: any) => <ProductCard key={product.id} product={product} />}
+                render={(product: any, i: number) => <ProductCard key={product.id} product={product} priority={i < 2} />}
               />
             ) : (
               <div className="bg-white p-12 rounded-xl border border-slate-200 text-center space-y-4">
@@ -319,19 +320,6 @@ export const CategoryPage: React.FC = () => {
                 {' '}Specifications are published as supplied by the manufacturer or supplier, so open any product page to check dimensions, power, refrigerant and warranty before you order. Compare two or three models side by side with the compare tool if you are choosing between similar sizes. Prices include GST, delivery is quoted to your postcode, and you can <Link href="/quote/" className="text-cyan-700 font-semibold">request a quote</Link> for several units.
               </p>
             </section>
-
-            {categoryBaseProducts.length > 0 && (
-              <nav aria-label={`All ${pageTitle} models`} className="mt-10">
-                <h2 className="text-base font-bold text-slate-900">All {pageTitle} models ({categoryBaseProducts.length})</h2>
-                <ul className="mt-3 columns-1 sm:columns-2 gap-6 text-xs text-slate-700 space-y-1">
-                  {categoryBaseProducts.map((p: any) => (
-                    <li key={p.id} className="break-inside-avoid">
-                      <Link href={`/product/${p.slug}/`} className="hover:text-cyan-700 hover:underline">{p.name}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            )}
 
             <RelatedSearches
               path={currentPath}

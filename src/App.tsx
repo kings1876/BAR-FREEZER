@@ -6,42 +6,41 @@
  */
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { RouterProvider, useRouter } from './context/RouterContext';
 import { CartProvider, useCart } from './context/CartContext';
 import { ProductDetailProvider, ProductDetail } from './context/ProductDetailContext';
 import { Header } from './components/Header';
-import { Footer } from './components/Footer';
-import { CartDrawer } from './components/CartDrawer';
-import { QuoteModal } from './components/QuoteModal';
+const CartDrawer = dynamic(() => import('./components/CartDrawer').then((m) => m.CartDrawer), { ssr: false });
+const QuoteModal = dynamic(() => import('./components/QuoteModal').then((m) => m.QuoteModal), { ssr: false });
 import { MobileStickyBar } from './components/MobileStickyBar';
 import { TrustpilotFloatingTab } from './components/TrustpilotWidget';
 
-// Pages
-import { HomePage } from './views/HomePage';
-import { CategoryPage } from './views/CategoryPage';
-import { ProductDetailPage } from './views/ProductDetailPage';
-import { BrandPage } from './views/BrandPage';
-import { VenuePage } from './views/VenuePage';
-import { DeliveryPage } from './views/DeliveryPage';
-import { GuidesPage } from './views/GuidesPage';
-import { TradePage } from './views/TradePage';
-import { WarrantyPage } from './views/WarrantyPage';
-import { ComparePage } from './views/ComparePage';
-import { ReviewsPage } from './views/ReviewsPage';
-import { 
-  DealsPage, 
-  FinancePage, 
-  AboutPage, 
-  ContactPage, 
-  CheckoutPage, 
-  SearchPage, 
-  NotFoundPage,
-  PaymentMethodsPage,
-  FaqPage,
-  ReturnsPage
-} from './views/StaticPages';
+// Pages are split into their own chunks so a visitor only downloads the code for the page they open.
+// They are still rendered on the server, so the HTML is unchanged.
+const HomePage = dynamic(() => import('./views/HomePage').then((m) => m.HomePage));
+const CategoryPage = dynamic(() => import('./views/CategoryPage').then((m) => m.CategoryPage));
+const ProductDetailPage = dynamic(() => import('./views/ProductDetailPage').then((m) => m.ProductDetailPage));
+const BrandPage = dynamic(() => import('./views/BrandPage').then((m) => m.BrandPage));
+const VenuePage = dynamic(() => import('./views/VenuePage').then((m) => m.VenuePage));
+const DeliveryPage = dynamic(() => import('./views/DeliveryPage').then((m) => m.DeliveryPage));
+const GuidesPage = dynamic(() => import('./views/GuidesPage').then((m) => m.GuidesPage));
+const TradePage = dynamic(() => import('./views/TradePage').then((m) => m.TradePage));
+const WarrantyPage = dynamic(() => import('./views/WarrantyPage').then((m) => m.WarrantyPage));
+const ComparePage = dynamic(() => import('./views/ComparePage').then((m) => m.ComparePage));
+const ReviewsPage = dynamic(() => import('./views/ReviewsPage').then((m) => m.ReviewsPage));
+const DealsPage = dynamic(() => import('./views/StaticPages').then((m) => m.DealsPage));
+const FinancePage = dynamic(() => import('./views/InfoPages').then((m) => m.FinancePage));
+const AboutPage = dynamic(() => import('./views/InfoPages').then((m) => m.AboutPage));
+const ContactPage = dynamic(() => import('./views/InfoPages').then((m) => m.ContactPage));
+const CheckoutPage = dynamic(() => import('./views/InfoPages').then((m) => m.CheckoutPage));
+const SearchPage = dynamic(() => import('./views/StaticPages').then((m) => m.SearchPage));
+const NotFoundPage = dynamic(() => import('./views/InfoPages').then((m) => m.NotFoundPage));
+const PaymentMethodsPage = dynamic(() => import('./views/InfoPages').then((m) => m.PaymentMethodsPage));
+const FaqPage = dynamic(() => import('./views/InfoPages').then((m) => m.FaqPage));
+const ReturnsPage = dynamic(() => import('./views/InfoPages').then((m) => m.ReturnsPage));
 
-const MainContent: React.FC = () => {
+const MainContent: React.FC<{ footer?: React.ReactNode; below?: React.ReactNode }> = ({ footer, below }) => {
   const { routeMatch } = useRouter();
   const { notification } = useCart();
 
@@ -112,6 +111,7 @@ const MainContent: React.FC = () => {
       {/* Dynamic View Body */}
       <main className="flex-1 w-full" id="main-content">
         {renderRoute()}
+        {below}
       </main>
 
       {/* Global Interactive Overlays */}
@@ -125,17 +125,17 @@ const MainContent: React.FC = () => {
       <MobileStickyBar />
 
       {/* Global Trade Footer */}
-      <Footer />
+      {footer}
     </div>
   );
 };
 
-export default function App({ productDetail = null }: { productDetail?: ProductDetail | null }) {
+export default function App({ productDetail = null, footer = null, below = null }: { productDetail?: ProductDetail | null; footer?: React.ReactNode; below?: React.ReactNode }) {
   return (
     <RouterProvider>
       <CartProvider>
         <ProductDetailProvider detail={productDetail}>
-          <MainContent />
+          <MainContent footer={footer} below={below} />
         </ProductDetailProvider>
       </CartProvider>
     </RouterProvider>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Phone, FileText, ShoppingBag } from 'lucide-react';
-import { SITE } from '../config/site.js';
+import { SITE } from '../config/core.js';
 import { useCart } from '../context/CartContext';
 
 export const MobileStickyBar: React.FC = () => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ShieldCheck, ChevronRight, ArrowRight, Award } from 'lucide-react';
-import { BRANDS, PRODUCTS } from '../config/site.js';
+import { BRANDS } from '../config/core.js';
+import { PRODUCTS } from '../config/products-data.js';
 import { ProductCard } from '../components/ProductCard';
 import { useRouter, Link } from '../context/RouterContext';
 import { PagedGrid } from '../components/PagedGrid';
@@ -70,23 +71,12 @@ export const BrandPage: React.FC = () => {
           </div>
 
           {brandProducts.length > 0 ? (
-            <PagedGrid items={brandProducts} pageSize={4} render={(p: any) => <ProductCard key={p.id} product={p} />} />
+            <PagedGrid items={brandProducts} pageSize={4} render={(p: any, i: number) => <ProductCard key={p.id} product={p} priority={i < 2} />} />
           ) : null}
           <p className="pt-6 text-sm text-slate-600 leading-relaxed">
             When you compare {brand.name} models, check the stated width, depth and height, the capacity in litres, the door type, the climate class and the warranty on each product page. Measure your opening and delivery path first, and leave the ventilation clearance listed in the manual. Specifications are published as supplied by the maker or supplier, and the full list of models below links to every product page. You can compare models side by side, or <Link href="/quote/" className="text-cyan-700 font-semibold">request a quote</Link> for several units with your delivery postcode.
           </p>
-          {brandProducts.length > 0 ? (
-            <nav aria-label={`All ${brand.name} models`} className="pt-6">
-              <h2 className="text-base font-bold text-slate-900">All {brand.name} models</h2>
-              <ul className="mt-3 columns-1 sm:columns-2 lg:columns-3 gap-6 text-xs text-slate-700 space-y-1">
-                {brandProducts.map((p: any) => (
-                  <li key={p.id} className="break-inside-avoid">
-                    <Link href={`/product/${p.slug}/`} className="hover:text-cyan-700 hover:underline">{p.name}</Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          ) : (
+          {brandProducts.length > 0 ? null : (
             <div className="bg-white p-8 rounded-xl border border-slate-200 text-center space-y-3">
               <p className="text-sm text-slate-600">
                 Additional {brand.name} models can be special-ordered through our trade desk.

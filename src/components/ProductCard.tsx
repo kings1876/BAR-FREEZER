@@ -7,9 +7,10 @@ import { Link } from '../context/RouterContext';
 
 interface ProductCardProps {
   product: Product;
+  priority?: boolean;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) => {
   const { addToCart, openQuoteForProduct, toggleCompare, isInCompare } = useCart();
   const compared = isInCompare(product.id);
 
@@ -18,7 +19,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Visual Product Box */}
       <div className="relative p-3 bg-slate-50/50 border-b border-slate-100">
         <Link href={`/product/${product.slug}/`} className="block focus-visible:outline-amber-500">
-          <ProductImage product={product} className="w-full" />
+          <ProductImage product={product} className="w-full" priority={priority} />
         </Link>
 
         {/* Compare Checkbox Trigger in top right */}

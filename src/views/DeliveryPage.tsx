@@ -1,6 +1,6 @@
 import React from 'react';
 import { Truck, Clock, ShieldCheck, MapPin, CheckCircle2, ChevronRight, Phone, AlertCircle } from 'lucide-react';
-import { CITIES, SITE } from '../config/site.js';
+import { CITIES, SITE } from '../config/core.js';
 import { PostcodeEstimator } from '../components/PostcodeEstimator';
 import { useRouter, Link } from '../context/RouterContext';
 import { CITY_META } from '../config/seo-pages';

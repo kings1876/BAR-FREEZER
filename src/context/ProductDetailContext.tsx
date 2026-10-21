@@ -6,6 +6,10 @@ import React, { createContext, useContext } from 'react';
 // Supplied by the server render so they are part of the page HTML and not shipped in the shared JS bundle.
 export interface ProductDetail {
   id: string;
+  base?: any;
+  alts?: any[];
+  related?: any[];
+  guide?: { slug: string; content: string; faqs?: { q: string; a: string }[] };
   images?: string[];
   features?: string[];
   shortDescription?: string;

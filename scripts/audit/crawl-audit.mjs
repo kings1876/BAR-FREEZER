@@ -3,13 +3,7 @@
 import fs from 'fs';
 
 const BASE = (process.argv[2] || 'https://bar-freezer.vercel.app').replace(/\/$/, '');
-let s = fs.readFileSync('src/config/site.js', 'utf8')
-  .replace("import productsTable from './products.client.json';", "import fs from 'fs'; const productsTable = JSON.parse(fs.readFileSync(new URL('../src/config/products.client.json', import.meta.url),'utf8'));")
-  .replace("import { EXTRA_POSTS } from './guides-extra.js';", "import { EXTRA_POSTS } from '../src/config/guides-extra.js';")
-  .replace("import { VENUE_COPY, VENUE_TAGLINE } from './venue-copy.js';", "import { VENUE_COPY, VENUE_TAGLINE } from '../src/config/venue-copy.js';");
-fs.writeFileSync('data/_site-tmp.mjs', s);
-const m = await import('../../data/_site-tmp.mjs?x=' + Date.now());
-fs.unlinkSync('data/_site-tmp.mjs');
+const m = await import(new URL('../../src/config/site.js', import.meta.url).href);
 
 const routes = new Set(['/']);
 ['trade', 'quote', 'finance', 'warranty-service', 'warranty', 'deals', 'clearance', 'compare', 'reviews', 'about', 'contact', 'faq', 'returns', 'cart', 'checkout', 'search', 'delivery', 'guides', 'payment-methods'].forEach((r) => routes.add(`/${r}/`));

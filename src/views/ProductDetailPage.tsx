@@ -18,7 +18,9 @@ import {
   Maximize2,
   Wind
 } from 'lucide-react';
-import { PRODUCTS, ACCESSORY_PRODUCTS, SITE } from '../config/site.js';
+import { SITE } from '../config/core.js';
+// The catalogue is not imported here: the server supplies this product, its alternatives and neighbours.
+const ACCESSORY_PRODUCTS: any[] = [];
 import { ProductImage } from '../components/ProductImage';
 import { PostcodeEstimator } from '../components/PostcodeEstimator';
 import { useCart } from '../context/CartContext';
@@ -39,7 +41,7 @@ export const ProductDetailPage: React.FC = () => {
   const productSlug = routeMatch.params.slug;
   useEffect(() => { setActivePhoto(0); }, [productSlug]);
   const detail = useProductDetail();
-  const baseProduct: any = PRODUCTS.find((p: any) => p.slug === productSlug) || PRODUCTS[0];
+  const baseProduct: any = (detail && detail.base) || { id: '', slug: productSlug, name: '', brand: '', model: '', price: null, images: [], categorySlug: '' };
   const product = {
     ...baseProduct,
     specs: {},
@@ -56,16 +58,11 @@ export const ProductDetailPage: React.FC = () => {
 
   // Alternative recommendations
   const alternativeItems = (product.alternatives || [])
-    .map((altId) => PRODUCTS.find((p) => p.id === altId))
+    .map((altId) => (detail && detail.alts ? detail.alts.find((p: any) => p.id === altId) : null))
     .filter(Boolean);
 
   // Neighbouring products in the same category: gives every product page more incoming internal links.
-  const relatedItems = (() => {
-    const same = PRODUCTS.filter((p: any) => p.categorySlug === product.categorySlug);
-    const idx = same.findIndex((p: any) => p.id === product.id);
-    if (idx < 0 || same.length < 2) return [] as any[];
-    return Array.from({ length: Math.min(8, same.length - 1) }, (_, k) => same[(idx + k + 1) % same.length]);
-  })();
+  const relatedItems: any[] = (detail && detail.related) || [];
 
   // Plain-language answers built only from the product's own data.
   const sp: any = product.specs || {};
@@ -164,7 +161,7 @@ export const ProductDetailPage: React.FC = () => {
             {/* Left 6 Columns: Product Visuals & Thumbnails */}
             <div className="lg:col-span-6 space-y-4">
               <div className="relative bg-slate-50 rounded-lg border border-slate-200 p-6 flex items-center justify-center">
-                <ProductImage product={product} className="w-full max-h-96" priority imageIndex={activePhoto} />
+                <ProductImage product={product} className="w-full max-h-96" priority imageIndex={activePhoto} sizes="(min-width: 1024px) 50vw, 100vw" />
                 <div className="absolute top-4 right-4 flex items-center gap-2">
                   <button
                     onClick={() => toggleCompare(product)}
@@ -792,18 +789,6 @@ export const ProductDetailPage: React.FC = () => {
           </div>
         )}
 
-        {relatedItems.length > 0 && (
-          <nav aria-label="More in this category" className="pt-2">
-            <h2 className="text-base font-bold text-slate-900">More in this category</h2>
-            <ul className="mt-2 columns-1 sm:columns-2 gap-6 text-xs text-slate-700 space-y-1">
-              {relatedItems.map((p: any) => (
-                <li key={p.id} className="break-inside-avoid">
-                  <Link href={`/product/${p.slug}/`} className="hover:text-cyan-700 hover:underline">{p.name}</Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        )}
 
       </div>
     </div>

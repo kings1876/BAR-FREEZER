@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 interface PagedGridProps<T> {
   items: T[];
-  render: (item: T) => React.ReactNode;
+  render: (item: T, index: number) => React.ReactNode;
   pageSize?: number;
   className?: string;
   resetKey?: string | number;
@@ -17,7 +17,7 @@ export function PagedGrid<T>({ items, render, pageSize = 12, className = 'grid g
   return (
     <>
       <h2 className="sr-only">Products</h2>
-      <div className={className}>{shown.map(render)}</div>
+      <div className={className}>{shown.map((it, i) => render(it, i))}</div>
       {remaining > 0 && (
         <div className="pt-6 text-center">
           <button

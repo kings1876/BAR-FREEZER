@@ -65,6 +65,17 @@
   ],
   "redirects": [
     {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.barfreezer.com.au"
+        }
+      ],
+      "destination": "https://barfreezer.com.au/$1",
+      "permanent": true
+    },
+    {
       "source": "/guides/underbar-freezer-sizing-guide-glass-vs-solid-doors/",
       "destination": "/guides/under-bar-freezer-glass-vs-solid-door-guide/",
       "permanent": true

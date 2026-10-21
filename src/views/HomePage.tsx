@@ -17,7 +17,9 @@ import {
   Thermometer, 
   Phone 
 } from 'lucide-react';
-import { SITE, CATEGORIES, BRANDS, VENUES, PRODUCTS, FAQS, POSTS } from '../config/site.js';
+import { SITE, CATEGORIES, BRANDS, VENUES, FAQS } from '../config/core.js';
+import { PRODUCTS } from '../config/products-data.js';
+import { POSTS } from '../config/posts-list.js';
 import { ProductCard } from '../components/ProductCard';
 import { ProductImage } from '../components/ProductImage';
 import { useCart } from '../context/CartContext';

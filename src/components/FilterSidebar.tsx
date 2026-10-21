@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Filter, X, ChevronDown, ChevronUp, RotateCcw } from 'lucide-react';
-import { BRANDS, PRODUCTS } from '../config/site.js';
+import { BRANDS } from '../config/core.js';
+import { PRODUCTS } from '../config/products-data.js';
 
 const ANY_PRICED = PRODUCTS.some((p: any) => p.price != null);
 

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ClientApp from '../../App';
+import { Footer } from '../../components/Footer';
 import { CATEGORIES, BRANDS, VENUES, CITIES, PRODUCTS, POSTS, FAQS } from '../../config/site.js';
 import { allPaths } from '../../lib/routes';
 import { KEYWORD_META } from '../../config/seo-keywords';
@@ -230,6 +231,60 @@ function breadcrumb(slug: string[]) {
   return { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items };
 }
 
+type LinkItem = { id: string; slug: string; name: string };
+// Plain anchors in a server component: crawlable, but nothing here is hydrated in the browser.
+function ProductLinkList({ title, aria, items }: { title: string; aria: string; items: LinkItem[] }) {
+  if (!items.length) return null;
+  return (
+    <div className="bg-slate-50 pb-12">
+      <nav aria-label={aria} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-base font-bold text-slate-900">{title}</h2>
+        <ul className="mt-3 columns-1 sm:columns-2 lg:columns-3 gap-6 text-xs text-slate-700 space-y-1">
+          {items.map((p) => (
+            <li key={p.id} className="break-inside-avoid">
+              <a href={`/product/${p.slug}/`} className="hover:text-cyan-700 hover:underline">{p.name}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  );
+}
+
+function belowContent(slug: string[], productDetail: any): React.ReactNode {
+  const all = PRODUCTS as any[];
+  const [a, b, c] = slug;
+  if (['bar-freezers', 'bar-fridges', 'accessories-parts'].includes(a)) {
+    const root: any = (CATEGORIES as any[]).find((x) => x.slug === a);
+    if (!root) return null;
+    const sub: any = b ? root.subcategories.find((s: any) => s.slug === b) : null;
+    const type: any = c && sub ? sub.types.find((t: any) => t.slug === c) : null;
+    const rootName = a === 'bar-freezers' ? 'Bar Freezers' : a === 'bar-fridges' ? 'Bar Fridges & Coolers' : 'Accessories & Parts';
+    const items = all.filter((p) => {
+      if (p.primaryCategory !== rootName) return false;
+      if (sub && p.categorySlug !== sub.slug) return false;
+      if (type && p.type.toLowerCase() !== type.name.toLowerCase() && !p.name.toLowerCase().includes(type.name.toLowerCase())) return false;
+      return true;
+    });
+    const label = (type || sub || root).name;
+    return <ProductLinkList title={`All ${label} models (${items.length})`} aria={`All ${label} models`} items={items} />;
+  }
+  if (a === 'brands' && b) {
+    const brand: any = (BRANDS as any[]).find((x) => x.slug === b);
+    if (!brand) return null;
+    const items = all.filter((p) => String(p.brand).toLowerCase() === brand.name.toLowerCase());
+    return <ProductLinkList title={`All ${brand.name} models`} aria={`All ${brand.name} models`} items={items} />;
+  }
+  if ((a === 'clearance' || a === 'deals') && !b) {
+    const items = all.filter((p) => p.condition === 'ex-display' || p.condition === 'refurbished' || p.condition === 'factory-second' || p.categorySlug === 'clearance-ex-display');
+    return <ProductLinkList title={`All ex-display and clearance models (${items.length})`} aria="All ex-display and clearance models" items={items} />;
+  }
+  if (a === 'product' && productDetail && productDetail.related) {
+    return <ProductLinkList title="More in this category" aria="More in this category" items={productDetail.related} />;
+  }
+  return null;
+}
+
 export default async function Page({ params }: { params: Promise<{ slug?: string[] }> }) {
   const { slug = [] } = await params;
   const blocks: any[] = [];
@@ -238,7 +293,12 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
     const full: any = (FULL_PRODUCTS as any[]).find((x) => x.slug === slug[1]);
     const kwd: any = (PRODUCT_KW as any)[full && full.id];
     const meta = full ? productMeta(full) : null;
-    if (full) productDetail = { h1: meta ? (meta.title.includes(' | Bar Freezer') ? meta.title.replace(' | Bar Freezer', '') : `${meta.title} for Sale`) : undefined, term: kwd ? kwd.term : undefined, intro: meta ? meta.description : undefined, id: full.id, images: full.images, features: full.features, shortDescription: full.shortDescription, specs: full.specs, fullDescription: full.fullDescription, dimensionGuide: full.dimensionGuide, sourceUrl: full.sourceUrl, alternatives: full.alternatives, frequentlyBoughtTogether: full.frequentlyBoughtTogether };
+    const slimSelf: any = (PRODUCTS as any[]).find((x) => x.slug === slug[1]);
+    const altItems = full ? (full.alternatives || []).map((id: string) => (PRODUCTS as any[]).find((x) => x.id === id)).filter(Boolean) : [];
+    const sameCat = full ? (PRODUCTS as any[]).filter((x) => x.categorySlug === full.categorySlug) : [];
+    const selfIdx = sameCat.findIndex((x) => full && x.id === full.id);
+    const relatedItems = selfIdx >= 0 && sameCat.length > 1 ? Array.from({ length: Math.min(8, sameCat.length - 1) }, (_, k) => sameCat[(selfIdx + k + 1) % sameCat.length]) : [];
+    if (full) productDetail = { base: slimSelf, alts: altItems, related: relatedItems, h1: meta ? (meta.title.includes(' | Bar Freezer') ? meta.title.replace(' | Bar Freezer', '') : `${meta.title} for Sale`) : undefined, term: kwd ? kwd.term : undefined, intro: meta ? meta.description : undefined, id: full.id, images: full.images, features: full.features, shortDescription: full.shortDescription, specs: full.specs, fullDescription: full.fullDescription, dimensionGuide: full.dimensionGuide, sourceUrl: full.sourceUrl, alternatives: full.alternatives, frequentlyBoughtTogether: full.frequentlyBoughtTogether };
   }
   const bc = breadcrumb(slug);
   if (bc) blocks.push(bc);
@@ -277,6 +337,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   } else if (slug[0] === 'guides' && slug[1]) {
     const post: any = (POSTS as any[]).find((x) => x.slug === slug[1]);
     if (post) {
+      productDetail = { id: `guide:${post.slug}`, guide: { slug: post.slug, content: post.content, faqs: post.faqs || [] } } as any;
       const d = new Date(post.publishedAt);
       blocks.push({
         '@context': 'https://schema.org',
@@ -320,7 +381,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
       {blocks.map((b, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(b).replace(/</g, '\\u003c') }} />
       ))}
-      <ClientApp productDetail={productDetail} />
+      <ClientApp productDetail={productDetail} footer={<Footer />} below={belowContent(slug, productDetail)} />
     </>
   );
 }

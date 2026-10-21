@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   Truck, 
   ShieldCheck, 
@@ -13,29 +13,10 @@ import {
   CreditCard,
   Building
 } from 'lucide-react';
-import { SITE, CATEGORIES, BRANDS, CITIES, VENUES } from '../config/site.js';
-import { Link } from '../context/RouterContext';
-import { sendEnquiry } from '../lib/enquiry-client';
+import { SITE, CATEGORIES, BRANDS, CITIES, VENUES } from '../config/core.js';
+import { FooterNewsletter } from './FooterNewsletter';
 
 export const Footer: React.FC = () => {
-  const [emailInput, setEmailInput] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-
-  const [subError, setSubError] = useState('');
-
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!emailInput.trim()) return;
-    setSubError('');
-    try {
-      await sendEnquiry('newsletter', { Email: emailInput.trim() });
-      setSubscribed(true);
-      setEmailInput('');
-    } catch (err) {
-      setSubError((err as Error).message);
-    }
-  };
-
   return (
     <footer className="bg-slate-950 text-slate-400 border-t border-slate-800 text-xs">
       {/* Trust strip */}
@@ -77,7 +58,7 @@ export const Footer: React.FC = () => {
           </p>
 
           {/* Trustpilot Review Badge */}
-          <Link href="/reviews/" className="inline-flex items-center gap-2 p-2.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 transition-colors">
+          <a href="/reviews/" className="inline-flex items-center gap-2 p-2.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 transition-colors">
             <div className="flex items-center text-emerald-400">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-3.5 h-3.5 fill-current" />
@@ -85,7 +66,7 @@ export const Footer: React.FC = () => {
             </div>
             <span className="font-semibold text-white">4.9 / 5.0</span>
             <span className="text-slate-400">· 3,140+ Trustpilot Reviews</span>
-          </Link>
+          </a>
 
           <div className="space-y-1.5 text-slate-400 pt-1">
             <div className="flex items-center gap-2">
@@ -108,17 +89,17 @@ export const Footer: React.FC = () => {
         <div className="space-y-3">
           <p className="text-xs font-bold uppercase tracking-wider text-white">Refrigeration</p>
           <ul className="space-y-2 text-slate-400">
-            <li><Link href="/bar-freezers/under-bar-freezers/" className="hover:text-white transition-colors">Underbar Freezers</Link></li>
-            <li><Link href="/bar-freezers/back-bar-freezers/" className="hover:text-white transition-colors">Back Bar Freezers</Link></li>
-            <li><Link href="/bar-freezers/glass-door-display-freezers/" className="hover:text-white transition-colors">Glass Display Freezers</Link></li>
-            <li><Link href="/bar-freezers/glass-frosters-specialty/" className="hover:text-white transition-colors">Glass & Beer Mug Frosters</Link></li>
-            <li><Link href="/bar-freezers/chest-bench-freezers/" className="hover:text-white transition-colors">Chest & Bench Freezers</Link></li>
-            <li><Link href="/bar-freezers/upright-commercial-freezers/" className="hover:text-white transition-colors">Upright Kitchen Freezers</Link></li>
-            <li><Link href="/bar-freezers/home-bar-outdoor-freezers/" className="hover:text-white transition-colors">Home Bar & Outdoor Freezers</Link></li>
-            <li><Link href="/bar-fridges/bottle-coolers/" className="hover:text-white transition-colors">Bottle Coolers</Link></li>
-            <li><Link href="/bar-fridges/kegerators-dispensers/" className="hover:text-white transition-colors">Kegerators &amp; Dispensers</Link></li>
-            <li><Link href="/bar-fridges/wine-fridges/" className="hover:text-white transition-colors">Wine Fridges</Link></li>
-            <li><Link href="/clearance/" className="text-rose-400 hover:text-rose-300 font-medium">Clearance & Ex-Display</Link></li>
+            <li><a href="/bar-freezers/under-bar-freezers/" className="hover:text-white transition-colors">Underbar Freezers</a></li>
+            <li><a href="/bar-freezers/back-bar-freezers/" className="hover:text-white transition-colors">Back Bar Freezers</a></li>
+            <li><a href="/bar-freezers/glass-door-display-freezers/" className="hover:text-white transition-colors">Glass Display Freezers</a></li>
+            <li><a href="/bar-freezers/glass-frosters-specialty/" className="hover:text-white transition-colors">Glass & Beer Mug Frosters</a></li>
+            <li><a href="/bar-freezers/chest-bench-freezers/" className="hover:text-white transition-colors">Chest & Bench Freezers</a></li>
+            <li><a href="/bar-freezers/upright-commercial-freezers/" className="hover:text-white transition-colors">Upright Kitchen Freezers</a></li>
+            <li><a href="/bar-freezers/home-bar-outdoor-freezers/" className="hover:text-white transition-colors">Home Bar & Outdoor Freezers</a></li>
+            <li><a href="/bar-fridges/bottle-coolers/" className="hover:text-white transition-colors">Bottle Coolers</a></li>
+            <li><a href="/bar-fridges/kegerators-dispensers/" className="hover:text-white transition-colors">Kegerators &amp; Dispensers</a></li>
+            <li><a href="/bar-fridges/wine-fridges/" className="hover:text-white transition-colors">Wine Fridges</a></li>
+            <li><a href="/clearance/" className="text-rose-400 hover:text-rose-300 font-medium">Clearance & Ex-Display</a></li>
           </ul>
         </div>
 
@@ -128,16 +109,16 @@ export const Footer: React.FC = () => {
           <ul className="space-y-1.5 text-slate-400 grid grid-cols-2 gap-x-2">
             {CITIES.map((c: any) => (
               <li key={c.slug}>
-                <Link href={`/delivery/${c.slug}/`} className="hover:text-cyan-400 transition-colors inline-block py-1.5">
+                <a href={`/delivery/${c.slug}/`} className="hover:text-cyan-400 transition-colors inline-block py-1.5">
                   {c.name}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
           <div className="pt-2">
-            <Link href="/delivery/" className="text-cyan-400 hover:text-cyan-300 font-semibold block">
+            <a href="/delivery/" className="text-cyan-400 hover:text-cyan-300 font-semibold block">
               Delivery information &rarr;
-            </Link>
+            </a>
           </div>
         </div>
 
@@ -145,17 +126,17 @@ export const Footer: React.FC = () => {
         <div className="space-y-3">
           <p className="text-xs font-bold uppercase tracking-wider text-white">Trade & Operations</p>
           <ul className="space-y-2 text-slate-400">
-            <li><Link href="/quote/" className="text-amber-400 hover:text-amber-300 font-semibold">Trade Pricing & Quotes</Link></li>
-                        <li><Link href="/warranty/" className="hover:text-white transition-colors">Warranty & Service Claims</Link></li>
-            <li><Link href="/finance/" className="hover:text-white transition-colors">Equipment Finance Enquiries</Link></li>
-            <li><Link href="/compare/" className="hover:text-white transition-colors">Side-by-Side Spec Compare</Link></li>
-            <li><Link href="/guides/" className="hover:text-white transition-colors">Buying Guides</Link></li>
-            <li><Link href="/reviews/" className="hover:text-white transition-colors">Trustpilot Customer Reviews</Link></li>
-            <li><Link href="/payment-methods/" className="hover:text-white transition-colors">Payment Methods</Link></li>
-            <li><Link href="/returns/" className="hover:text-white transition-colors">Returns & Australian Consumer Law</Link></li>
-            <li><Link href="/faq/" className="hover:text-white transition-colors">Equipment FAQs</Link></li>
-            <li><Link href="/about/" className="hover:text-white transition-colors">About Bar Freezer Australia</Link></li>
-            <li><Link href="/contact/" className="hover:text-white transition-colors">Contact Us</Link></li>
+            <li><a href="/quote/" className="text-amber-400 hover:text-amber-300 font-semibold">Trade Pricing & Quotes</a></li>
+                        <li><a href="/warranty/" className="hover:text-white transition-colors">Warranty & Service Claims</a></li>
+            <li><a href="/finance/" className="hover:text-white transition-colors">Equipment Finance Enquiries</a></li>
+            <li><a href="/compare/" className="hover:text-white transition-colors">Side-by-Side Spec Compare</a></li>
+            <li><a href="/guides/" className="hover:text-white transition-colors">Buying Guides</a></li>
+            <li><a href="/reviews/" className="hover:text-white transition-colors">Trustpilot Customer Reviews</a></li>
+            <li><a href="/payment-methods/" className="hover:text-white transition-colors">Payment Methods</a></li>
+            <li><a href="/returns/" className="hover:text-white transition-colors">Returns & Australian Consumer Law</a></li>
+            <li><a href="/faq/" className="hover:text-white transition-colors">Equipment FAQs</a></li>
+            <li><a href="/about/" className="hover:text-white transition-colors">About Bar Freezer Australia</a></li>
+            <li><a href="/contact/" className="hover:text-white transition-colors">Contact Us</a></li>
           </ul>
         </div>
       </div>
@@ -185,7 +166,7 @@ export const Footer: React.FC = () => {
           <p className="text-xs font-bold uppercase tracking-wider text-white">Brands</p>
           <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-slate-400">
             {BRANDS.map((b: any) => (
-              <li key={b.slug}><Link href={`/brands/${b.slug}/`} className="hover:text-white">{b.name}</Link></li>
+              <li key={b.slug}><a href={`/brands/${b.slug}/`} className="hover:text-white">{b.name}</a></li>
             ))}
           </ul>
         </div>
@@ -193,7 +174,7 @@ export const Footer: React.FC = () => {
           <p className="text-xs font-bold uppercase tracking-wider text-white">Venues</p>
           <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-slate-400">
             {VENUES.map((v: any) => (
-              <li key={v.slug}><Link href={v.path} className="hover:text-white">{v.name}</Link></li>
+              <li key={v.slug}><a href={v.path} className="hover:text-white">{v.name}</a></li>
             ))}
           </ul>
         </div>
@@ -209,29 +190,8 @@ export const Footer: React.FC = () => {
             </p>
           </div>
 
-          <form onSubmit={handleSubscribe} className="flex w-full md:w-auto max-w-md gap-2">
-            <input
-              type="email"
-              required
-              placeholder="Enter your email (e.g. venue@bar.com.au)"
-              value={emailInput}
-              onChange={(e) => setEmailInput(e.target.value)}
-              className="bg-slate-900 border border-slate-700 text-slate-100 placeholder-slate-500 text-xs px-3 py-2 rounded-md focus:outline-none focus:border-amber-500 flex-1 md:w-64"
-            />
-            <button
-              type="submit"
-              className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase rounded-md transition-colors whitespace-nowrap"
-            >
-              Subscribe
-            </button>
-          </form>
+          <FooterNewsletter />
         </div>
-        {subError && <p role="alert" className="max-w-7xl mx-auto text-red-400 text-xs mt-2 text-center md:text-right">{subError}</p>}
-        {subscribed && (
-          <p className="max-w-7xl mx-auto text-emerald-400 text-xs mt-2 text-center md:text-right">
-            ✓ Subscribed to Bar Freezer trade updates.
-          </p>
-        )}
       </div>
 
       {/* Bottom Legal Strip */}
@@ -241,11 +201,11 @@ export const Footer: React.FC = () => {
             © {new Date().getFullYear()} {SITE.legalName}. ABN {SITE.abn}. All prices in AUD include 10% Australian GST.
           </div>
           <div className="flex flex-wrap items-center gap-4 text-slate-400">
-            <Link href="/delivery/" className="hover:text-white">Shipping Policy</Link>
+            <a href="/delivery/" className="hover:text-white">Shipping Policy</a>
             <span>·</span>
-            <Link href="/returns/" className="hover:text-white">Returns & Guarantees</Link>
+            <a href="/returns/" className="hover:text-white">Returns & Guarantees</a>
             <span>·</span>
-            <Link href="/warranty/" className="hover:text-white">Warranty</Link>
+            <a href="/warranty/" className="hover:text-white">Warranty</a>
           </div>
         </div>
       </div>

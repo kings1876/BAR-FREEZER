@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, FileText, CheckCircle2, ShieldCheck, Phone, Building, Send, Plus, Trash2 } from 'lucide-react';
-import { SITE, VENUES, PRODUCTS } from '../config/site.js';
+import { SITE, VENUES } from '../config/core.js';
 import { useCart } from '../context/CartContext';
 import { Product } from '../types';
 import { sendEnquiry } from '../lib/enquiry-client';

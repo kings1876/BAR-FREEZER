@@ -12,7 +12,8 @@ import {
   Trash2,
   Send
 } from 'lucide-react';
-import { SITE, PRODUCTS, VENUES } from '../config/site.js';
+import { SITE, VENUES } from '../config/core.js';
+import { PRODUCTS } from '../config/products-data.js';
 import { useCart } from '../context/CartContext';
 import { Link } from '../context/RouterContext';
 import { collectForm, sendEnquiry } from '../lib/enquiry-client';
