@@ -308,6 +308,18 @@ export const CategoryPage: React.FC = () => {
               </div>
             )}
 
+            <section className="mt-10 bg-white rounded-xl border border-slate-200/90 p-6 space-y-2">
+              <h2 className="text-base font-bold text-slate-900">Buying notes for {pageTitle.toLowerCase()}</h2>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                {rootSlug === 'bar-freezers'
+                  ? 'Measure the opening and the delivery path, then compare capacity in litres, door type and the stated climate class. Allow the ventilation clearance in the manufacturer manual, because a freezer that cannot shed heat works harder and cools less well. Glass doors show stock but gain more heat than solid doors, and drawers suit small items you reach for often.'
+                  : rootSlug === 'bar-fridges'
+                  ? 'Measure the space and check the stated width, depth and height, including legs or castors. Compare capacity, shelf spacing for tall bottles and the door type. Glass doors display stock while solid doors hold temperature more easily. Check the climate class if the fridge will sit in a warm room, garage or outdoor area, and leave the ventilation clearance listed in the manual.'
+                  : 'Match the part number or model to your equipment before you order, and check the size, voltage and finish where they apply. If you are unsure which part fits, send us the model and serial number from the data plate and we will help you find the right item.'}
+                {' '}Prices include GST, delivery is quoted to your postcode, and you can <Link href="/quote/" className="text-cyan-700 font-semibold">request a quote</Link> for several units.
+              </p>
+            </section>
+
             {categoryBaseProducts.length > 0 && (
               <nav aria-label={`All ${pageTitle} models`} className="mt-10">
                 <h2 className="text-base font-bold text-slate-900">All {pageTitle} models ({categoryBaseProducts.length})</h2>
