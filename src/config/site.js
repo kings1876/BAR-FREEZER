@@ -589,7 +589,7 @@ const VENUES_RAW = [
         summary: "Rugged road-case compatible cold storage fleet ready for multi-day festival and expo deployments."
       }
     },
-    relatedCategories: ["chest-bench-freezers", "under-bar-freezers", "castors-legs-stands"]
+    relatedCategories: ["chest-bench-freezers", "under-bar-freezers", "kegerators-dispensers"]
   },
   {
     name: "Food Trucks & Mobile Bars",
@@ -620,7 +620,7 @@ const VENUES_RAW = [
         summary: "Commercial food hygiene compliant stainless work surfaces with heavy insulation for outdoor summer heat."
       }
     },
-    relatedCategories: ["under-bar-freezers", "kegerators-dispensers", "door-locks-gaskets"]
+    relatedCategories: ["under-bar-fridges", "under-bar-freezers", "kegerators-dispensers"]
   },
   {
     name: "Ice Cream & Gelato Shops",
@@ -744,7 +744,7 @@ const VENUES_RAW = [
         summary: "Complete open-air entertainment suite engineered to withstand coastal salt air and torrential rain."
       }
     },
-    relatedCategories: ["outdoor-alfresco-fridges", "home-bar-outdoor-freezers", "covers-cleaning"]
+    relatedCategories: ["outdoor-alfresco-fridges", "home-bar-outdoor-freezers", "wine-fridges"]
   },
   {
     name: "Caravans & Boats",
@@ -775,7 +775,7 @@ const VENUES_RAW = [
         summary: "Saltwater-corrosion-proof 316 stainless steel with magnetic gasket and positive deadbolt catches."
       }
     },
-    relatedCategories: ["combination-fridge-freezers", "door-locks-gaskets", "chest-bench-freezers"]
+    relatedCategories: ["under-bar-fridges", "combination-fridge-freezers", "outdoor-alfresco-fridges"]
   },
   {
     name: "Offices & Staff Rooms",
@@ -806,7 +806,7 @@ const VENUES_RAW = [
         summary: "Architectural aesthetics matching executive interior design with whisper-quiet operation."
       }
     },
-    relatedCategories: ["beer-beverage-fridges", "under-bar-freezers", "door-locks-gaskets"]
+    relatedCategories: ["beer-beverage-fridges", "under-bar-fridges", "wine-fridges"]
   }
 ];
 
