@@ -5,7 +5,8 @@ import { PRODUCT_COUNTS } from '../config/products-counts.js';
 import { useProductDetail } from '../context/ProductDetailContext';
 import { ProductCard } from '../components/ProductCard';
 import { useRouter, Link } from '../context/RouterContext';
-import { PagedGrid } from '../components/PagedGrid';
+import { PaginatedGrid } from '../components/PaginatedGrid';
+import { useCatalogue } from '../lib/use-catalogue';
 import { RelatedSearches } from '../components/RelatedSearches';
 import { BRAND_META } from '../config/seo-brands';
 
@@ -18,10 +19,13 @@ export const BrandPage: React.FC = () => {
   const brand = BRANDS.find((b: any) => b.slug === brandSlug) || BRANDS[0];
 
   const pageDetail = useProductDetail();
-  const brandProducts: any[] = (pageDetail && pageDetail.data && pageDetail.data.products) || [];
-  const brandTotal: number = (PRODUCT_COUNTS.byBrand as any)[brand.name] || brandProducts.length;
-  const kinds = Array.from(new Set(brandProducts.map((p: any) => String(p.subCategory || '').replace(/s*(.*)s*$/, '').toLowerCase()).filter(Boolean))).slice(0, 5);
-  const brandIntro = brandProducts.length
+  // The server supplies the first products; the full list loads on the first interaction and drives the pages.
+  const serverProducts: any[] = (pageDetail && pageDetail.data && pageDetail.data.products) || [];
+  const [catalogue, loadCatalogueNow] = useCatalogue();
+  const brandProducts: any[] = catalogue ? catalogue.filter((p: any) => String(p.brand).toLowerCase() === brand.name.toLowerCase()) : serverProducts;
+  const brandTotal: number = (PRODUCT_COUNTS.byBrand as any)[brand.name] || serverProducts.length;
+  const kinds = Array.from(new Set(serverProducts.map((p: any) => String(p.subCategory || '').replace(/s*(.*)s*$/, '').toLowerCase()).filter(Boolean))).slice(0, 5);
+  const brandIntro = serverProducts.length
     ? `Browse ${brandTotal} ${brand.name} products${kinds.length ? ' including ' + kinds.join(', ') : ''}. Compare sizes, specifications and prices, or request a quote for multiple units.`
     : brand.description;
 
@@ -74,7 +78,7 @@ export const BrandPage: React.FC = () => {
           </div>
 
           {brandProducts.length > 0 ? (
-            <PagedGrid items={brandProducts} pageSize={4} render={(p: any, i: number) => <ProductCard key={p.id} product={p} priority={i < 2} />} />
+            <PaginatedGrid items={brandProducts} pageSize={12} totalCount={catalogue ? undefined : brandTotal} onNeedAll={loadCatalogueNow} resetKey={brand.slug} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" render={(p: any, i: number) => <ProductCard key={p.id} product={p} priority={i < 2} />} />
           ) : null}
           <p className="pt-6 text-sm text-slate-600 leading-relaxed">
             When you compare {brand.name} models, check the stated width, depth and height, the capacity in litres, the door type, the climate class and the warranty on each product page. Measure your opening and delivery path first, and leave the ventilation clearance listed in the manual. Specifications are published as supplied by the maker or supplier, and the full list of models below links to every product page. You can compare models side by side, or <Link href="/quote/" className="text-cyan-700 font-semibold">request a quote</Link> for several units with your delivery postcode.

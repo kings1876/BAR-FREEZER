@@ -274,7 +274,7 @@ function pageData(slug: string[]): any {
   }
   if ((a === 'clearance' || a === 'deals') && !b) {
     const items = all.filter((p) => p.condition === 'ex-display' || p.condition === 'refurbished' || p.condition === 'factory-second' || p.categorySlug === 'clearance-ex-display');
-    return { items: items.slice(0, 12), total: items.length };
+    return { items: items.slice(0, 4), total: items.length };
   }
   return null;
 }

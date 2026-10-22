@@ -20,7 +20,8 @@ import { SITE, FAQS, BRANDS } from '../config/core.js';
 import { useProductDetail } from '../context/ProductDetailContext';
 import { ProductCard } from '../components/ProductCard';
 import { collectForm, sendEnquiry } from '../lib/enquiry-client';
-import { PagedGrid } from '../components/PagedGrid';
+import { PaginatedGrid } from '../components/PaginatedGrid';
+import { useCatalogue } from '../lib/use-catalogue';
 import { makeOrderNumber } from '../lib/order';
 import { waOrderLink, whatsappEnabled } from '../lib/whatsapp';
 import { useCart } from '../context/CartContext';
@@ -32,8 +33,12 @@ import { useRouter, Link } from '../context/RouterContext';
 export const DealsPage: React.FC = () => {
   // The server supplies the first products and the total; the full list is linked below the grid.
   const pageDetail = useProductDetail();
-  const clearanceItems: any[] = (pageDetail && pageDetail.data && pageDetail.data.items) || [];
-  const clearanceTotal: number = (pageDetail && pageDetail.data && pageDetail.data.total) || clearanceItems.length;
+  const serverItems: any[] = (pageDetail && pageDetail.data && pageDetail.data.items) || [];
+  const serverTotal: number = (pageDetail && pageDetail.data && pageDetail.data.total) || serverItems.length;
+  const [catalogue, loadCatalogueNow] = useCatalogue();
+  const clearanceItems: any[] = catalogue
+    ? catalogue.filter((p: any) => p.condition === 'ex-display' || p.condition === 'refurbished' || p.condition === 'factory-second' || p.categorySlug === 'clearance-ex-display')
+    : serverItems;
 
   return (
     <div className="bg-slate-50 min-h-screen py-8">
@@ -51,7 +56,7 @@ export const DealsPage: React.FC = () => {
           </p>
         </div>
 
-        <PagedGrid items={clearanceItems} pageSize={4} render={(p: any, i: number) => <ProductCard key={p.id} product={p} priority={i < 2} />} />
+        <PaginatedGrid items={clearanceItems} pageSize={12} totalCount={catalogue ? undefined : serverTotal} onNeedAll={loadCatalogueNow} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" render={(p: any, i: number) => <ProductCard key={p.id} product={p} priority={i < 2} />} />
       </div>
     </div>
   );

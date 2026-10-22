@@ -20,7 +20,7 @@ import { SITE, FAQS, BRANDS } from '../config/core.js';
 import { PRODUCTS } from '../config/products-data.js';
 import { ProductCard } from '../components/ProductCard';
 import { collectForm, sendEnquiry } from '../lib/enquiry-client';
-import { PagedGrid } from '../components/PagedGrid';
+import { PaginatedGrid } from '../components/PaginatedGrid';
 import { makeOrderNumber } from '../lib/order';
 import { waOrderLink, whatsappEnabled } from '../lib/whatsapp';
 import { useCart } from '../context/CartContext';
@@ -75,7 +75,7 @@ export const SearchPage: React.FC = () => {
         )}
 
         {term && results.length > 0 && (
-          <PagedGrid items={results} render={(p: any, i: number) => <ProductCard key={p.id} product={p} priority={i < 2} />} resetKey={term} />
+          <PaginatedGrid items={results} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" render={(p: any, i: number) => <ProductCard key={p.id} product={p} priority={i < 2} />} resetKey={term} />
         )}
 
         {term && results.length === 0 && (
