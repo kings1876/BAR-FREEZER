@@ -252,8 +252,8 @@ export const ContactPage: React.FC = () => {
               <div className="flex items-start gap-3">
                 <Mail className="w-4 h-4 text-cyan-600 shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-mono font-bold text-slate-900 block">{SITE.email}</span>
-                  <span className="text-slate-500">Quotes & General Inquiries: trade@barfreezer.com.au</span>
+                  <a href={`mailto:${SITE.email}`} className="font-bold text-lg text-cyan-800 hover:text-cyan-700 underline underline-offset-2 block">{SITE.email}</a>
+                  <span className="text-slate-500">Quotes &amp; trade enquiries: <a href="mailto:trade@barfreezer.com.au" className="text-cyan-800 underline">trade@barfreezer.com.au</a></span>
                 </div>
               </div>
 

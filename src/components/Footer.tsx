@@ -74,7 +74,7 @@ export const Footer: React.FC = () => {
               
             </div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-slate-300">{SITE.email}</span>
+              <a href={`mailto:${SITE.email}`} className="font-semibold text-white hover:text-amber-300 underline underline-offset-2">{SITE.email}</a>
             </div>
             <div className="flex items-start gap-2 pt-1">
               <span>{SITE.headOffice}</span>

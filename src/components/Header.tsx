@@ -9,7 +9,8 @@ import {
   Sparkles, 
   FileText, 
   Truck, 
-  ShieldCheck, 
+  ShieldCheck,
+  Mail, 
   Star, 
   Check, 
   Flame, 
@@ -140,6 +141,13 @@ export const Header: React.FC = () => {
             <Link href="/warranty/" className="hidden sm:flex items-center gap-1 hover:text-white transition-colors">
               <span>Warranty Service</span>
             </Link>
+            <a
+              href={`mailto:${SITE.email}`}
+              className="hidden md:flex items-center gap-1 text-white font-semibold hover:text-amber-300 transition-colors"
+            >
+              <Mail className="w-3.5 h-3.5 text-amber-400" aria-hidden="true" />
+              <span>{SITE.email}</span>
+            </a>
             <a 
               href={`tel:${SITE.phone.replace(/\s+/g, '')}`} 
               className="text-amber-400 font-semibold flex items-center gap-1 hover:text-amber-300 transition-colors"
@@ -743,6 +751,10 @@ export const Header: React.FC = () => {
               >
                 <Phone className="w-5 h-5" />
                 <span>{SITE.phoneDisplay}</span>
+              </a>
+              <a href={`mailto:${SITE.email}`} className="text-sm font-semibold text-white block flex items-center gap-2">
+                <Mail className="w-4 h-4 text-amber-400" aria-hidden="true" />
+                <span>{SITE.email}</span>
               </a>
             </div>
           </div>
