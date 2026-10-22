@@ -495,10 +495,33 @@ export const HomePage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {bestSellers.map((product: any) => (
+            {bestSellers.slice(0, 4).map((product: any) => (
               <ProductCard key={product.id} product={product} />
             ))}
+            {/* Lighter cards for the second row: image, name, price and a link, so the home page stays quick to load. */}
+            {bestSellers.slice(4).map((product: any) => (
+              <Link key={product.id} href={`/product/${product.slug}/`} className="group block bg-white rounded-lg border border-slate-200/90 hover:border-slate-300 hover:shadow-md transition-shadow overflow-hidden">
+                <div className="p-3 bg-slate-50/50 border-b border-slate-100">
+                  <ProductImage product={product} className="w-full" />
+                </div>
+                <div className="p-4 space-y-1">
+                  <span className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">{product.brand}</span>
+                  <span className="block text-sm font-semibold text-slate-900 leading-snug line-clamp-2 group-hover:text-cyan-700">{product.name}</span>
+                  <span className="block text-lg font-bold font-mono text-slate-900">${fmtNum(product.price)} <span className="text-xs font-normal text-slate-500 font-sans">AUD incl. GST</span></span>
+                </div>
+              </Link>
+            ))}
           </div>
+
+          <p className="mt-8 max-w-4xl text-sm text-slate-600 leading-relaxed">
+            These are a selection from the range. Every model links to its own page with the full specification, dimensions, capacity, power details and a price in Australian dollars including GST. To see more, browse all <Link href="/bar-fridges/" className="font-semibold text-cyan-800 underline">bar fridges</Link>, <Link href="/bar-freezers/" className="font-semibold text-cyan-800 underline">bar freezers</Link>, <Link href="/bar-fridges/wine-fridges/" className="font-semibold text-cyan-800 underline">wine fridges</Link>, <Link href="/bar-fridges/kegerators-dispensers/" className="font-semibold text-cyan-800 underline">kegerators and dispensers</Link>, <Link href="/bar-fridges/bottle-coolers/" className="font-semibold text-cyan-800 underline">bottle coolers</Link> and <Link href="/accessories-parts/" className="font-semibold text-cyan-800 underline">accessories and parts</Link>, or compare two or three models side by side with the <Link href="/compare/" className="font-semibold text-cyan-800 underline">compare tool</Link> before you decide.
+          </p>
+          <p className="mt-3 max-w-4xl text-sm text-slate-600 leading-relaxed">
+            Choosing between models usually comes down to four things: the space you have, how much you need to store at peak trade, whether a glass or solid door suits the way the unit is used, and the temperature range the contents need. Under bar units suit tight bar counters, back bar coolers show bottles to customers, wine fridges hold a steadier temperature for cellaring, and freezers store ice, glassware and frozen stock. If you are unsure which size or type suits your venue, send us the model numbers and the space available through the <Link href="/quote/" className="font-semibold text-cyan-800 underline">quote form</Link> and we will reply by email.
+          </p>
+          <p className="mt-3 max-w-4xl text-sm text-slate-600 leading-relaxed">
+            Heavy refrigeration is sent by freight, and the freight cost is quoted to your postcode and confirmed with your order. Measure the doorways, stairs and the path to the final spot before delivery, and check the unit for damage when it arrives. You can read the <Link href="/delivery/" className="font-semibold text-cyan-800 underline">delivery page</Link> for how freight works, the <Link href="/warranty/" className="font-semibold text-cyan-800 underline">warranty page</Link> for service claims and the <Link href="/returns/" className="font-semibold text-cyan-800 underline">returns page</Link> for your rights under Australian Consumer Law.
+          </p>
         </div>
       </section>
 
