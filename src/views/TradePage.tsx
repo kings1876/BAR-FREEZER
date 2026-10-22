@@ -101,6 +101,10 @@ export const TradePage: React.FC = () => {
             Build a list of the bar fridges, freezers, kegerators and ice machines you need, then send it to us for a delivered price. Trade and multi-unit pricing is confirmed in your quote. Include your ABN and delivery postcode so we can quote accurately.
           </p>
 
+          <p className="text-sm text-slate-400 max-w-3xl leading-relaxed">
+            To get an accurate delivered price, add the models you want, the quantity of each and your delivery postcode. Tell us about any access limits such as stairs, narrow doorways or a loading dock, and whether you need the units installed into a cabinet or bench. We reply by email with the price, the freight and what happens next, and prices include GST.
+          </p>
+
           <div className="flex flex-wrap items-center gap-6 text-xs text-slate-400 pt-3 border-t border-slate-800">
             <span className="flex items-center gap-1.5 text-white">
               <Percent className="w-4 h-4 text-amber-400 shrink-0" />

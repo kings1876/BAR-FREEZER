@@ -340,8 +340,8 @@ function belowContent(slug: string[], productDetail: any): React.ReactNode {
     return (
       <>
         {typeNav}
-        {/* Top-level categories link to their sub-categories; the models themselves are listed on those pages and on the brand pages. */}
-        {b ? <ProductLinkList title={`All ${label} models (${items.length})`} aria={`All ${label} models`} items={items} /> : <BuyingChecklist />}
+        {/* Fridge and freezer top-level pages link to sub-categories (models are listed there and on brand pages). Accessories are listed in full here because many have no brand page. */}
+        {b || a === 'accessories-parts' ? <ProductLinkList title={`All ${label} models (${items.length})`} aria={`All ${label} models`} items={items} /> : <BuyingChecklist />}
       </>
     );
   }

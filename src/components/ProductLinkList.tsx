@@ -16,6 +16,12 @@ export function BuyingChecklist() {
         Prices on this site are in Australian dollars and include GST, and the availability of each model is shown on its product page. If you are comparing models or are unsure which size suits your venue, send us the model numbers and the space available and we will reply.
       </p>
       <p className="mt-2 text-xs text-slate-600 max-w-3xl">
+        Specifications are published as supplied by the manufacturer or supplier, so open any product page to check the dimensions, capacity, power, refrigerant, climate class and warranty before you order. If two models look similar, use the compare tool to see their specifications side by side, and read the buying guides for help with sizing, ventilation and finishes.
+      </p>
+      <p className="mt-2 text-xs text-slate-600 max-w-3xl">
+        Photos are supplied by the manufacturer or supplier, and the finish or fittings can differ slightly between batches. If you need a part for older equipment, send us the make, model and any numbers from the data plate together with the product code, and we will help you find the right item before you order.
+      </p>
+      <p className="mt-2 text-xs text-slate-600 max-w-3xl">
         Delivery areas and timing are explained on the <a className="underline" href="/delivery/">delivery page</a>, the terms that apply after purchase are on the <a className="underline" href="/warranty/">warranty page</a> and the <a className="underline" href="/returns/">returns page</a>, and trade buyers ordering for a venue can ask for pricing on the <a className="underline" href="/trade/">trade page</a>.
       </p>
     </section>
