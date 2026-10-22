@@ -56,6 +56,17 @@ export const HomePage: React.FC = () => {
       
       {/* 1. HERO SECTION (Deep Navy & Icy Glow, H1 with balanced text) */}
       <section className="relative bg-slate-900 text-slate-100 overflow-hidden border-b border-slate-800">
+        {/* Decorative background: the site's own equipment photos, inverted and dimmed (scripts/make-hero-bg.mjs) */}
+        <img
+          src="/images/hero-bg.webp"
+          alt=""
+          aria-hidden="true"
+          width={1920}
+          height={900}
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover object-bottom pointer-events-none select-none"
+        />
+        <div className="absolute inset-0 bg-slate-900/55 pointer-events-none" aria-hidden="true" />
         {/* Subtle engineering grid background */}
         <div 
           className="absolute inset-0 opacity-[0.04] pointer-events-none" 
