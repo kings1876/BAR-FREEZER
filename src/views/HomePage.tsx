@@ -172,6 +172,17 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
+      {/* Crypto payment offer */}
+      <section aria-label="Cryptocurrency offer" className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-slate-950 border-b border-amber-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center">
+          <p className="text-lg sm:text-2xl font-extrabold tracking-tight">Pay with crypto and save 10%</p>
+          <p className="text-sm sm:text-base font-semibold">10% off your order total with Bitcoin, USDT or Ethereum</p>
+          <Link href="/payment-methods/" className="px-5 py-2 rounded-md bg-slate-950 hover:bg-slate-800 text-amber-400 font-bold text-xs sm:text-sm uppercase tracking-wider whitespace-nowrap transition-colors">
+            See how it works
+          </Link>
+        </div>
+      </section>
+
       {/* 2. TRUST BAR: Australia-wide delivery, local stock, warranty service, trade pricing */}
       <section className="bg-slate-950 text-slate-300 py-6 border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
