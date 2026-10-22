@@ -24,6 +24,7 @@ import { waOrderLink, whatsappEnabled } from '../lib/whatsapp';
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
 import { fmtNum } from '../lib/format';
+import { WALLETS } from '../config/reply';
 
 /**
  * Commercial Financing Page (/finance/)
@@ -135,7 +136,7 @@ export const PAYMENT_OPTIONS: [string, string, string][] = [
   ['Bank Transfer', 'Bank Transfer (EFT)', 'Bank details on your tax invoice'],
   ['PayID', 'PayID', 'PayID details on your tax invoice'],
   ['Osko', 'Osko (instant bank payment)', 'Pay instantly from your banking app'],
-  ['Crypto', 'Cryptocurrency (BTC, USDT, ETH)', 'Wallet address and AUD amount emailed after order']
+  ['Crypto', 'Cryptocurrency (BTC, USDT, ETH)', 'Wallet address and AUD amount confirmed in your order email']
 ];
 
 export const PaymentMethodsPage: React.FC = () => (
@@ -147,11 +148,21 @@ export const PaymentMethodsPage: React.FC = () => (
         ['Bank Transfer (EFT)', 'Pay by direct bank transfer using the account details on your tax invoice. Use your order reference so we can match the payment.'],
         ['PayID', 'Pay instantly to our PayID shown on your tax invoice, from any participating Australian bank app.'],
         ['Osko', 'Osko payments settle in minutes, including after hours. Use the PayID or account details on your invoice.'],
-        ['Cryptocurrency (BTC, USDT, ETH)', 'We accept Bitcoin (BTC), Tether (USDT, on the Tron network as TRC-20) and Ethereum (ETH). Choose crypto at checkout and tell us which coin you prefer in your order; we email the wallet address and network, with the AUD amount converted at the time of invoice. Send the exact amount quoted on the network we specify; the order is confirmed once the transaction is verified.']
+        ['Cryptocurrency (BTC, USDT, ETH)', 'We accept Bitcoin (BTC), Tether (USDT, on the Tron network as TRC-20) and Ethereum (ETH). Choose crypto at checkout and tell us which coin you prefer in your order; we confirm the amount in AUD converted at the time of invoice. Send the exact amount quoted on the network shown below, and check the address against your order email before you send. The order is confirmed once the transaction is verified.']
       ].map(([t, d]) => (
         <div key={t} className="bg-white p-5 rounded-xl border border-slate-200">
           <h2 className="text-base font-bold text-slate-900">{t}</h2>
           <p className="text-xs text-slate-600 mt-1 leading-relaxed">{d}</p>
+          {t.startsWith('Cryptocurrency') && (
+            <dl className="mt-3 space-y-3">
+              {WALLETS.map((w) => (
+                <div key={w.coin} className="rounded-lg bg-slate-50 border border-slate-200 p-3">
+                  <dt className="text-xs font-bold text-slate-900">{w.name} <span className="font-normal text-slate-500">· Network: {w.network}</span></dt>
+                  <dd className="mt-1 font-mono text-xs sm:text-sm text-slate-800 break-all select-all">{w.address}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
         </div>
       ))}
       <p className="text-xs text-slate-500">Questions about paying? <Link href="/contact/" className="text-cyan-700 font-semibold">Contact us</Link>.</p>
