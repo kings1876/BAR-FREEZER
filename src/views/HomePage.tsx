@@ -704,7 +704,7 @@ export const HomePage: React.FC = () => {
                 <div className="text-xs font-semibold text-slate-700 uppercase tracking-wide mt-1">
                   Tax Invoices
                 </div>
-                <p className="text-xs text-slate-500 mt-1">ABN 88 642 901 328</p>
+                <p className="text-xs text-slate-500 mt-1">ABN {SITE.abn}</p>
               </div>
             </div>
 

@@ -138,7 +138,7 @@ export const QuoteModal: React.FC = () => {
                     <label className="block font-semibold text-slate-700 mb-1">ABN (Optional for trade discount)</label>
                     <input
                       type="text"
-                      placeholder="e.g. 88 642 901 328"
+                      placeholder="11-digit ABN"
                       value={abn}
                       onChange={(e) => setAbn(e.target.value)}
                       className="w-full bg-white border border-slate-300 rounded px-3 py-2 text-slate-900 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 font-mono"

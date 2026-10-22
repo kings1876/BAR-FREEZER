@@ -46,11 +46,11 @@ export async function sendEnquiry(
       body: JSON.stringify({ type, fields, items: extra.items || [], totals: extra.totals || null, ref: extra.ref, channel: extra.channel })
     });
   } catch {
-    throw new Error('We could not reach the server. Please check your connection and try again, or call us on 1300 858 290.');
+    throw new Error('We could not reach the server. Please check your connection and try again, or call us on +61 420 127 043.');
   }
   let data: any = null;
   try { data = await res.json(); } catch {}
   if (res.ok && data?.ok) return { ref: data.ref };
   if (data?.error && data.error !== 'not-configured') throw new Error(data.error);
-  throw new Error('We could not send your request right now. Please call us on 1300 858 290 or email sales@barfreezer.com.au and we will help you directly.');
+  throw new Error('We could not send your request right now. Please call us on +61 420 127 043 or email sales@barfreezer.com.au and we will help you directly.');
 }
