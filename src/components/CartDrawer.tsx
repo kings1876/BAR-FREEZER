@@ -57,6 +57,7 @@ export const CartDrawer: React.FC = () => {
               <Truck className="w-4 h-4 text-cyan-600 shrink-0" />
               <span>Freight is quoted to your postcode and confirmed with your order.</span>
             </div>
+            <div className="mt-1.5 pl-6 font-semibold text-emerald-700">Pay with crypto at checkout and save 10%.</div>
           </div>
 
           {/* Cart Items List */}

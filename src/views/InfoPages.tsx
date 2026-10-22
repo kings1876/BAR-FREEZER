@@ -153,7 +153,7 @@ export const WalletBox: React.FC<{ coin: string }> = ({ coin }) => {
 
 export const PAYMENT_OPTIONS: [string, string, string][] = [
   ['Osko', 'Osko (instant bank payment)', 'Pay instantly from your banking app'],
-  ['Crypto', 'Cryptocurrency (BTC, USDT, ETH)', 'Wallet address and AUD amount confirmed in your order email']
+  ['Crypto', 'Cryptocurrency (BTC, USDT, ETH): save 10%', '10% off your order total, wallet shown below']
 ];
 
 export const PaymentMethodsPage: React.FC = () => (
@@ -163,7 +163,7 @@ export const PaymentMethodsPage: React.FC = () => (
       <p className="text-sm text-slate-600">We accept the payment methods below. After you place an order request we confirm stock and freight, then email your tax invoice with payment instructions. Orders are dispatched once payment is confirmed. All prices are in AUD and include GST.</p>
       {[
         ['Osko', 'Osko payments settle in minutes, including after hours. Use the Osko details on your tax invoice and your order reference so we can match the payment.'],
-        ['Cryptocurrency (BTC, USDT, ETH)', 'We accept Bitcoin (BTC), Tether (USDT, on the Tron network as TRC-20) and Ethereum (ETH). Choose crypto at checkout and tell us which coin you prefer in your order; we confirm the amount in AUD converted at the time of invoice. Send the exact amount quoted on the network shown below, and check the address against your order email before you send. The order is confirmed once the transaction is verified.']
+        ['Cryptocurrency (BTC, USDT, ETH)', 'Pay with cryptocurrency and take 10% off your order total. We accept Bitcoin (BTC), Tether (USDT, on the Tron network as TRC-20) and Ethereum (ETH). Choose crypto at checkout and tell us which coin you prefer in your order; we confirm the amount in AUD converted at the time of invoice. Send the exact amount quoted on the network shown below, and check the address against your order email before you send. The order is confirmed once the transaction is verified.']
       ].map(([t, d]) => (
         <div key={t} className="bg-white p-5 rounded-xl border border-slate-200">
           <h2 className="text-base font-bold text-slate-900">{t}</h2>
@@ -332,7 +332,7 @@ export const ContactPage: React.FC = () => {
  * Commercial Checkout Page (/checkout/)
  */
 export const CheckoutPage: React.FC = () => {
-  const { cart, subtotal, gstAmount, clearCart } = useCart();
+  const { cart, subtotal, clearCart } = useCart();
   const [complete, setComplete] = useState(false);
   const [orderId, setOrderId] = useState('');
   const [payMethod, setPayMethod] = useState('Osko');
@@ -341,7 +341,10 @@ export const CheckoutPage: React.FC = () => {
   const [error, setError] = useState('');
 
   const deliveryFee = 0; // freight is quoted to the postcode and confirmed after the order request
-  const grandTotal = subtotal + deliveryFee;
+  // 10% off the order total when paying with cryptocurrency
+  const cryptoDiscount = payMethod === 'Crypto' ? Math.round(subtotal * 0.1 * 100) / 100 : 0;
+  const grandTotal = subtotal - cryptoDiscount + deliveryFee;
+  const gstOnTotal = Math.round(grandTotal / 11);
 
   const formRef = React.useRef<HTMLFormElement>(null);
 
@@ -351,6 +354,7 @@ export const CheckoutPage: React.FC = () => {
     const ref = makeOrderNumber();
     const fields = collectForm(form);
     fields['Payment Method'] = payMethod;
+    if (cryptoDiscount > 0) fields['Crypto Discount (10%)'] = `-$${fmtNum(cryptoDiscount)} AUD (order total after discount: $${fmtNum(grandTotal)} AUD)`;
     const items = cart.map(({ product, quantity }: any) => ({ name: product.name, sku: product.sku, qty: quantity, price: product.price ?? null }));
     // window.open must run synchronously inside the click, before any await (pop-up blockers).
     if (channel === 'whatsapp') {
@@ -362,7 +366,7 @@ export const CheckoutPage: React.FC = () => {
     setSending(true);
     setError('');
     try {
-      await sendEnquiry('order', fields, { items, totals: { subtotal, delivery: deliveryFee, total: grandTotal }, ref, channel });
+      await sendEnquiry('order', fields, { items, totals: { subtotal, delivery: deliveryFee, total: grandTotal, discount: cryptoDiscount }, ref, channel });
       setOrderId(ref);
       setComplete(true);
       clearCart();
@@ -508,9 +512,15 @@ export const CheckoutPage: React.FC = () => {
                   <span>Subtotal:</span>
                   <span className="font-mono">${fmtNum(subtotal)} AUD</span>
                 </div>
+                {cryptoDiscount > 0 && (
+                  <div className="flex justify-between text-emerald-700 font-semibold">
+                    <span>Crypto discount (10%):</span>
+                    <span className="font-mono">-${fmtNum(cryptoDiscount)} AUD</span>
+                  </div>
+                )}
                 <div className="flex justify-between text-slate-500 text-[11px]">
-                  <span>10% Australian GST:</span>
-                  <span className="font-mono">${fmtNum(gstAmount)} AUD</span>
+                  <span>Includes 10% Australian GST:</span>
+                  <span className="font-mono">${fmtNum(gstOnTotal)} AUD</span>
                 </div>
                 <div className="flex justify-between text-slate-600">
                   <span>Freight:</span>

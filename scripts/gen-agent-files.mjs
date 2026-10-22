@@ -26,7 +26,7 @@ const summary = 'Australian online store for commercial and home bar freezers, b
 // ---- llms.txt (llmstxt.org format)
 const L = [];
 L.push(`# ${NAME}`, '', `> ${summary}`, '');
-L.push(`${PRODUCTS.length} products from ${BRANDS.length} brands. Prices are in AUD and include GST. Orders are placed as order requests; payment instructions are emailed after stock and freight are confirmed. Accepted payment methods: Osko and cryptocurrency (BTC, USDT on Tron, ETH).`, '');
+L.push(`${PRODUCTS.length} products from ${BRANDS.length} brands. Prices are in AUD and include GST. Orders are placed as order requests; payment instructions are emailed after stock and freight are confirmed. Accepted payment methods: Osko and cryptocurrency (10% off the order total when paying with crypto) (BTC, USDT on Tron, ETH).`, '');
 L.push('## Shop', '');
 for (const c of CATEGORIES) {
   L.push(`- [${c.name}](${U}${c.path}): ${String(c.description || '').replace(/\s+/g, ' ').slice(0, 140)}`);

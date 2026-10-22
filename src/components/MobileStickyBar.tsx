@@ -17,7 +17,7 @@ export const MobileStickyBar: React.FC = () => {
         className="flex-1 flex items-center justify-center gap-1.5 h-10 px-2 rounded-md bg-slate-800 text-slate-100 font-semibold text-xs border border-slate-700 active:bg-slate-700 transition-colors whitespace-nowrap"
       >
         <Phone className="w-4 h-4 text-amber-400 shrink-0" />
-        <span>Call 1300</span>
+        <span>Call us</span>
       </a>
 
       {/* Primary Trade Quote Button */}

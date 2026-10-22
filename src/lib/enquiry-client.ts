@@ -31,7 +31,7 @@ export function collectForm(form: HTMLFormElement): Record<string, string> {
 }
 
 export interface EnquiryItem { name: string; sku?: string; qty?: number; price?: number | null }
-export interface EnquiryTotals { subtotal: number; delivery: number; total: number }
+export interface EnquiryTotals { subtotal: number; delivery: number; total: number; discount?: number }
 
 export async function sendEnquiry(
   type: EnquiryType,

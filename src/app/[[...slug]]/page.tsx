@@ -32,7 +32,7 @@ const STATIC_META: Record<string, [string, string]> = {
   contact: ['Contact Bar Freezer Australia', 'Contact Bar Freezer Australia about product specifications, availability, delivery or quotes for bar fridges and freezers.'],
   faq: ['Bar Fridge & Freezer FAQs', 'Answers to common questions about bar freezers, bar fridges, delivery and ordering from Bar Freezer Australia.'],
   returns: ['Returns & Australian Consumer Law', 'How returns and Australian Consumer Law consumer guarantees apply to bar fridges and freezers bought from us.'],
-  'payment-methods': ['Payment Methods: Osko and Crypto (BTC, USDT, ETH)', 'Pay by Osko or cryptocurrency (BTC, USDT, ETH). Payment details are emailed after your order request.'],
+  'payment-methods': ['Payment Methods: Osko and Crypto (BTC, USDT, ETH)', 'Pay by Osko or cryptocurrency (BTC, USDT, ETH) and save 10% when you pay with crypto. Payment details are emailed after your order request.'],
   cart: ['Shopping Cart', 'Review the bar fridges, bar freezers and accessories in your cart before you request an order.'],
   checkout: ['Checkout & Order Request', 'Enter your delivery details and choose a payment method to send your bar fridge or freezer order request.'],
   search: ['Search Bar Fridges & Freezers', 'Search bar freezers, bar fridges, kegerators, ice machines and accessories by name, brand or model.'],
