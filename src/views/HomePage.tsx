@@ -22,7 +22,6 @@ import { PRODUCT_COUNTS } from '../config/products-counts.js';
 import { useProductDetail } from '../context/ProductDetailContext';
 import { POSTS } from '../config/posts-list.js';
 import { ProductCard } from '../components/ProductCard';
-import { ProductImage } from '../components/ProductImage';
 import { useCart } from '../context/CartContext';
 import { useRouter, Link } from '../context/RouterContext';
 import { fmtNum } from '../lib/format';
@@ -47,7 +46,6 @@ export const HomePage: React.FC = () => {
   const pageDetail = useProductDetail();
   const homeData: any = (pageDetail && pageDetail.data) || { featured: [] };
   const bestSellers: any[] = homeData.featured || [];
-  const spotlight: any = homeData.spotlight || {};
 
   const toggleFaq = (idx: number) => {
     setOpenFaqIndex(openFaqIndex === idx ? null : idx);
@@ -64,143 +62,101 @@ export const HomePage: React.FC = () => {
           style={{ backgroundImage: 'radial-gradient(#38bdf8 1px, transparent 1px)', backgroundSize: '24px 24px' }}
         />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Column: Headline & Action */}
-            <div className="lg:col-span-7 space-y-6">
-              
-              {/* Regional Authority Kicker & Trustpilot Badge */}
-              <div className="flex flex-wrap items-center gap-3">
-                <Link
-                  href="/reviews/"
-                  className="inline-flex items-center gap-2 py-1 px-3 rounded-md bg-[#005128] hover:bg-[#003d1e] border border-[#00b67a]/60 text-white transition-all shadow-md group"
-                  title="Read 3,140+ Trustpilot verified reviews"
-                >
-                  <div className="flex items-center gap-0.5">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="inline-flex items-center justify-center w-3.5 h-3.5 bg-[#00b67a] text-white text-[9px] font-bold">
-                        ★
-                      </span>
-                    ))}
-                  </div>
-                  <span className="text-xs font-bold">Trustpilot</span>
-                  <span className="text-xs font-mono font-bold text-emerald-300">4.9 / 5</span>
-                  <span className="text-xs text-emerald-100">· 3,140+ Verified Reviews</span>
-                </Link>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative z-10">
+          <div className="flex flex-col items-center text-center space-y-7">
 
-                <div className="hidden sm:flex items-center gap-2 text-xs font-mono font-medium text-cyan-400">
-                  <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                  <span>AUSTRALIA-WIDE DELIVERY</span>
+            {/* Trustpilot badge and delivery kicker */}
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href="/reviews/"
+                className="inline-flex items-center gap-2 py-1 px-3 rounded-md bg-[#005128] hover:bg-[#003d1e] border border-[#00b67a]/60 text-white transition-all shadow-md group"
+                title="Read 3,140+ Trustpilot verified reviews"
+              >
+                <div className="flex items-center gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="inline-flex items-center justify-center w-3.5 h-3.5 bg-[#00b67a] text-white text-[9px] font-bold">
+                      ★
+                    </span>
+                  ))}
                 </div>
-              </div>
+                <span className="text-xs font-bold">Trustpilot</span>
+                <span className="text-xs font-mono font-bold text-emerald-300">4.9 / 5</span>
+                <span className="text-xs text-emerald-100">· 3,140+ Verified Reviews</span>
+              </Link>
 
-              {/* H1 - Exactly as requested */}
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight" style={{ textWrap: 'balance' }}>
-                Bar Freezers & Bar Fridges Delivered Australia-Wide
-              </h1>
-
-              {/* Lead copy */}
-              <p className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
-                Shop under bar freezers, glass frosters, back bar fridges, kegerators and more from leading commercial refrigeration brands. Compare sizes and prices, or request a quote for trade and multi-unit orders.
-              </p>
-
-              {/* Hero Search */}
-              <form onSubmit={handleHeroSearch} className="flex max-w-lg shadow-lg rounded-lg overflow-hidden border border-slate-700">
-                <input
-                  type="text"
-                  placeholder="Search model, litres, brand (e.g. Skope 2-door underbar)..."
-                  value={heroSearch}
-                  onChange={(e) => setHeroSearch(e.target.value)}
-                  className="w-full bg-slate-800/90 text-sm text-slate-100 placeholder-slate-400 px-4 py-3 focus:outline-none focus:bg-slate-800"
-                />
-                <button
-                  type="submit"
-                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 text-sm uppercase tracking-wide transition-colors flex items-center justify-center shrink-0"
-                >
-                  <Search className="w-4 h-4 mr-1.5" />
-                  <span>Search</span>
-                </button>
-              </form>
-
-              {/* Two CTAs - Shop Bar Freezers & Get a Trade Quote */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
-                <Link
-                  href="/bar-freezers/"
-                  className="px-6 py-3.5 rounded-md bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm uppercase tracking-wider transition-colors shadow-sm flex items-center gap-2 focus-visible:outline-amber-500"
-                >
-                  <span>Shop Bar Freezers</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-
-                <button
-                  onClick={() => setIsQuoteModalOpen(true)}
-                  className="px-6 py-3.5 rounded-md bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-semibold text-sm transition-colors flex items-center gap-2 focus-visible:outline-amber-500"
-                >
-                  <FileText className="w-4 h-4 text-cyan-400" />
-                  <span>Get a Trade Quote</span>
-                </button>
-              </div>
-
-              {/* Quick Trust tags */}
-              <div className="flex flex-wrap items-center gap-6 text-xs text-slate-400 pt-3 border-t border-slate-800/80">
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Australia-wide delivery</span>
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Warranty claims lodged online</span>
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Trade and multi-unit quotes</span>
-                </span>
+              <div className="hidden sm:flex items-center gap-2 text-xs font-mono font-medium text-cyan-400">
+                <span className="w-2 h-2 rounded-full bg-cyan-400" />
+                <span>AUSTRALIA-WIDE DELIVERY</span>
               </div>
             </div>
 
-            {/* Right Column: Hero Equipment Spotlight Card */}
-            <div className="lg:col-span-5">
-              <div className="bg-slate-800/80 rounded-xl border border-slate-700/80 p-6 shadow-2xl backdrop-blur-xs space-y-4">
-                <div className="flex items-center justify-between text-xs text-slate-400 border-b border-slate-700/80 pb-3">
-                  <span className="font-mono text-cyan-400">SPOTLIGHT EQUIPMENT</span>
-                  <span className="bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded font-mono text-[11px]">
-                    {spotlight.brand}
-                  </span>
-                </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight" style={{ textWrap: 'balance' }}>
+              Bar Freezers & Bar Fridges Delivered Australia-Wide
+            </h1>
 
-                <div className="bg-white rounded-lg p-4 border border-slate-200">
-                  <div className="aspect-[4/3] flex items-center justify-center">
-                    <ProductImage product={spotlight} className="w-full h-full max-h-52" priority />
-                  </div>
-                </div>
+            <p className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
+              Shop under bar freezers, glass frosters, back bar fridges, kegerators and more from leading commercial refrigeration brands. Compare sizes and prices, or request a quote for trade and multi-unit orders.
+            </p>
 
-                <div className="space-y-2">
-                  <div className="flex items-baseline justify-between gap-3">
-                    <div>
-                      <h2 className="text-base font-bold text-white">{spotlight.name.replace(/ - [A-Z0-9.-]+$/, '')}</h2>
-                      <p className="text-xs text-slate-400">
-                        {[spotlight.widthMm ? `${spotlight.widthMm}mm W` : '', spotlight.capacityLitres ? `${spotlight.capacityLitres}L` : '', spotlight.refrigerant, spotlight.warrantyText].filter(Boolean).join(' · ')}
-                      </p>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <span className="text-lg font-bold font-mono text-amber-400">${fmtNum(spotlight.price)}</span>
-                      <span className="block text-[10px] text-slate-400">Incl. GST</span>
-                    </div>
-                  </div>
+            {/* Hero search */}
+            <form onSubmit={handleHeroSearch} className="flex w-full max-w-xl shadow-lg rounded-lg overflow-hidden border border-slate-700">
+              <input
+                type="text"
+                aria-label="Search the range"
+                placeholder="Search model, litres, brand (e.g. Skope 2-door underbar)..."
+                value={heroSearch}
+                onChange={(e) => setHeroSearch(e.target.value)}
+                className="w-full bg-slate-800/90 text-sm text-slate-100 placeholder-slate-400 px-4 py-3 focus:outline-none focus:bg-slate-800"
+              />
+              <button
+                type="submit"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 text-sm uppercase tracking-wide transition-colors flex items-center justify-center shrink-0"
+              >
+                <Search className="w-4 h-4 mr-1.5" />
+                <span>Search</span>
+              </button>
+            </form>
 
-                  <div className="pt-2 flex items-center gap-2">
-                    <Link
-                      href={`/product/${spotlight.slug}/`}
-                      className="flex-1 py-2 text-center rounded bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider transition-colors"
-                    >
-                      View Specs & Postcode Delivery
-                    </Link>
-                  </div>
-                </div>
-              </div>
+            {/* Calls to action */}
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Link
+                href="/bar-freezers/"
+                className="px-6 py-3.5 rounded-md bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm uppercase tracking-wider transition-colors shadow-sm flex items-center gap-2 focus-visible:outline-amber-500"
+              >
+                <span>Shop Bar Freezers</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/bar-fridges/"
+                className="px-6 py-3.5 rounded-md bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-semibold text-sm transition-colors flex items-center gap-2 focus-visible:outline-amber-500"
+              >
+                <span>Shop Bar Fridges</span>
+                <ArrowRight className="w-4 h-4 text-cyan-400" />
+              </Link>
+              <button
+                onClick={() => setIsQuoteModalOpen(true)}
+                className="px-6 py-3.5 rounded-md bg-transparent hover:bg-slate-800 text-white border border-slate-600 font-semibold text-sm transition-colors flex items-center gap-2 focus-visible:outline-amber-500"
+              >
+                <FileText className="w-4 h-4 text-cyan-400" />
+                <span>Get a Trade Quote</span>
+              </button>
             </div>
 
+            {/* Quick trust tags */}
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-slate-400 pt-5 border-t border-slate-800/80 w-full">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Australia-wide delivery</span>
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Warranty claims lodged online</span>
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Trade and multi-unit quotes</span>
+              </span>
+            </div>
           </div>
         </div>
       </section>

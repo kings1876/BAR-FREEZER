@@ -257,7 +257,6 @@ function pageData(slug: string[]): any {
   if (!slug.length) {
     const pick = (cat: string, n: number) => all.filter((p) => p.categorySlug === cat && p.condition === 'new' && p.images && p.images.length && p.capacityLitres > 0).filter((_, i) => i % 7 === 0).slice(0, n);
     return {
-      spotlight: all.find((p) => p.id === 'sk-rf7-ubf-2-sd') || all[0],
       featured: [...pick('under-bar-fridges', 1), ...pick('under-bar-freezers', 1), ...pick('wine-fridges', 1), ...pick('kegerators-dispensers', 1), ...pick('bottle-coolers', 1), ...pick('back-bar-fridges', 1), ...pick('glass-door-display-freezers', 1), ...pick('outdoor-alfresco-fridges', 1)],
     };
   }
