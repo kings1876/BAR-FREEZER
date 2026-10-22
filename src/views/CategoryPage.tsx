@@ -10,7 +10,7 @@ import { useRouter, Link } from '../context/RouterContext';
 import { Product } from '../types';
 import { CATEGORY_COPY } from '../config/seo-category-copy';
 import { KEYWORD_META } from '../config/seo-keywords';
-import { PagedGrid } from '../components/PagedGrid';
+import { PaginatedGrid } from '../components/PaginatedGrid';
 import { RelatedSearches } from '../components/RelatedSearches';
 
 export const CategoryPage: React.FC = () => {
@@ -277,11 +277,11 @@ export const CategoryPage: React.FC = () => {
 
             {/* Product Cards Grid */}
             {sortedProducts.length > 0 || !catalogue ? (
-              <PagedGrid
+              <PaginatedGrid
                 items={sortedProducts}
-                pageSize={4}
+                pageSize={12}
                 totalCount={catalogue ? undefined : baseTotal}
-                onMore={loadCatalogueNow}
+                onNeedAll={loadCatalogueNow}
                 resetKey={`${currentPath}|${sortBy}|${JSON.stringify(filters)}`}
                 className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
                 render={(product: any, i: number) => <ProductCard key={product.id} product={product} priority={i < 2} />}
