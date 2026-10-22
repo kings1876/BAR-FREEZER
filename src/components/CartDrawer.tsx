@@ -21,9 +21,6 @@ export const CartDrawer: React.FC = () => {
 
   if (!isCartOpen) return null;
 
-  const freeDeliveryThreshold = 3500;
-  const amountToFreeDelivery = freeDeliveryThreshold - subtotal;
-  const qualifiesForFreeDelivery = subtotal >= freeDeliveryThreshold;
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
@@ -54,30 +51,12 @@ export const CartDrawer: React.FC = () => {
             </button>
           </div>
 
-          {/* Free delivery tracker banner */}
+          {/* Freight note */}
           <div className="bg-slate-50 border-b border-slate-200 px-4 py-3 text-xs">
-            {qualifiesForFreeDelivery ? (
-              <div className="flex items-center gap-2 text-emerald-800 font-medium">
-                <Truck className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Congratulations! Your order qualifies for <strong>Free Metro Delivery</strong> Australia-wide.</span>
-              </div>
-            ) : (
-              <div>
-                <div className="flex items-center justify-between text-slate-700 mb-1.5">
-                  <span className="flex items-center gap-1.5">
-                    <Truck className="w-3.5 h-3.5 text-cyan-600" />
-                    <span>Add <strong>${fmtNum(amountToFreeDelivery)} AUD</strong> for Free Metro Delivery</span>
-                  </span>
-                  <span className="font-mono text-slate-500">{Math.round((subtotal / freeDeliveryThreshold) * 100)}%</span>
-                </div>
-                <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-cyan-600 rounded-full transition-all duration-300"
-                    style={{ width: `${Math.min(100, (subtotal / freeDeliveryThreshold) * 100)}%` }}
-                  />
-                </div>
-              </div>
-            )}
+            <div className="flex items-center gap-2 text-slate-700">
+              <Truck className="w-4 h-4 text-cyan-600 shrink-0" />
+              <span>Freight is quoted to your postcode and confirmed with your order.</span>
+            </div>
           </div>
 
           {/* Cart Items List */}
@@ -187,15 +166,13 @@ export const CartDrawer: React.FC = () => {
                   <span className="font-mono">${fmtNum(gstAmount)} AUD</span>
                 </div>
                 <div className="flex justify-between text-slate-600">
-                  <span>Estimated Metro Delivery</span>
-                  <span className="font-mono font-medium text-emerald-700">
-                    {qualifiesForFreeDelivery ? 'FREE ($3,500+ order)' : '$89.00 AUD (flat metro)'}
-                  </span>
+                  <span>Freight</span>
+                  <span className="font-medium text-slate-700">Quoted to your postcode</span>
                 </div>
                 <div className="pt-2 border-t border-slate-200 flex justify-between items-baseline text-sm font-bold text-slate-900">
-                  <span>Total (AUD)</span>
+                  <span>Total (AUD, excl. freight)</span>
                   <span className="text-lg font-mono">
-                    ${fmtNum((subtotal + (qualifiesForFreeDelivery ? 0 : 89)))} AUD
+                    ${fmtNum(subtotal)} AUD
                   </span>
                 </div>
               </div>

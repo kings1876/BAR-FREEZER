@@ -822,178 +822,82 @@ export const CITIES = [
   {
     name: "Sydney",
     slug: "sydney",
-    state: "NSW",
-    metroPostcodeRange: "2000 - 2234, 2560 - 2770",
-    deliveryTime: "Next business day (Same day dispatch for orders before 2pm)",
-    deliveryCost: "$89 flat rate metro (Free for orders over $3,500)",
-    regionalNotes: "Regional NSW (Central Coast, Blue Mountains, Wollongong, Southern Highlands) delivered in 2-3 business days. Tailgate service available on request.",
-    authorizedServiceAgents: "14 licensed refrigeration mechanics across Greater Sydney & Western Sydney",
-    localDepot: "Distribution Centre 3, Chullora NSW 2190 (Customer collection available by appointment)"
+    state: "NSW"
   },
   {
     name: "Melbourne",
     slug: "melbourne",
-    state: "VIC",
-    metroPostcodeRange: "3000 - 3207",
-    deliveryTime: "1-2 business days",
-    deliveryCost: "$89 flat rate metro (Free for orders over $3,500)",
-    regionalNotes: "Regional Victoria (Geelong, Ballarat, Bendigo, Mornington Peninsula) dispatched daily with 2-day delivery.",
-    authorizedServiceAgents: "12 authorized repair contractors covering CBD, Northern, Eastern & Western suburbs",
-    localDepot: "Logistics Hub B, Truganina VIC 3029"
+    state: "VIC"
   },
   {
     name: "Brisbane",
     slug: "brisbane",
-    state: "QLD",
-    metroPostcodeRange: "4000 - 4179, 4300 - 4305",
-    deliveryTime: "1-2 business days",
-    deliveryCost: "$95 flat rate metro (Free for orders over $3,500)",
-    regionalNotes: "Gold Coast and Sunshine Coast delivered on dedicated daily shuttle runs.",
-    authorizedServiceAgents: "9 certified commercial refrigeration technicians",
-    localDepot: "Industrial Way, Yatala QLD 4207"
+    state: "QLD"
   },
   {
     name: "Perth",
     slug: "perth",
-    state: "WA",
-    metroPostcodeRange: "6000 - 6199",
-    deliveryTime: "2-3 business days (Stocked locally in WA warehouse)",
-    deliveryCost: "$120 flat rate metro (Free for orders over $4,000)",
-    regionalNotes: "Direct freight to Southwest (Bunbury, Margaret River) and Northern mining hubs via specialized road transit.",
-    authorizedServiceAgents: "7 authorized warranty repair agents across Perth metro",
-    localDepot: "Airport Freight Estate, Hazelmere WA 6055"
+    state: "WA"
   },
   {
     name: "Adelaide",
     slug: "adelaide",
-    state: "SA",
-    metroPostcodeRange: "5000 - 5199",
-    deliveryTime: "2 business days",
-    deliveryCost: "$95 flat rate metro (Free for orders over $3,500)",
-    regionalNotes: "Direct connections to Barossa Valley, McLaren Vale, and Adelaide Hills hospitality venues.",
-    authorizedServiceAgents: "6 mobile refrigeration technicians",
-    localDepot: "Freightlink Hub, Regency Park SA 5010"
+    state: "SA"
   },
   {
     name: "Canberra",
     slug: "canberra",
-    state: "ACT",
-    metroPostcodeRange: "2600 - 2620, 2900 - 2914",
-    deliveryTime: "1-2 business days",
-    deliveryCost: "$95 flat rate metro",
-    regionalNotes: "Daily express line-haul from our Sydney distribution centre.",
-    authorizedServiceAgents: "4 ACT licensed commercial refrigeration mechanics",
-    localDepot: "Fyshwick Logistics Park ACT 2609"
+    state: "ACT"
   },
   {
     name: "Hobart",
     slug: "hobart",
-    state: "TAS",
-    metroPostcodeRange: "7000 - 7054",
-    deliveryTime: "3-4 business days (Bass Strait SeaRoad express)",
-    deliveryCost: "$165 flat rate metro",
-    regionalNotes: "All units secured in heavy timber export crates for maritime transit.",
-    authorizedServiceAgents: "3 Tasmanian authorized service partners",
-    localDepot: "Derwent Park Freight Terminal TAS 7009"
+    state: "TAS"
   },
   {
     name: "Darwin",
     slug: "darwin",
-    state: "NT",
-    metroPostcodeRange: "0800 - 0832",
-    deliveryTime: "4-6 business days",
-    deliveryCost: "$220 flat rate metro (Tropical T-Class rated units only)",
-    regionalNotes: "Specialist tropical packaging. Every unit dispatched to NT is pre-tested for high-ambient humidity performance.",
-    authorizedServiceAgents: "2 specialized commercial cooling contractors in Darwin & Palmerston",
-    localDepot: "Berrimah Rail Freight Terminal NT 0828"
+    state: "NT"
   },
   {
     name: "Gold Coast",
     slug: "gold-coast",
-    state: "QLD",
-    metroPostcodeRange: "4208 - 4230",
-    deliveryTime: "1-2 business days (Daily dispatch from Yatala depot)",
-    deliveryCost: "$89 flat rate metro",
-    regionalNotes: "Door-to-door delivery with optional uncrate and position service for beachfront hospitality venues.",
-    authorizedServiceAgents: "6 Gold Coast commercial refrigeration technicians",
-    localDepot: "Yatala Depot QLD 4207"
+    state: "QLD"
   },
   {
     name: "Newcastle",
     slug: "newcastle",
-    state: "NSW",
-    metroPostcodeRange: "2280 - 2310",
-    deliveryTime: "1-2 business days",
-    deliveryCost: "$95 flat rate",
-    regionalNotes: "Fast delivery to Newcastle CBD, Hunter Valley wineries, and Lake Macquarie venues.",
-    authorizedServiceAgents: "5 Hunter Region service partners",
-    localDepot: "Hexham Freight Centre NSW 2322"
+    state: "NSW"
   },
   {
     name: "Wollongong",
     slug: "wollongong",
-    state: "NSW",
-    metroPostcodeRange: "2500 - 2530",
-    deliveryTime: "1 business day",
-    deliveryCost: "$89 flat rate",
-    regionalNotes: "Direct daily van runs from Sydney distribution centre.",
-    authorizedServiceAgents: "4 Illawarra commercial refrigeration contractors",
-    localDepot: "Unanderra Industrial Estate NSW 2526"
+    state: "NSW"
   },
   {
     name: "Geelong",
     slug: "geelong",
-    state: "VIC",
-    metroPostcodeRange: "3211 - 3228",
-    deliveryTime: "1-2 business days",
-    deliveryCost: "$89 flat rate",
-    regionalNotes: "Daily transit from Truganina warehouse to Bellarine Peninsula and Surf Coast.",
-    authorizedServiceAgents: "4 local authorized repairers",
-    localDepot: "North Geelong Freight Depot VIC 3215"
+    state: "VIC"
   },
   {
     name: "Sunshine Coast",
     slug: "sunshine-coast",
-    state: "QLD",
-    metroPostcodeRange: "4550 - 4575",
-    deliveryTime: "2 business days",
-    deliveryCost: "$95 flat rate",
-    regionalNotes: "Covers Caloundra to Noosa Heads with tailgate lifter service.",
-    authorizedServiceAgents: "4 Sunshine Coast commercial technicians",
-    localDepot: "Kunda Park Logistics Centre QLD 4556"
+    state: "QLD"
   },
   {
     name: "Townsville",
     slug: "townsville",
-    state: "QLD",
-    metroPostcodeRange: "4810 - 4819",
-    deliveryTime: "3-4 business days",
-    deliveryCost: "$175 flat rate",
-    regionalNotes: "All units supplied with 43°C tropical ambient rating and coated condenser coils.",
-    authorizedServiceAgents: "3 North Queensland authorized service technicians",
-    localDepot: "Stuart Freight Depot QLD 4811"
+    state: "QLD"
   },
   {
     name: "Cairns",
     slug: "cairns",
-    state: "QLD",
-    metroPostcodeRange: "4868 - 4879",
-    deliveryTime: "4-5 business days",
-    deliveryCost: "$195 flat rate",
-    regionalNotes: "Reinforced tropicalized packaging to withstand humid maritime conditions.",
-    authorizedServiceAgents: "2 Far North Queensland commercial refrigeration partners",
-    localDepot: "Portsmith Logistics Hub QLD 4870"
+    state: "QLD"
   },
   {
     name: "Toowoomba",
     slug: "toowoomba",
-    state: "QLD",
-    metroPostcodeRange: "4350 - 4352",
-    deliveryTime: "2 business days",
-    deliveryCost: "$110 flat rate",
-    regionalNotes: "Direct daily road freight from Brisbane distribution centre.",
-    authorizedServiceAgents: "3 Darling Downs authorized service mechanics",
-    localDepot: "Wilsonton Industrial Hub QLD 4350"
+    state: "QLD"
   }
 ];
 

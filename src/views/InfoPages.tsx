@@ -313,7 +313,7 @@ export const CheckoutPage: React.FC = () => {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
 
-  const deliveryFee = subtotal >= 3500 ? 0 : 89;
+  const deliveryFee = 0; // freight is quoted to the postcode and confirmed after the order request
   const grandTotal = subtotal + deliveryFee;
 
   const formRef = React.useRef<HTMLFormElement>(null);
@@ -484,11 +484,11 @@ export const CheckoutPage: React.FC = () => {
                   <span className="font-mono">${fmtNum(gstAmount)} AUD</span>
                 </div>
                 <div className="flex justify-between text-slate-600">
-                  <span>Freight Delivery:</span>
-                  <span className="font-mono text-emerald-700">{deliveryFee === 0 ? 'FREE' : '$89.00 AUD'}</span>
+                  <span>Freight:</span>
+                  <span className="text-slate-700">Quoted to your postcode</span>
                 </div>
                 <div className="flex justify-between text-sm font-bold text-slate-900 pt-2 border-t border-slate-200">
-                  <span>Total Payable:</span>
+                  <span>Total (excl. freight):</span>
                   <span className="text-base font-mono">${fmtNum(grandTotal)} AUD</span>
                 </div>
               </div>

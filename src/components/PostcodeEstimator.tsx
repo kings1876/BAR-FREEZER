@@ -1,135 +1,41 @@
 import React, { useState } from 'react';
-import { Truck, MapPin, CheckCircle2, AlertCircle, Clock } from 'lucide-react';
+import { Truck, MapPin, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Link } from '../context/RouterContext';
 
 interface PostcodeEstimatorProps {
   productPrice?: number;
 }
 
-export const PostcodeEstimator: React.FC<PostcodeEstimatorProps> = ({ productPrice = 2000 }) => {
+// State for an Australian postcode, from the standard Australia Post ranges.
+function stateFor(n: number): string | null {
+  if ((n >= 200 && n <= 299) || (n >= 2600 && n <= 2618) || (n >= 2900 && n <= 2920)) return 'ACT';
+  if (n >= 800 && n <= 999) return 'NT';
+  if ((n >= 1000 && n <= 2599) || (n >= 2619 && n <= 2899) || (n >= 2921 && n <= 2999)) return 'NSW';
+  if ((n >= 3000 && n <= 3999) || (n >= 8000 && n <= 8999)) return 'VIC';
+  if ((n >= 4000 && n <= 4999) || (n >= 9000 && n <= 9999)) return 'QLD';
+  if (n >= 5000 && n <= 5999) return 'SA';
+  if (n >= 6000 && n <= 6999) return 'WA';
+  if (n >= 7000 && n <= 7999) return 'TAS';
+  return null;
+}
+
+// Freight is quoted per order, so this checks that we deliver to the postcode and points to a quote. It shows no prices or transit times.
+export const PostcodeEstimator: React.FC<PostcodeEstimatorProps> = () => {
   const [postcode, setPostcode] = useState('');
-  const [estimate, setEstimate] = useState<{
-    city: string;
-    state: string;
-    deliveryTime: string;
-    cost: string;
-    depot: string;
-    tailgateIncluded: boolean;
-  } | null>(null);
+  const [result, setResult] = useState<{ pc: string; state: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const calculateEstimate = (e: React.FormEvent) => {
+  const check = (e: React.FormEvent) => {
     e.preventDefault();
     const pc = postcode.trim();
-    if (!/^\d{4}$/.test(pc)) {
+    const state = /^\d{4}$/.test(pc) ? stateFor(parseInt(pc, 10)) : null;
+    if (!state) {
       setError('Please enter a valid 4-digit Australian postcode (e.g. 2000, 3000, 4000)');
-      setEstimate(null);
+      setResult(null);
       return;
     }
-
     setError(null);
-    const num = parseInt(pc, 10);
-    const isFree = productPrice >= 3500;
-
-    if (num >= 2000 && num <= 2234) {
-      setEstimate({
-        city: 'Sydney Metro',
-        state: 'NSW',
-        deliveryTime: 'Next Business Day (Dispatch before 2pm)',
-        cost: isFree ? 'FREE ($3,500+ order)' : '$89.00 AUD flat rate',
-        depot: 'Dispatched from Chullora Distribution Centre NSW',
-        tailgateIncluded: true
-      });
-    } else if (num >= 2250 && num <= 2999) {
-      setEstimate({
-        city: 'Regional NSW / ACT',
-        state: 'NSW/ACT',
-        deliveryTime: '1 - 3 Business Days',
-        cost: isFree ? 'FREE' : '$125.00 AUD specialized linehaul',
-        depot: 'Sydney Regional Express Logistics',
-        tailgateIncluded: true
-      });
-    } else if (num >= 3000 && num <= 3207) {
-      setEstimate({
-        city: 'Melbourne Metro',
-        state: 'VIC',
-        deliveryTime: '1 - 2 Business Days',
-        cost: isFree ? 'FREE' : '$89.00 AUD flat rate',
-        depot: 'Dispatched from Truganina Logistics Hub VIC',
-        tailgateIncluded: true
-      });
-    } else if (num >= 3211 && num <= 3999) {
-      setEstimate({
-        city: 'Regional Victoria',
-        state: 'VIC',
-        deliveryTime: '2 - 3 Business Days',
-        cost: isFree ? 'FREE' : '$110.00 AUD',
-        depot: 'Melbourne Logistics Hub',
-        tailgateIncluded: true
-      });
-    } else if (num >= 4000 && num <= 4207) {
-      setEstimate({
-        city: 'Brisbane Metro',
-        state: 'QLD',
-        deliveryTime: '1 - 2 Business Days',
-        cost: isFree ? 'FREE' : '$95.00 AUD flat rate',
-        depot: 'Dispatched from Yatala Warehouse QLD',
-        tailgateIncluded: true
-      });
-    } else if (num >= 4208 && num <= 4999) {
-      setEstimate({
-        city: 'Gold Coast / Sunshine Coast / Regional QLD',
-        state: 'QLD',
-        deliveryTime: '2 - 4 Business Days',
-        cost: isFree ? 'FREE' : '$145.00 AUD',
-        depot: 'Yatala Express Depot QLD',
-        tailgateIncluded: true
-      });
-    } else if (num >= 5000 && num <= 5999) {
-      setEstimate({
-        city: 'Adelaide & SA',
-        state: 'SA',
-        deliveryTime: '2 - 3 Business Days',
-        cost: isFree ? 'FREE' : '$95.00 AUD',
-        depot: 'Regency Park Freight Terminal SA',
-        tailgateIncluded: true
-      });
-    } else if (num >= 6000 && num <= 6999) {
-      setEstimate({
-        city: 'Perth Metro & WA',
-        state: 'WA',
-        deliveryTime: '2 - 3 Business Days',
-        cost: isFree ? 'FREE' : '$120.00 AUD (WA local stock)',
-        depot: 'Hazelmere Airport Logistics Park WA',
-        tailgateIncluded: true
-      });
-    } else if (num >= 7000 && num <= 7999) {
-      setEstimate({
-        city: 'Hobart & Tasmania',
-        state: 'TAS',
-        deliveryTime: '3 - 4 Business Days (Bass Strait Express)',
-        cost: '$165.00 AUD in heavy export crate',
-        depot: 'Derwent Park Terminal TAS',
-        tailgateIncluded: true
-      });
-    } else if (num >= 800 && num <= 999) {
-      setEstimate({
-        city: 'Darwin & NT',
-        state: 'NT',
-        deliveryTime: '4 - 6 Business Days',
-        cost: '$220.00 AUD',
-        depot: 'Berrimah Freight Terminal NT',
-        tailgateIncluded: true
-      });
-    } else {
-      setEstimate({
-        city: 'Australia Regional / Rural',
-        state: 'AU',
-        deliveryTime: '3 - 5 Business Days',
-        cost: '$135.00 AUD (tailgate included)',
-        depot: 'Nearest Capital City Distribution Hub',
-        tailgateIncluded: true
-      });
-    }
+    setResult({ pc, state });
   };
 
   return (
@@ -137,16 +43,18 @@ export const PostcodeEstimator: React.FC<PostcodeEstimatorProps> = ({ productPri
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-xs font-bold text-slate-900 uppercase tracking-wide">
           <Truck className="w-4 h-4 text-cyan-700" />
-          <span>Delivery Lead Time & Cost Estimator</span>
+          <span>Delivery Area Check</span>
         </div>
         <span className="text-[11px] text-slate-500 font-mono">Australia-Wide</span>
       </div>
 
-      <form onSubmit={calculateEstimate} className="flex gap-2">
+      <form onSubmit={check} className="flex gap-2">
         <div className="relative flex-1">
           <input
             type="text"
+            inputMode="numeric"
             maxLength={4}
+            aria-label="Delivery postcode"
             placeholder="Enter 4-digit AU Postcode (e.g. 2000)"
             value={postcode}
             onChange={(e) => setPostcode(e.target.value)}
@@ -169,22 +77,15 @@ export const PostcodeEstimator: React.FC<PostcodeEstimatorProps> = ({ productPri
         </div>
       )}
 
-      {estimate && (
+      {result && (
         <div className="p-3 bg-white rounded border border-slate-200 space-y-1.5 text-xs">
-          <div className="flex items-center justify-between font-semibold text-slate-900">
-            <span className="flex items-center gap-1.5 text-cyan-800">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>{estimate.city} ({estimate.state})</span>
-            </span>
-            <span className="font-mono text-emerald-700">{estimate.cost}</span>
+          <div className="flex items-center gap-1.5 font-semibold text-cyan-800">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>We deliver to {result.pc} ({result.state})</span>
           </div>
-          <div className="text-slate-600 flex items-center gap-1.5 text-[11px]">
-            <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-            <span>Transit: <strong>{estimate.deliveryTime}</strong></span>
-          </div>
-          <div className="text-[11px] text-slate-500 pt-1 border-t border-slate-100">
-            <span>Estimate only. Delivery time and freight are confirmed with your order.</span>
-          </div>
+          <p className="text-slate-600 text-[11px] leading-relaxed">
+            Freight is quoted to your postcode and confirmed with your order. <Link href="/quote/" className="text-cyan-700 font-semibold">Request a quote</Link> with your postcode for a delivered price.
+          </p>
         </div>
       )}
     </div>

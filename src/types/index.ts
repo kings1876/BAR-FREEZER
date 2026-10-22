@@ -112,12 +112,6 @@ export interface City {
   name: string;
   slug: string;
   state: string;
-  metroPostcodeRange: string;
-  deliveryTime: string;
-  deliveryCost: string;
-  regionalNotes: string;
-  authorizedServiceAgents: string;
-  localDepot: string;
 }
 
 export interface Post {
