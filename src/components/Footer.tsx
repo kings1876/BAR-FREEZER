@@ -79,9 +79,6 @@ export const Footer: React.FC = () => {
             <div className="flex items-start gap-2 pt-1">
               <span>{SITE.headOffice}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <span>{SITE.tradingHours}</span>
-            </div>
           </div>
         </div>
 

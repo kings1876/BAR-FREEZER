@@ -18,8 +18,7 @@ export const SITE = {
   quoteEmail: "trade@barfreezer.com.au",
   supportEmail: "service@barfreezer.com.au",
   abn: "24 186 299 047",
-  headOffice: "Unit 4, 18-24 Commercial Rd, Kingsgrove NSW 2208",
-  tradingHours: "Mon - Fri: 7:30am - 5:30pm AEST (Sat: 8:30am - 1:00pm trade line)",
+  headOffice: "Pakenham VIC 3810",
   tagline: "Commercial & Home Bar Refrigeration Delivered Australia-Wide",
   subheading: "Australia's specialist trade importer and stockist of underbar freezers, back bar coolers, glass frosters and beverage systems.",
   trustpilot: {

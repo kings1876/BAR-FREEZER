@@ -729,7 +729,6 @@ export const Header: React.FC = () => {
                 <Phone className="w-5 h-5" />
                 <span>{SITE.phoneDisplay}</span>
               </a>
-              <div className="text-[11px] text-slate-500">7:30am - 5:30pm AEST Mon - Fri</div>
             </div>
           </div>
         </div>

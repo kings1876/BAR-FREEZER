@@ -245,7 +245,7 @@ export const ContactPage: React.FC = () => {
                 <Phone className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-slate-900 block text-sm">{SITE.phoneDisplay}</span>
-                  <span className="text-slate-500">Toll-free across Australia (Mon - Fri: 7:30am - 5:30pm AEST)</span>
+                  <span className="text-slate-500">Call to speak to sales</span>
                 </div>
               </div>
 
@@ -260,7 +260,7 @@ export const ContactPage: React.FC = () => {
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold text-slate-900 block">National Head Office & Depot</span>
+                  <span className="font-bold text-slate-900 block">Location</span>
                   <span className="text-slate-500">{SITE.headOffice}</span>
                 </div>
               </div>
@@ -292,7 +292,7 @@ export const ContactPage: React.FC = () => {
               <div className="py-8 text-center space-y-2 text-xs">
                 <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
                 <h4 className="text-base font-bold text-slate-900">Message Received</h4>
-                <p className="text-slate-600">Our sales desk will respond within 2 business hours.</p>
+                <p className="text-slate-600">Our sales desk will reply to your enquiry by email.</p>
               </div>
             )}
           </div>

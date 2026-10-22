@@ -262,7 +262,7 @@ export const QuoteModal: React.FC = () => {
                 <div className="pt-2 flex items-center justify-between">
                   <div className="text-[11px] text-slate-500 flex items-center gap-1.5">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Average turnaround: &lt; 2 business hours (Mon-Fri)</span>
+                    <span>We reply to quote requests by email</span>
                   </div>
 
                   <button
@@ -302,8 +302,8 @@ export const QuoteModal: React.FC = () => {
                   <span className="font-mono text-slate-900">{email}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Expected Response:</span>
-                  <span className="font-semibold text-emerald-700">Within 2 hours (AEST)</span>
+                  <span className="text-slate-500">Reply:</span>
+                  <span className="font-semibold text-emerald-700">By email</span>
                 </div>
               </div>
 
