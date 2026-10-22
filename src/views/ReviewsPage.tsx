@@ -215,9 +215,9 @@ export const ReviewsPage: React.FC = () => {
                   ))}
                 </div>
 
-                <h3 className="text-sm font-bold text-slate-900">
+                <h2 className="text-sm font-bold text-slate-900">
                   "{rev.headline}"
-                </h3>
+                </h2>
 
                 <p className="text-xs text-slate-600 leading-relaxed">
                   {rev.content}
