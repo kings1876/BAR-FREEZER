@@ -132,6 +132,25 @@ export const AboutPage: React.FC = () => {
   );
 };
 
+// Shows the receiving wallet for a coin with a copy button.
+export const WalletBox: React.FC<{ coin: string }> = ({ coin }) => {
+  const w = WALLETS.find((x) => x.coin === coin) || WALLETS[0];
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    if (navigator.clipboard) navigator.clipboard.writeText(w.address).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
+  };
+  return (
+    <div className="rounded-lg bg-slate-50 border border-slate-300 p-3 space-y-1.5">
+      <div className="text-xs font-bold text-slate-900">{w.name} <span className="font-normal text-slate-500">· Network: {w.network}</span></div>
+      <div className="font-mono text-xs sm:text-sm text-slate-800 break-all select-all">{w.address}</div>
+      <div className="flex items-center justify-between gap-3">
+        <button type="button" onClick={copy} className="px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold">{copied ? 'Copied' : 'Copy address'}</button>
+        <span className="text-[11px] text-slate-500">Send only {w.coin} on the {w.network} network. Check the address against your order email before you send.</span>
+      </div>
+    </div>
+  );
+};
+
 export const PAYMENT_OPTIONS: [string, string, string][] = [
   ['Bank Transfer', 'Bank Transfer (EFT)', 'Bank details on your tax invoice'],
   ['PayID', 'PayID', 'PayID details on your tax invoice'],
@@ -321,6 +340,7 @@ export const CheckoutPage: React.FC = () => {
   const [complete, setComplete] = useState(false);
   const [orderId, setOrderId] = useState('');
   const [payMethod, setPayMethod] = useState('Bank Transfer');
+  const [coin, setCoin] = useState('BTC');
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
 
@@ -441,9 +461,11 @@ export const CheckoutPage: React.FC = () => {
                   {payMethod === 'Crypto' && (
                     <div className="mt-2">
                       <label className="block font-semibold text-slate-700 mb-1">Preferred coin</label>
-                      <select name="Crypto Coin" className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900">
-                        <option>BTC (Bitcoin)</option><option>USDT (Tether, TRC-20 on Tron)</option><option>ETH (Ethereum)</option>
+                      <select name="Crypto Coin" value={coin} onChange={(e) => setCoin(e.target.value)} className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900">
+                        <option value="BTC">BTC (Bitcoin)</option><option value="USDT">USDT (Tether, TRC-20 on Tron)</option><option value="ETH">ETH (Ethereum)</option>
                       </select>
+                      <div className="mt-3"><WalletBox coin={coin} /></div>
+                      <p className="mt-2 text-[11px] text-slate-500">Pay only after we confirm your order and the exact amount in AUD by email. Your order is not paid until the transaction is verified.</p>
                     </div>
                   )}
                   <p className="mt-2 text-[11px] text-slate-500">No payment is taken on this page. We email your tax invoice and payment instructions after we confirm stock and freight.</p>
@@ -515,6 +537,12 @@ export const CheckoutPage: React.FC = () => {
             <p className="text-xs text-slate-600 leading-relaxed">
               Thanks, we have received your order request. We will email your tax invoice and payment instructions shortly. Your order is not paid or dispatched until payment is confirmed.
             </p>
+            {payMethod === 'Crypto' && (
+              <div className="text-left space-y-2">
+                <p className="text-xs font-semibold text-slate-700">Your chosen wallet</p>
+                <WalletBox coin={coin} />
+              </div>
+            )}
             <div className="pt-2">
               <Link href="/" className="px-5 py-2.5 bg-slate-900 text-white font-semibold text-xs rounded-md">
                 Return to Store
