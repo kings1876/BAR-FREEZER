@@ -13,8 +13,6 @@ export const REPLY = {
   // WhatsApp number (digits with country code, e.g. 61400000000). Empty = WhatsApp features hidden.
   channels: { whatsapp: '', email: 'sales@barfreezer.com.au' },
   methods: [
-    { id: 'bank-transfer', label: 'Bank Transfer (EFT)', placeholder: 'Account name: ...\nBSB: ...\nAccount number: ...\nReference: ...' },
-    { id: 'payid', label: 'PayID', placeholder: 'PayID: ...\nAccount name: ...\nReference: ...' },
     { id: 'osko', label: 'Osko', placeholder: 'PayID: ...\nAccount name: ...\nBSB: ...\nAccount number: ...' },
     { id: 'crypto', label: 'Cryptocurrency (BTC / USDT TRC-20 / ETH)', placeholder: 'Coin: USDT\nNetwork: Tron (TRC-20)\nWallet address: TBnrAF6yjaYyUBXFGDzDUdkUG7EZr6qrFN\nAmount: ...' },
   ],

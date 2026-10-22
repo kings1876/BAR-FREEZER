@@ -29,8 +29,6 @@
     "commerce": {
       "ordering": "human-completed order request or quote",
       "payment": [
-        "bank-transfer",
-        "payid",
         "osko",
         "crypto-btc",
         "crypto-usdt-trc20",

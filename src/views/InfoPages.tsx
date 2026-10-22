@@ -67,7 +67,7 @@ export const FinancePage: React.FC = () => {
             <div>
               <h2 className="text-lg font-bold text-slate-900">Pay now instead</h2>
               <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                You can pay by bank transfer, PayID, Osko or cryptocurrency once your order is confirmed. See the payment methods page for details.
+                You can pay by Osko or cryptocurrency once your order is confirmed. See the payment methods page for details.
               </p>
             </div>
             <Link
@@ -152,8 +152,6 @@ export const WalletBox: React.FC<{ coin: string }> = ({ coin }) => {
 };
 
 export const PAYMENT_OPTIONS: [string, string, string][] = [
-  ['Bank Transfer', 'Bank Transfer (EFT)', 'Bank details on your tax invoice'],
-  ['PayID', 'PayID', 'PayID details on your tax invoice'],
   ['Osko', 'Osko (instant bank payment)', 'Pay instantly from your banking app'],
   ['Crypto', 'Cryptocurrency (BTC, USDT, ETH)', 'Wallet address and AUD amount confirmed in your order email']
 ];
@@ -164,9 +162,7 @@ export const PaymentMethodsPage: React.FC = () => (
       <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Payment Methods</h1>
       <p className="text-sm text-slate-600">We accept the payment methods below. After you place an order request we confirm stock and freight, then email your tax invoice with payment instructions. Orders are dispatched once payment is confirmed. All prices are in AUD and include GST.</p>
       {[
-        ['Bank Transfer (EFT)', 'Pay by direct bank transfer using the account details on your tax invoice. Use your order reference so we can match the payment.'],
-        ['PayID', 'Pay instantly to our PayID shown on your tax invoice, from any participating Australian bank app.'],
-        ['Osko', 'Osko payments settle in minutes, including after hours. Use the PayID or account details on your invoice.'],
+        ['Osko', 'Osko payments settle in minutes, including after hours. Use the Osko details on your tax invoice and your order reference so we can match the payment.'],
         ['Cryptocurrency (BTC, USDT, ETH)', 'We accept Bitcoin (BTC), Tether (USDT, on the Tron network as TRC-20) and Ethereum (ETH). Choose crypto at checkout and tell us which coin you prefer in your order; we confirm the amount in AUD converted at the time of invoice. Send the exact amount quoted on the network shown below, and check the address against your order email before you send. The order is confirmed once the transaction is verified.']
       ].map(([t, d]) => (
         <div key={t} className="bg-white p-5 rounded-xl border border-slate-200">
@@ -339,7 +335,7 @@ export const CheckoutPage: React.FC = () => {
   const { cart, subtotal, gstAmount, clearCart } = useCart();
   const [complete, setComplete] = useState(false);
   const [orderId, setOrderId] = useState('');
-  const [payMethod, setPayMethod] = useState('Bank Transfer');
+  const [payMethod, setPayMethod] = useState('Osko');
   const [coin, setCoin] = useState('BTC');
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');

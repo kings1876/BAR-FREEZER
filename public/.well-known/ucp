@@ -27,8 +27,6 @@
   ],
   "currency": "AUD",
   "payment_methods": [
-    "bank-transfer",
-    "payid",
     "osko",
     "crypto"
   ]

@@ -26,7 +26,7 @@ const summary = 'Australian online store for commercial and home bar freezers, b
 // ---- llms.txt (llmstxt.org format)
 const L = [];
 L.push(`# ${NAME}`, '', `> ${summary}`, '');
-L.push(`${PRODUCTS.length} products from ${BRANDS.length} brands. Prices are in AUD and include GST. Orders are placed as order requests; payment instructions are emailed after stock and freight are confirmed. Accepted payment methods: bank transfer, PayID, Osko and cryptocurrency (BTC, USDT on Tron, ETH).`, '');
+L.push(`${PRODUCTS.length} products from ${BRANDS.length} brands. Prices are in AUD and include GST. Orders are placed as order requests; payment instructions are emailed after stock and freight are confirmed. Accepted payment methods: Osko and cryptocurrency (BTC, USDT on Tron, ETH).`, '');
 L.push('## Shop', '');
 for (const c of CATEGORIES) {
   L.push(`- [${c.name}](${U}${c.path}): ${String(c.description || '').replace(/\s+/g, ' ').slice(0, 140)}`);
@@ -115,13 +115,13 @@ wj('mcp/server-card.json', {
       { name: 'catalogue', description: 'Product catalogue', uri: `${U}/bar-fridges/` },
       { name: 'guides', description: 'Buying guides', uri: `${U}/guides/` },
     ],
-    commerce: { ordering: 'human-completed order request or quote', payment: ['bank-transfer', 'payid', 'osko', 'crypto-btc', 'crypto-usdt-trc20', 'crypto-eth'], currency: 'AUD', ships: 'Australia-wide' },
+    commerce: { ordering: 'human-completed order request or quote', payment: ['osko', 'crypto-btc', 'crypto-usdt-trc20', 'crypto-eth'], currency: 'AUD', ships: 'Australia-wide' },
   },
 });
 wj('oauth-protected-resource', { resource: U, resource_name: `${NAME} public catalogue`, authorization_servers: [], scopes_supported: [], bearer_methods_supported: [], resource_documentation: `${U}/auth.md`, note: 'All catalogue resources are public. No OAuth tokens are required.' });
 wj('oauth-authorization-server', { issuer: U, authorization_endpoint: null, token_endpoint: null, jwks_uri: null, grant_types_supported: [], response_types_supported: [], scopes_supported: [], note: `${NAME} has no protected APIs.`, agent_auth: { register_uri: null, identity_types_supported: ['none'], credential_types_supported: ['none'], notes: 'No registration required.' } });
 wj('openid-configuration', { issuer: U, note: `${NAME} does not operate an OpenID Connect provider.`, public_site: true, authorization_endpoint: null, token_endpoint: null, userinfo_endpoint: null, jwks_uri: null, scopes_supported: [], response_types_supported: [], grant_types_supported: [], subject_types_supported: [], id_token_signing_alg_values_supported: [] });
-wj('acp.json', { protocol: { name: 'acp', version: '0.1.0' }, name: NAME, description: summary, homepage: U, transports: ['https'], capabilities: { services: ['product-catalog', 'quotes', 'guides'], ordering: 'human-completed', payment_methods: ['bank-transfer', 'payid', 'osko', 'crypto'], currency: 'AUD' }, contact: { email: EMAIL }, legal: { region: 'Australia', ships_to: 'Australia' } });
-wj('ucp', { ucp: '1.0', protocol_version: '1.0', spec: 'https://ucp.dev/specification/overview/', schema: 'https://ucp.dev/schema/v1.json', site: U, name: NAME, description: summary, services: [{ id: 'product-catalog', type: 'catalog', url: `${U}/bar-fridges/`, description: 'Product catalogue' }, { id: 'quote', type: 'commerce', url: `${U}/quote/`, description: 'Request a quote' }], capabilities: ['browse', 'inquiry', 'content'], currency: 'AUD', payment_methods: ['bank-transfer', 'payid', 'osko', 'crypto'] });
+wj('acp.json', { protocol: { name: 'acp', version: '0.1.0' }, name: NAME, description: summary, homepage: U, transports: ['https'], capabilities: { services: ['product-catalog', 'quotes', 'guides'], ordering: 'human-completed', payment_methods: ['osko', 'crypto'], currency: 'AUD' }, contact: { email: EMAIL }, legal: { region: 'Australia', ships_to: 'Australia' } });
+wj('ucp', { ucp: '1.0', protocol_version: '1.0', spec: 'https://ucp.dev/specification/overview/', schema: 'https://ucp.dev/schema/v1.json', site: U, name: NAME, description: summary, services: [{ id: 'product-catalog', type: 'catalog', url: `${U}/bar-fridges/`, description: 'Product catalogue' }, { id: 'quote', type: 'commerce', url: `${U}/quote/`, description: 'Request a quote' }], capabilities: ['browse', 'inquiry', 'content'], currency: 'AUD', payment_methods: ['osko', 'crypto'] });
 
 console.log('generated: llms.txt, auth.md, .well-known/* for', D, '|', PRODUCTS.length, 'products');
