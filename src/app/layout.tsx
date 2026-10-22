@@ -7,6 +7,7 @@ const description =
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://barfreezer.com.au'),
+  verification: { other: { 'msvalidate.01': '7D6F07E69DC6B3FEAD27BC6A852B150E' } },
   title,
   description,
   alternates: { canonical: '/' },
