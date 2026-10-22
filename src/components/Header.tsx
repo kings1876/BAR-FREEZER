@@ -94,7 +94,7 @@ export const Header: React.FC = () => {
       <div className="bg-slate-950 border-b border-slate-800/80 px-4 py-1.5 text-center text-xs sm:text-sm">
         <div className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 font-semibold text-white">
           <ShieldCheck className="w-4 h-4 text-rose-400 shrink-0" aria-hidden="true" />
-          <span>{SITE.legalName} · ABN {SITE.abn}</span>
+          <span>Bar Freezer Australia(FRIDGEE) · ABN {SITE.abn}</span>
           <a
             href={`https://abr.business.gov.au/ABN/View?abn=${SITE.abn.split(' ').join('')}`}
             target="_blank"
