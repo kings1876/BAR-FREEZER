@@ -90,6 +90,21 @@ export const Header: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-40 w-full bg-slate-900 border-b border-slate-800 text-slate-100 shadow-md">
+      {/* ABN line, centred above the utility bar */}
+      <div className="bg-slate-950 border-b border-slate-800/80 px-4 py-1.5 text-center text-xs sm:text-sm">
+        <div className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 font-semibold text-white">
+          <ShieldCheck className="w-4 h-4 text-rose-400 shrink-0" aria-hidden="true" />
+          <span>{SITE.legalName} · ABN {SITE.abn}</span>
+          <a
+            href={`https://abr.business.gov.au/ABN/View?abn=${SITE.abn.split(' ').join('')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-rose-400 underline underline-offset-2 hover:text-rose-300"
+          >
+            Verify on ABR
+          </a>
+        </div>
+      </div>
       {/* Top Utility & Trust Bar */}
       <div className="bg-slate-950 text-slate-300 text-xs py-1.5 px-4 sm:px-6 lg:px-8 border-b border-slate-800/80">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
