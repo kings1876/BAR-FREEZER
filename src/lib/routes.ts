@@ -3,7 +3,7 @@ import { CATEGORIES, BRANDS, VENUES, CITIES, PRODUCTS, ACCESSORY_PRODUCTS, POSTS
 export const STATIC_ROUTES = [
   'trade', 'quote', 'finance', 'warranty-service', 'warranty', 'deals', 'clearance',
   'compare', 'reviews', 'about', 'contact', 'faq', 'returns', 'payment-methods', 'cart', 'checkout',
-  'search', 'delivery', 'guides',
+  'search', 'delivery', 'guides', 'pay-crypto',
 ];
 
 function collectPaths(nodes: any[], out: Set<string>) {

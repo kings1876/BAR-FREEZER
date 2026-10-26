@@ -145,11 +145,56 @@ export const WalletBox: React.FC<{ coin: string }> = ({ coin }) => {
       <div className="font-mono text-xs sm:text-sm text-slate-800 break-all select-all">{w.address}</div>
       <div className="flex items-center justify-between gap-3">
         <button type="button" onClick={copy} className="px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold">{copied ? 'Copied' : 'Copy address'}</button>
-        <span className="text-[11px] text-slate-500">Send only {w.coin} on the {w.network} network. Check the address against your order email before you send.</span>
+        <span className="text-[11px] text-slate-500">Send only {w.coin} on the {w.network} network. <Link href="/pay-crypto/" className="text-cyan-800 underline">Show QR code</Link></span>
       </div>
     </div>
   );
 };
+
+// Wallet card with a QR code, the address and a copy button.
+const WalletCard: React.FC<{ coin: string }> = ({ coin }) => {
+  const w = WALLETS.find((x) => x.coin === coin) || WALLETS[0];
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    if (navigator.clipboard) navigator.clipboard.writeText(w.address).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
+  };
+  return (
+    <section aria-label={w.name} className="bg-white rounded-xl border border-slate-200 p-5 sm:p-6 flex flex-col sm:flex-row gap-5 items-center sm:items-start">
+      <img src={`/qr/${w.coin.toLowerCase()}.svg`} alt={`QR code for the ${w.name} wallet address`} width={176} height={176} className="w-44 h-44 shrink-0 rounded-lg border border-slate-200" />
+      <div className="min-w-0 w-full space-y-2 text-center sm:text-left">
+        <h2 className="text-lg font-bold text-slate-900">{w.name}</h2>
+        <p className="text-xs text-slate-500">Network: <strong className="text-slate-700">{w.network}</strong></p>
+        <p className="font-mono text-xs sm:text-sm text-slate-800 break-all select-all bg-slate-50 border border-slate-200 rounded-md p-3">{w.address}</p>
+        <button type="button" onClick={copy} className="px-4 py-2 rounded-md bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold">{copied ? 'Copied' : 'Copy address'}</button>
+        <p className="text-[11px] text-amber-800">Send only {w.coin} on the {w.network} network. Sending a different coin or using another network can lose the payment for good.</p>
+      </div>
+    </section>
+  );
+};
+
+/**
+ * Crypto payment page (/pay-crypto/): wallet addresses with QR codes.
+ */
+export const CryptoPaymentPage: React.FC = () => (
+  <div className="bg-slate-50 min-h-screen py-8">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div className="space-y-2">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Pay with Crypto</h1>
+        <p className="text-sm text-slate-600 leading-relaxed">
+          Pay your order with Bitcoin, Tether (USDT on Tron) or Ethereum and take 10% off your order total. Scan the QR code with your wallet app or copy the address. We confirm the exact amount in AUD in your order email, so wait for that email before you send anything.
+        </p>
+      </div>
+      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-900 space-y-1 leading-relaxed">
+        <p className="font-bold">Before you send</p>
+        <p>Check the address against your order email. Send the exact amount quoted, on the network shown for that coin. Network fees are paid by the sender. After you pay, reply to your order email with a screenshot or the transaction ID so we can confirm it faster. Your order is confirmed once the transaction is verified.</p>
+      </div>
+      {WALLETS.map((w) => <WalletCard key={w.coin} coin={w.coin} />)}
+      <p className="text-xs text-slate-500">
+        Questions? Email <a href={`mailto:${SITE.email}`} className="text-cyan-800 underline">{SITE.email}</a> or see the <Link href="/payment-methods/" className="text-cyan-800 underline">payment methods page</Link>.
+      </p>
+    </div>
+  </div>
+);
 
 export const PAYMENT_OPTIONS: [string, string, string][] = [
   ['Osko', 'Osko (instant bank payment)', 'Pay instantly from your banking app'],
@@ -168,6 +213,9 @@ export const PaymentMethodsPage: React.FC = () => (
         <div key={t} className="bg-white p-5 rounded-xl border border-slate-200">
           <h2 className="text-base font-bold text-slate-900">{t}</h2>
           <p className="text-xs text-slate-600 mt-1 leading-relaxed">{d}</p>
+          {t.startsWith('Cryptocurrency') && (
+            <p className="mt-3 text-xs"><Link href="/pay-crypto/" className="font-semibold text-cyan-800 underline">Open the crypto payment page with QR codes</Link></p>
+          )}
           {t.startsWith('Cryptocurrency') && (
             <dl className="mt-3 space-y-3">
               {WALLETS.map((w) => (

@@ -38,6 +38,7 @@ const CheckoutPage = dynamic(() => import('./views/InfoPages').then((m) => m.Che
 const SearchPage = dynamic(() => import('./views/StaticPages').then((m) => m.SearchPage));
 const NotFoundPage = dynamic(() => import('./views/InfoPages').then((m) => m.NotFoundPage));
 const PaymentMethodsPage = dynamic(() => import('./views/InfoPages').then((m) => m.PaymentMethodsPage));
+const CryptoPaymentPage = dynamic(() => import('./views/InfoPages').then((m) => m.CryptoPaymentPage));
 const FaqPage = dynamic(() => import('./views/InfoPages').then((m) => m.FaqPage));
 const ReturnsPage = dynamic(() => import('./views/InfoPages').then((m) => m.ReturnsPage));
 
@@ -90,6 +91,8 @@ const MainContent: React.FC<{ below?: React.ReactNode }> = ({ below }) => {
         return <ReturnsPage />;
       case 'payment-methods':
         return <PaymentMethodsPage />;
+      case 'pay-crypto':
+        return <CryptoPaymentPage />;
       case 'checkout':
       case 'cart':
         return <CheckoutPage />;

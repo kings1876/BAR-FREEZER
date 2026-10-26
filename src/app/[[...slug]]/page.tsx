@@ -33,6 +33,7 @@ const STATIC_META: Record<string, [string, string]> = {
   faq: ['Bar Fridge & Freezer FAQs', 'Answers to common questions about bar freezers, bar fridges, delivery and ordering from Bar Freezer Australia.'],
   returns: ['Returns & Australian Consumer Law', 'How returns and Australian Consumer Law consumer guarantees apply to bar fridges and freezers bought from us.'],
   'payment-methods': ['Payment Methods: Osko and Crypto (BTC, USDT, ETH)', 'Pay by Osko or cryptocurrency (BTC, USDT, ETH) and save 10% when you pay with crypto. Payment details are emailed after your order request.'],
+  'pay-crypto': ['Pay with Crypto', 'Cryptocurrency wallet addresses and QR codes for paying a Bar Freezer Australia order with Bitcoin, USDT (Tron) or Ethereum.'],
   cart: ['Shopping Cart', 'Review the bar fridges, bar freezers and accessories in your cart before you request an order.'],
   checkout: ['Checkout & Order Request', 'Enter your delivery details and choose a payment method to send your bar fridge or freezer order request.'],
   search: ['Search Bar Fridges & Freezers', 'Search bar freezers, bar fridges, kegerators, ice machines and accessories by name, brand or model.'],
@@ -165,7 +166,7 @@ function lookup(slug: string[]): { title: string; description: string; image?: s
   }
   if (slug.length === 1 && STATIC_META[a]) {
     const [t, d] = STATIC_META[a];
-    return { title: t, description: d, noindex: a === 'cart' || a === 'checkout' || a === 'search' };
+    return { title: t, description: d, noindex: a === 'cart' || a === 'checkout' || a === 'search' || a === 'pay-crypto' };
   }
   const kw = KEYWORD_META[path];
   if (kw) return { title: kw.title, description: kw.description, full: true };
