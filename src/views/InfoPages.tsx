@@ -376,6 +376,91 @@ export const ContactPage: React.FC = () => {
   );
 };
 
+// Payment step shown straight after a crypto order is placed: amount due, QR, address, and a form to send the transaction ID.
+const CryptoPayStep: React.FC<{ orderId: string; amount: number; initialCoin: string; name: string; email: string }> = ({ orderId, amount, initialCoin, name, email }) => {
+  const [coin, setCoin] = useState(initialCoin);
+  const w = WALLETS.find((x) => x.coin === coin) || WALLETS[0];
+  const [copied, setCopied] = useState('');
+  const [hash, setHash] = useState('');
+  const [state, setState] = useState<'idle' | 'sending' | 'sent'>('idle');
+  const [err, setErr] = useState('');
+  const copy = (key: string, text: string) => {
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => { setCopied(key); setTimeout(() => setCopied(''), 2000); });
+  };
+  const submitHash = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!hash.trim() || state === 'sending') return;
+    setState('sending');
+    setErr('');
+    try {
+      await sendEnquiry('contact', {
+        'Contact Name': name || 'Customer',
+        Email: email,
+        Subject: `Crypto payment sent for order ${orderId}`,
+        Message: `Order ${orderId}: ${w.name} (${w.network}) payment of $${amount.toFixed(2)} AUD sent. Transaction ID: ${hash.trim()}`
+      });
+      setState('sent');
+    } catch (ex) {
+      setErr((ex as Error).message);
+      setState('idle');
+    }
+  };
+  return (
+    <div className="space-y-5 max-w-2xl mx-auto">
+      <div className="bg-white rounded-xl border border-slate-200 p-6 text-center space-y-2">
+        <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
+        <span className="inline-block text-xs font-mono font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded border border-amber-200">Order ID: {orderId}</span>
+        <h2 className="text-2xl font-bold text-slate-900">Complete your crypto payment</h2>
+        <p className="text-xs text-slate-600">Your order request is in. Pay with the details below to secure it. A copy of your order is emailed to {email}.</p>
+      </div>
+
+      <div className="bg-white rounded-xl border border-slate-200 p-5 sm:p-6 space-y-5">
+        <div className="flex items-center justify-between gap-3 rounded-lg bg-slate-900 text-white px-4 py-3">
+          <div>
+            <div className="text-[11px] uppercase tracking-wider text-slate-300">Amount due (10% crypto discount applied)</div>
+            <div className="text-2xl font-mono font-bold">${amount.toFixed(2)} AUD</div>
+          </div>
+          <button type="button" onClick={() => copy("amt", amount.toFixed(2))} className="px-3 py-1.5 rounded bg-white/10 hover:bg-white/20 text-xs font-semibold">{copied === 'amt' ? 'Copied' : 'Copy amount'}</button>
+        </div>
+        <p className="text-[11px] text-slate-500 -mt-3">Send the AUD equivalent in {w.coin} at the rate when you send. Freight is quoted to your postcode and confirmed in your order email.</p>
+
+        <div role="tablist" aria-label="Choose coin" className="grid grid-cols-3 gap-2">
+          {WALLETS.map((x) => (
+            <button key={x.coin} type="button" role="tab" aria-selected={coin === x.coin} onClick={() => setCoin(x.coin)} className={`py-2 rounded-md border text-xs font-bold ${coin === x.coin ? 'bg-amber-50 border-amber-400 text-slate-900' : 'bg-slate-50 border-slate-300 text-slate-600'}`}>{x.coin}</button>
+          ))}
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-5 items-center sm:items-start">
+          <img src={`/qr/${w.coin.toLowerCase()}.svg`} alt={`QR code for the ${w.name} wallet address`} width={176} height={176} className="w-44 h-44 shrink-0 rounded-lg border border-slate-200" />
+          <div className="min-w-0 w-full space-y-2 text-center sm:text-left">
+            <h3 className="text-base font-bold text-slate-900">{w.name}</h3>
+            <p className="text-xs text-slate-500">Network: <strong className="text-slate-700">{w.network}</strong></p>
+            <p className="font-mono text-xs sm:text-sm text-slate-800 break-all select-all bg-slate-50 border border-slate-200 rounded-md p-3">{w.address}</p>
+            <button type="button" onClick={() => copy('addr', w.address)} className="px-4 py-2 rounded-md bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold">{copied === 'addr' ? 'Copied' : 'Copy address'}</button>
+            <p className="text-[11px] text-amber-800">Send only {w.coin} on the {w.network} network. Another coin or network can lose the payment for good.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl border border-slate-200 p-5 sm:p-6 space-y-3 text-xs">
+        <h3 className="text-base font-bold text-slate-900">After you send</h3>
+        {state === 'sent' ? (
+          <p role="status" className="p-3 rounded border border-emerald-200 bg-emerald-50 text-emerald-800">Thanks, we have your transaction ID. We verify it on the blockchain and email you when your order is confirmed.</p>
+        ) : (
+          <form onSubmit={submitHash} className="space-y-2">
+            <label className="block font-semibold text-slate-700" htmlFor="txid">Transaction ID (hash)</label>
+            <input id="txid" value={hash} onChange={(e) => setHash(e.target.value)} required placeholder="Paste the transaction ID from your wallet" className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 font-mono text-slate-900" />
+            {err && <div role="alert" className="p-3 rounded border border-red-200 bg-red-50 text-red-800">{err}</div>}
+            <button type="submit" disabled={state === 'sending'} className="w-full py-3 bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-md">{state === 'sending' ? 'Sending…' : "I've paid: send transaction ID"}</button>
+          </form>
+        )}
+        <p className="text-slate-500">Your order is dispatched once the transaction is verified. Questions? Email <a href={`mailto:${SITE.email}`} className="text-cyan-800 underline">{SITE.email}</a> and quote {orderId}.</p>
+        <Link href="/" className="inline-block px-5 py-2.5 bg-slate-900 text-white font-semibold text-xs rounded-md">Return to Store</Link>
+      </div>
+    </div>
+  );
+};
+
 /**
  * Commercial Checkout Page (/checkout/)
  */
@@ -383,6 +468,7 @@ export const CheckoutPage: React.FC = () => {
   const { cart, subtotal, clearCart } = useCart();
   const [complete, setComplete] = useState(false);
   const [orderId, setOrderId] = useState('');
+  const [paid, setPaid] = useState({ amount: 0, name: '', email: '' });
   const [payMethod, setPayMethod] = useState('Osko');
   const [coin, setCoin] = useState('BTC');
   const [sending, setSending] = useState(false);
@@ -415,8 +501,10 @@ export const CheckoutPage: React.FC = () => {
     setError('');
     try {
       await sendEnquiry('order', fields, { items, totals: { subtotal, delivery: deliveryFee, total: grandTotal, discount: cryptoDiscount }, ref, channel });
+      setPaid({ amount: grandTotal, name: fields['Contact Name'] || '', email: fields['Email'] || '' });
       setOrderId(ref);
       setComplete(true);
+      if (typeof window !== 'undefined') window.scrollTo(0, 0);
       clearCart();
     } catch (err) {
       setError((err as Error).message);
@@ -437,7 +525,9 @@ export const CheckoutPage: React.FC = () => {
           Commercial Equipment Checkout
         </h1>
 
-        {!complete ? (
+        {complete && payMethod === 'Crypto' ? (
+          <CryptoPayStep orderId={orderId} amount={paid.amount} initialCoin={coin} name={paid.name} email={paid.email} />
+        ) : !complete ? (
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
             <div className="md:col-span-7 bg-white p-6 rounded-xl border border-slate-200 space-y-4 text-xs">
               <h2 className="text-base font-bold text-slate-900 border-b border-slate-100 pb-2">
@@ -512,8 +602,7 @@ export const CheckoutPage: React.FC = () => {
                       <select name="Crypto Coin" value={coin} onChange={(e) => setCoin(e.target.value)} className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900">
                         <option value="BTC">BTC (Bitcoin)</option><option value="USDT">USDT (Tether, TRC-20 on Tron)</option><option value="ETH">ETH (Ethereum)</option>
                       </select>
-                      <div className="mt-3"><WalletBox coin={coin} /></div>
-                      <p className="mt-2 text-[11px] text-slate-500">Pay only after we confirm your order and the exact amount in AUD by email. Your order is not paid until the transaction is verified.</p>
+                      <p className="mt-2 text-[11px] text-slate-500">When you place the order you go straight to a payment page showing the amount due, the network and a QR code. Please do not send anything before then.</p>
                     </div>
                   )}
                   <p className="mt-2 text-[11px] text-slate-500">No payment is taken on this page. We email your tax invoice and payment instructions after we confirm stock and freight.</p>
