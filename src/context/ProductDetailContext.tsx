@@ -10,7 +10,7 @@ export interface ProductDetail {
   base?: any;
   alts?: any[];
   related?: any[];
-  guide?: { slug: string; content: string; faqs?: { q: string; a: string }[] };
+  guide?: { slug: string; content: string; faqs?: { q: string; a: string }[]; hero?: { src: string; alt: string; slug: string; name: string } | null; thumbs?: Record<string, string> };
   images?: string[];
   features?: string[];
   shortDescription?: string;

@@ -4,6 +4,7 @@ import { ProductLinkList as LinkList, BuyingChecklist } from '../../components/P
 import { CATEGORIES, BRANDS, VENUES, CITIES, PRODUCTS, POSTS, FAQS } from '../../config/site.js';
 import { allPaths } from '../../lib/routes';
 import { categoryProducts } from '../../lib/category-filter';
+import { guideImages } from '../../lib/guide-images';
 import { KEYWORD_META } from '../../config/seo-keywords';
 import { BRAND_META } from '../../config/seo-brands';
 import { CITY_META, VENUE_META } from '../../config/seo-pages';
@@ -430,7 +431,8 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   } else if (slug[0] === 'guides' && slug[1]) {
     const post: any = (POSTS as any[]).find((x) => x.slug === slug[1]);
     if (post) {
-      productDetail = { id: `guide:${post.slug}`, guide: { slug: post.slug, content: post.content, faqs: post.faqs || [] } } as any;
+      const gi = guideImages(post.content, FULL_PRODUCTS as any[]);
+      productDetail = { id: `guide:${post.slug}`, guide: { slug: post.slug, content: post.content, faqs: post.faqs || [], hero: gi.hero, thumbs: gi.thumbs } } as any;
       const d = new Date(post.publishedAt);
       blocks.push({
         '@context': 'https://schema.org',
@@ -440,7 +442,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
         datePublished: isNaN(d.getTime()) ? undefined : d.toISOString().slice(0, 10),
         author: { '@type': 'Organization', name: 'Bar Freezer Australia' },
         publisher: { '@type': 'Organization', name: 'Bar Freezer Australia', logo: { '@type': 'ImageObject', url: SITE_URL + '/og-image.png' } },
-        image: SITE_URL + '/og-image.png',
+        image: gi.hero ? SITE_URL + gi.hero.src : SITE_URL + '/og-image.png',
         mainEntityOfPage: `${SITE_URL}/guides/${post.slug}/`,
         keywords: post.primaryKeyword ? [post.primaryKeyword, ...(post.supportingKeywords || [])].join(', ') : undefined,
         wordCount: post.content ? String(post.content).split(/\s+/).length : undefined,

@@ -17,7 +17,7 @@ const renderInline = (text: string) => {
   return parts;
 };
 
-const renderBody = (content: string) =>
+const renderBody = (content: string, thumbs: Record<string, string> = {}) =>
   content.split('\n\n').map((block: string, i: number) => {
     if (block.startsWith('## ')) return <h2 key={i} className="text-xl font-bold text-slate-900 pt-2">{block.slice(3)}</h2>;
     const lines = block.split('\n');
@@ -27,7 +27,16 @@ const renderBody = (content: string) =>
       return (
         <div key={i}>
           {intro.map((t, n) => <p key={n} className="whitespace-pre-line">{renderInline(t)}</p>)}
-          <ul className="list-disc pl-5 space-y-1 mt-1">{bullets.map((b, n) => <li key={n}>{renderInline(b.slice(2))}</li>)}</ul>
+          <ul className="list-disc pl-5 space-y-1 mt-1">{bullets.map((b, n) => {
+            const ps = b.match(/\]\(\/product\/([^/)]+)\/\)/);
+            const thumb = ps ? thumbs[ps[1]] : null;
+            return thumb ? (
+              <li key={n} className="list-none -ml-5 flex gap-3 items-start py-1">
+                <img src={thumb} alt={(b.match(/\[([^\]]+)\]\(\/product\//) || [])[1] || ''} width={96} height={96} loading="lazy" decoding="async" className="w-20 h-20 sm:w-24 sm:h-24 shrink-0 object-contain rounded-md border border-slate-200 bg-white" />
+                <span>{renderInline(b.slice(2))}</span>
+              </li>
+            ) : <li key={n}>{renderInline(b.slice(2))}</li>;
+          })}</ul>
         </div>
       );
     }
@@ -93,9 +102,16 @@ export const GuidesPage: React.FC = () => {
             </div>
           </header>
 
+          {guideBody && guideBody.hero && (
+            <figure className="bg-white rounded-xl border border-slate-200/90 overflow-hidden">
+              <img src={guideBody.hero.src} alt={guideBody.hero.alt} width={800} height={500} fetchPriority="high" decoding="async" className="w-full h-56 sm:h-80 object-contain bg-white p-4" />
+              <figcaption className="px-4 pb-3 text-xs text-slate-500">Pictured: <Link href={`/product/${guideBody.hero.slug}/`} className="text-cyan-700 font-semibold hover:underline">{guideBody.hero.name}</Link></figcaption>
+            </figure>
+          )}
+
           {/* Article Body */}
           <article className="bg-white rounded-xl border border-slate-200/90 p-6 sm:p-10 shadow-xs prose prose-slate max-w-none text-sm text-slate-700 leading-relaxed space-y-4">
-            {renderBody(currentGuide.content)}
+            {renderBody(currentGuide.content, guideBody?.thumbs || {})}
             {currentGuide.faqs && currentGuide.faqs.length > 0 && (
               <section aria-labelledby="guide-faqs" className="pt-4 space-y-3">
                 <h2 id="guide-faqs" className="text-xl font-bold text-slate-900">Frequently asked questions</h2>
