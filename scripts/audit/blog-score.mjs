@@ -17,6 +17,13 @@ for (const m of siteSrc.matchAll(/slug:\s*"([a-z0-9-]+)"/g)) {
 for (const s of ['trade', 'quote', 'finance', 'warranty', 'deals', 'clearance', 'compare', 'reviews', 'about', 'contact', 'faq', 'returns', 'payment-methods', 'delivery', 'guides']) valid.add(`/${s}/`);
 const kwSrc = fs.readFileSync(path.join(root, 'src/config/seo-keywords.ts'), 'utf8');
 for (const m of kwSrc.matchAll(/['"](\/[a-z0-9/-]+\/)['"]\s*:/g)) valid.add(m[1]);
+// Product pages and category pages are valid link targets too: check them against the catalogue and the built sitemap.
+const productSlugs = new Set(JSON.parse(fs.readFileSync(path.join(root, 'src/config/products.light.json'), 'utf8')).map((p) => p.slug));
+try {
+  const sm = await (await fetch((process.env.SITEMAP_BASE || 'https://barfreezer.com.au') + '/sitemap.xml')).text();
+  for (const m of sm.matchAll(/<loc>https?:\/\/[^/]+(\/(?:bar-fridges|bar-freezers|accessories-parts)\/[^<]*)<\/loc>/g)) valid.add(m[1]);
+} catch {}
+for (const s of productSlugs) valid.add(`/product/${s}/`);
 const all = [...EXTRA_POSTS];
 for (const p of all) valid.add(`/guides/${p.slug}/`);
 
