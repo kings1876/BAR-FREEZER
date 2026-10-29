@@ -142,7 +142,6 @@ export const ProductDetailPage: React.FC = () => {
       : '/bar-freezers/';
   const hasPrice = typeof product.price === 'number';
   const firmPrice = hasPrice;
-  const silverChefWeekly = hasPrice ? Math.round((product.price as number) * 0.016) : 0;
 
   return (
     <div className="bg-slate-50 min-h-screen py-8">
@@ -336,11 +335,6 @@ export const ProductDetailPage: React.FC = () => {
                   </button>
                 </div>
 
-                {/* SilverChef Lease Estimate */}
-                <div className="pt-1.5 text-[11px] text-slate-600 flex items-center justify-between">
-                  <span>SilverChef Rent-Try-Buy (100% Tax Deductible):</span>
-                  <span className="font-mono font-bold text-slate-900">From ${silverChefWeekly} AUD / week</span>
-                </div>
               </div>
               )}
 
@@ -531,7 +525,6 @@ export const ProductDetailPage: React.FC = () => {
                 <div className="flex items-center justify-between pb-4 border-b border-slate-200">
                   <div>
                     <h2 className="text-lg font-bold text-slate-900">{product.brand} {product.model} Specifications</h2>
-                    <p className="text-xs text-slate-500">Tested to Australian MEPS and HACCP food safety standards.</p>
                   </div>
                   <button
                     onClick={handleDownloadSpecSheet}

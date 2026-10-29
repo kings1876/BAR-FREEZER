@@ -5,6 +5,7 @@ import { CATEGORIES, BRANDS, VENUES, CITIES, PRODUCTS, POSTS, FAQS } from '../..
 import { allPaths } from '../../lib/routes';
 import { categoryProducts } from '../../lib/category-filter';
 import { guideImages } from '../../lib/guide-images';
+import { duplicateOf, isThinProduct } from '../../lib/index-policy';
 import { KEYWORD_META } from '../../config/seo-keywords';
 import { BRAND_META } from '../../config/seo-brands';
 import { CITY_META, VENUE_META } from '../../config/seo-pages';
@@ -144,7 +145,7 @@ function lookup(slug: string[]): { title: string; description: string; image?: s
     const p: any = (PRODUCTS as any[]).find((x) => x.slug === b);
     if (!p) return null;
     const m = productMeta(p);
-    return { title: m.title, description: m.description, image: p.images?.[0], full: true };
+    return { title: m.title, description: m.description, image: p.images?.[0], full: true, noindex: isThinProduct(p.slug) };
   }
   if (a === 'brands' && b && BRAND_META[path]) return { title: BRAND_META[path].title, description: BRAND_META[path].description, full: true };
   if (a === 'brands' && b) {
@@ -180,7 +181,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
   const { slug = [] } = await params;
   const m = lookup(slug);
   const own = '/' + slug.join('/') + (slug.length ? '/' : '');
-  const canonical = CANONICAL_OVERRIDE[own] || own;
+  const dup = slug[0] === 'product' && slug[1] ? duplicateOf(slug[1]) : undefined;
+  const canonical = dup ? `/product/${dup}/` : CANONICAL_OVERRIDE[own] || own;
   if (!m) return { alternates: { canonical } };
   const fullTitle = m.full ? m.title : m.title + SUFFIX;
   return {
@@ -236,8 +238,8 @@ function breadcrumb(slug: string[]) {
 }
 
 type LinkItem = { id: string; slug: string; name: string };
-function ProductLinkList({ title, aria, items }: { title: string; aria: string; items: LinkItem[] }) {
-  return <LinkList title={title} aria={aria} items={items.map((p) => [p.slug, p.name] as [string, string])} />;
+function ProductLinkList({ title, aria, items, checklist = true }: { title: string; aria: string; items: LinkItem[]; checklist?: boolean }) {
+  return <LinkList title={title} aria={aria} checklist={checklist} items={items.map((p) => [p.slug, p.name] as [string, string])} />;
 }
 
 // The few products a page shows, supplied by the server so the client does not need the whole catalogue.
@@ -311,6 +313,51 @@ function brandSummary(name: string, items: any[]): string {
   return `We list ${items.length} ${name} model${items.length === 1 ? '' : 's'} across ${types} product type${types === 1 ? '' : 's'}.${range}${size}`;
 }
 
+const fmtMoney = (n: number) => '$' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+const signed = (n: number, unit: string) => (Math.round(n) === 0 ? 'same' : `${n > 0 ? '+' : '-'}${Math.abs(Math.round(n)).toLocaleString('en-AU')}${unit}`);
+
+// A section written only from this model's own data: where it sits among models of the same type, and its nearest neighbours.
+// Every figure is a listed value, so the text is different on each product page and says something a visitor can use.
+function CompareBlock({ p }: { p: any }) {
+  const peers = (FULL_PRODUCTS as any[]).filter((q) => q.primaryCategory === p.primaryCategory && q.categorySlug === p.categorySlug && q.type === p.type && q.slug !== p.slug && !duplicateOf(q.slug));
+  if (peers.length < 2) return null;
+  const metric = p.capacityLitres >= 20 && peers.filter((q) => q.capacityLitres >= 20).length >= 2 ? 'capacity' : p.widthMm > 0 && peers.filter((q) => q.widthMm > 0).length >= 2 ? 'width' : 'price';
+  const val = (q: any) => (metric === 'capacity' ? (q.capacityLitres >= 20 ? q.capacityLitres : 0) : metric === 'width' ? q.widthMm : q.price);
+  const known = [p, ...peers].filter((q) => val(q) > 0);
+  if (known.length < 3 || !(val(p) > 0)) return null;
+  const sorted = [...known].sort((a, b) => val(a) - val(b));
+  const rank = sorted.findIndex((q) => q.slug === p.slug) + 1;
+  const unit = metric === 'capacity' ? ' L' : metric === 'width' ? ' mm' : '';
+  const label = metric === 'capacity' ? 'capacity' : metric === 'width' ? 'width' : 'price';
+  const shown = (n: number) => (metric === 'price' ? fmtMoney(n) : `${Math.round(n).toLocaleString('en-AU')}${unit}`);
+  const priced = known.filter((q) => q.price > 0).map((q) => q.price).sort((a, b) => a - b);
+  const median = priced.length ? priced[Math.floor(priced.length / 2)] : 0;
+  const near = known.filter((q) => q.slug !== p.slug).sort((a, b) => Math.abs(val(a) - val(p)) - Math.abs(val(b) - val(p)) || a.price - b.price).slice(0, 3);
+  const typeName = String(p.type || p.subCategory || 'models').toLowerCase();
+  const title = `${p.brand} ${p.model || ''}`.trim();
+  return (
+    <section aria-label={`How the ${title} compares`} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+      <h2 className="text-base font-bold text-slate-900">How the {title} compares</h2>
+      <p className="mt-1 text-xs text-slate-600 max-w-3xl">
+        We list {known.length} {typeName} models in this category. The {title} has a listed {label} of {shown(val(p))}, which puts it number {rank} of {known.length} from smallest to largest
+        {sorted.length > 1 ? `, in a range of ${shown(val(sorted[0]))} to ${shown(val(sorted[sorted.length - 1]))}` : ''}.
+        {p.price > 0 && median > 0 ? ` Its listed price of ${fmtMoney(p.price)} is ${p.price === median ? 'level with' : p.price > median ? `${fmtMoney(p.price - median)} above` : `${fmtMoney(median - p.price)} below`} the median of ${fmtMoney(median)} for these models.` : ''}
+      </p>
+      <p className="mt-2 text-xs text-slate-600 max-w-3xl">The closest models by {label} are:</p>
+      <ul className="mt-1 text-xs text-slate-700 max-w-3xl list-disc pl-5 space-y-0.5">
+        {near.map((q) => (
+          <li key={q.slug}>
+            <a className="text-cyan-700 font-semibold hover:underline" href={`/product/${q.slug}/`}>{q.brand} {q.model || q.name}</a>
+            {`: ${shown(val(q))} (${metric === 'price' ? signed(val(q) - val(p), '').replace(/^([+-])/, '$1$') : signed(val(q) - val(p), unit)})`}
+            {metric !== 'price' && q.price > 0 ? `, ${fmtMoney(q.price)}` : ''}
+            {metric !== 'width' && q.widthMm > 0 ? `, ${q.widthMm} mm wide` : ''}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 function belowContent(slug: string[], productDetail: any): React.ReactNode {
   const all = PRODUCTS as any[];
   const [a, b, c] = slug;
@@ -374,7 +421,13 @@ function belowContent(slug: string[], productDetail: any): React.ReactNode {
     return <ProductLinkList title={`All ex-display and clearance models (${items.length})`} aria="All ex-display and clearance models" items={items} />;
   }
   if (a === 'product' && productDetail && productDetail.related) {
-    return <ProductLinkList title="More in this category" aria="More in this category" items={productDetail.related} />;
+    const self: any = (FULL_PRODUCTS as any[]).find((x) => x.id === productDetail.id);
+    return (
+      <>
+        {self ? <CompareBlock p={self} /> : null}
+        <ProductLinkList title="More in this category" aria="More in this category" items={productDetail.related} checklist={false} />
+      </>
+    );
   }
   return null;
 }

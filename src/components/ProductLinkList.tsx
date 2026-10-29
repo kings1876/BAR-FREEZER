@@ -30,7 +30,7 @@ export function BuyingChecklist() {
 
 // Plain anchors that crawlers can follow. Items arrive as compact [slug, name] pairs: rendering the list
 // here instead of as a server element tree keeps the page's data payload small.
-export function ProductLinkList({ title, aria, items }: { title: string; aria: string; items: [string, string][] }) {
+export function ProductLinkList({ title, aria, items, checklist = true }: { title: string; aria: string; items: [string, string][]; checklist?: boolean }) {
   if (!items.length) return null;
   return (
     <div className="bg-slate-50 pb-12">
@@ -45,7 +45,7 @@ export function ProductLinkList({ title, aria, items }: { title: string; aria: s
           ))}
         </div>
       </nav>
-      <BuyingChecklist />
+      {checklist && <BuyingChecklist />}
     </div>
   );
 }
