@@ -20,6 +20,18 @@ const renderInline = (text: string) => {
 const renderBody = (content: string, thumbs: Record<string, string> = {}) =>
   content.split('\n\n').map((block: string, i: number) => {
     if (block.startsWith('## ')) return <h2 key={i} className="text-xl font-bold text-slate-900 pt-2">{block.slice(3)}</h2>;
+    if (block.startsWith('|')) {
+      const rows = block.split('\n').filter((l) => !/^\|[\s|:-]+\|?$/.test(l)).map((l) => l.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim()));
+      const [head, ...body] = rows;
+      return (
+        <div key={i} className="overflow-x-auto -mx-2 sm:mx-0">
+          <table className="w-full text-xs text-left border-collapse min-w-[34rem]">
+            <thead><tr>{head.map((h, n) => <th key={n} scope="col" className="bg-slate-100 border border-slate-200 px-3 py-2 font-bold text-slate-900">{h}</th>)}</tr></thead>
+            <tbody>{body.map((r, n) => <tr key={n} className="odd:bg-white even:bg-slate-50">{r.map((c, m) => <td key={m} className="border border-slate-200 px-3 py-2 align-top">{renderInline(c)}</td>)}</tr>)}</tbody>
+          </table>
+        </div>
+      );
+    }
     const lines = block.split('\n');
     const bullets = lines.filter((l) => l.startsWith('- '));
     if (bullets.length && bullets.length >= lines.length - 1) {

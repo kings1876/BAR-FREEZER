@@ -21,7 +21,7 @@ for (const m of kwSrc.matchAll(/['"](\/[a-z0-9/-]+\/)['"]\s*:/g)) valid.add(m[1]
 const productSlugs = new Set(JSON.parse(fs.readFileSync(path.join(root, 'src/config/products.light.json'), 'utf8')).map((p) => p.slug));
 try {
   const sm = await (await fetch((process.env.SITEMAP_BASE || 'https://barfreezer.com.au') + '/sitemap.xml')).text();
-  for (const m of sm.matchAll(/<loc>https?:\/\/[^/]+(\/(?:bar-fridges|bar-freezers|accessories-parts)\/[^<]*)<\/loc>/g)) valid.add(m[1]);
+  for (const m of sm.matchAll(/<loc>https?:\/\/[^/]+(\/(?:bar-fridges|bar-freezers|accessories-parts|venues|brands|delivery)\/[^<]*)<\/loc>/g)) valid.add(m[1]);
 } catch {}
 for (const s of productSlugs) valid.add(`/product/${s}/`);
 const all = [...EXTRA_POSTS];
@@ -49,7 +49,7 @@ for (const p of BLOG_POSTS) {
   const links = [...c.matchAll(/\]\((\/[^)]*)\)/g)].map((m) => m[1]);
   const primary = p.primaryKeyword.toLowerCase();
   const wc = words(plain) + words((p.faqs || []).map((f) => f.q + ' ' + f.a).join(' '));
-  const paraLens = blocks.filter((b) => !b.startsWith('## ') && !b.startsWith('- ')).map(words);
+  const paraLens = blocks.filter((b) => !b.startsWith('## ') && !b.startsWith('- ') && !b.startsWith('|')).map(words);
   const sentences = plain.split(/(?<=[.!?])\s+|\n/).filter(Boolean);
   const avgSentence = words(plain) / Math.max(1, sentences.length);
   const density = count(plain, primary) / Math.max(1, words(plain)) * 100;
