@@ -16,6 +16,7 @@ interface CartContextType {
   setIsQuoteModalOpen: (open: boolean) => void;
   quoteProducts: Product[];
   openQuoteForProduct: (product: Product) => void;
+  openQuote: (products?: Product[]) => void;
   openQuoteForCart: () => void;
   notification: string | null;
   showNotification: (msg: string) => void;
@@ -114,6 +115,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsQuoteModalOpen(true);
   };
 
+  const openQuote = (products: Product[] = []) => {
+    setQuoteProducts(products);
+    setIsQuoteModalOpen(true);
+  };
+
   const openQuoteForCart = () => {
     if (cart.length === 0) {
       showNotification('Your cart is empty. Add equipment before requesting a multi-product trade quote.');
@@ -165,6 +171,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setIsQuoteModalOpen,
         quoteProducts,
         openQuoteForProduct,
+        openQuote,
         openQuoteForCart,
         notification,
         showNotification,

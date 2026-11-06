@@ -4,7 +4,7 @@ import { ProductLinkList as LinkList, BuyingChecklist } from '../../components/P
 import { CATEGORIES, BRANDS, VENUES, CITIES, PRODUCTS, POSTS, FAQS } from '../../config/site.js';
 import { allPaths } from '../../lib/routes';
 import { categoryProducts } from '../../lib/category-filter';
-import { guideImages } from '../../lib/guide-images';
+import { guideImages, guideCards } from '../../lib/guide-images';
 import { duplicateOf, isThinProduct } from '../../lib/index-policy';
 import { KEYWORD_META } from '../../config/seo-keywords';
 import { BRAND_META } from '../../config/seo-brands';
@@ -485,7 +485,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
     const post: any = (POSTS as any[]).find((x) => x.slug === slug[1]);
     if (post) {
       const gi = guideImages(post.content, FULL_PRODUCTS as any[]);
-      productDetail = { id: `guide:${post.slug}`, guide: { slug: post.slug, content: post.content, faqs: post.faqs || [], hero: gi.hero, thumbs: gi.thumbs } } as any;
+      productDetail = { id: `guide:${post.slug}`, guide: { slug: post.slug, content: post.content, faqs: post.faqs || [], hero: gi.hero, thumbs: gi.thumbs, cards: guideCards(post.content, FULL_PRODUCTS as any[]), primaryKeyword: post.primaryKeyword || '' } } as any;
       const d = new Date(post.publishedAt);
       blocks.push({
         '@context': 'https://schema.org',

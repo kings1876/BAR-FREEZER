@@ -48,7 +48,8 @@ export const QuoteModal: React.FC = () => {
           'Tailgate truck required': tailgateNeeded ? 'Yes' : 'No',
           'Stairs / difficult access': stairAccess ? 'Yes' : 'No',
           'Finance estimate wanted': financeInterest ? 'Yes' : 'No',
-          Notes: notes
+          Notes: notes,
+          'Source page': typeof window !== 'undefined' ? window.location.pathname : ''
         },
         { items: itemsToQuote.map((p: any) => ({ name: p.name, sku: p.sku, qty: 1, price: p.price ?? null })) }
       );

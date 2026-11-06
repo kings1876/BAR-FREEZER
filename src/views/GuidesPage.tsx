@@ -1,5 +1,7 @@
 import React from 'react';
-import { ChevronRight, ArrowRight, Clock, Calendar, BookOpen, Share2, Printer } from 'lucide-react';
+import { ChevronRight, ArrowRight, Clock, Calendar, BookOpen, Share2, Printer, FileText, ShoppingBag } from 'lucide-react';
+import { ProductCard } from '../components/ProductCard';
+import { useCart } from '../context/CartContext';
 import { POSTS } from '../config/posts-list.js';
 import { useRouter, Link } from '../context/RouterContext';
 import { useProductDetail } from '../context/ProductDetailContext';
@@ -54,6 +56,28 @@ const renderBody = (content: string, thumbs: Record<string, string> = {}) =>
     }
     return <p key={i} className="whitespace-pre-line">{renderInline(block)}</p>;
   });
+
+// Lead capture used inside every guide: opens the quote form with the guide's models pre-selected.
+const GuideCta: React.FC<{ cards: any[]; variant: 'top' | 'bottom'; topic: string }> = ({ cards, variant, topic }) => {
+  const { openQuote } = useCart();
+  const top = variant === 'top';
+  return (
+    <aside aria-label="Request a free quote" className={`rounded-xl border border-amber-300 bg-amber-50 ${top ? 'p-4 sm:p-5' : 'p-6 sm:p-8'} flex flex-col sm:flex-row sm:items-center gap-4 justify-between`}>
+      <div>
+        <h2 className={`${top ? 'text-base' : 'text-xl'} font-bold text-slate-900`}>{top ? 'Want a price for your venue? Get a free quote' : `Ready to buy? Get a free quote on ${topic}`}</h2>
+        <p className="mt-1 text-xs sm:text-sm text-slate-700 max-w-2xl">
+          {top ? 'Tell us the models and your postcode and we reply by email with pricing and freight. No obligation.' : 'Send the models you like and your delivery postcode. We confirm freight and reply by email with pricing for the whole order, with no obligation. Trade and multi-unit orders welcome.'}
+        </p>
+      </div>
+      <div className="flex flex-col sm:flex-row gap-2 shrink-0">
+        <button onClick={() => openQuote(cards)} className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-sm transition-colors">
+          <FileText className="w-4 h-4" /><span>Get a free quote</span>
+        </button>
+        {!top && <Link href="/bar-fridges/" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition-colors"><ShoppingBag className="w-4 h-4" /><span>Browse the shop</span></Link>}
+      </div>
+    </aside>
+  );
+};
 
 export const GuidesPage: React.FC = () => {
   const { routeMatch } = useRouter();
@@ -121,6 +145,8 @@ export const GuidesPage: React.FC = () => {
             </figure>
           )}
 
+          {guideBody && <GuideCta cards={guideBody.cards || []} variant="top" topic={currentGuide.title} />}
+
           {/* Article Body */}
           <article className="bg-white rounded-xl border border-slate-200/90 p-6 sm:p-10 shadow-xs prose prose-slate max-w-none text-sm text-slate-700 leading-relaxed space-y-4">
             {renderBody(currentGuide.content, guideBody?.thumbs || {})}
@@ -136,6 +162,18 @@ export const GuidesPage: React.FC = () => {
               </section>
             )}
           </article>
+
+          {guideBody && guideBody.cards && guideBody.cards.length > 0 && (
+            <section aria-labelledby="guide-models" className="space-y-4">
+              <h2 id="guide-models" className="text-xl font-bold text-slate-900">Order the models from this guide</h2>
+              <p className="text-sm text-slate-600">Add to cart for an order request, or ask for a quote. We confirm freight to your postcode before you pay.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {guideBody.cards.map((p: any) => <ProductCard key={p.id} product={p} />)}
+              </div>
+            </section>
+          )}
+
+          {guideBody && <GuideCta cards={guideBody.cards || []} variant="bottom" topic={String(guideBody.primaryKeyword || 'your next fridge or freezer').toLowerCase()} />}
 
           {/* Related Articles Footer */}
           <div className="bg-slate-900 text-white rounded-xl p-6 sm:p-8 space-y-4">
