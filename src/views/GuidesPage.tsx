@@ -2,6 +2,7 @@ import React from 'react';
 import { ChevronRight, ArrowRight, Clock, Calendar, BookOpen, Share2, Printer, FileText, ShoppingBag } from 'lucide-react';
 import { ProductCard } from '../components/ProductCard';
 import { useCart } from '../context/CartContext';
+import { rememberGuide } from '../lib/enquiry-client';
 import { POSTS } from '../config/posts-list.js';
 import { useRouter, Link } from '../context/RouterContext';
 import { useProductDetail } from '../context/ProductDetailContext';
@@ -82,6 +83,8 @@ const GuideCta: React.FC<{ cards: any[]; variant: 'top' | 'bottom'; topic: strin
 export const GuidesPage: React.FC = () => {
   const { routeMatch } = useRouter();
   const guideSlug = routeMatch.params.slug;
+
+  React.useEffect(() => { if (guideSlug) rememberGuide(`/guides/${guideSlug}/`); }, [guideSlug]);
 
   const detail = useProductDetail();
   const guideBody = detail && detail.guide && detail.guide.slug === guideSlug ? detail.guide : null;

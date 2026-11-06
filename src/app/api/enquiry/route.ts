@@ -96,7 +96,7 @@ export async function POST(req: Request) {
       items: items.map((i: any) => ({ name: i.name, quantity: i.quantity, lineTotal: i.lineTotal })),
       amountDue,
       paymentMethod: pick(fields, /payment/i),
-      notes: pick(fields, /note/i),
+      notes: [pick(fields, /note/i), fields['Source guide'] ? `From guide: ${fields['Source guide']}` : ''].filter(Boolean).join(' | '),
       status: 'pending',
       channel: body.channel === 'whatsapp' ? 'whatsapp' : 'email',
       createdAt,

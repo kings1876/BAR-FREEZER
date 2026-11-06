@@ -33,11 +33,22 @@ export function collectForm(form: HTMLFormElement): Record<string, string> {
 export interface EnquiryItem { name: string; sku?: string; qty?: number; price?: number | null }
 export interface EnquiryTotals { subtotal: number; delivery: number; total: number; discount?: number }
 
+// The last buying guide a visitor read, kept for the session so quotes and orders can be traced back to it.
+const GUIDE_KEY = 'bf_source_guide';
+export function rememberGuide(path: string) {
+  try { sessionStorage.setItem(GUIDE_KEY, path); } catch {}
+}
+function sourceGuide(): string {
+  try { return sessionStorage.getItem(GUIDE_KEY) || ''; } catch { return ''; }
+}
+
 export async function sendEnquiry(
   type: EnquiryType,
   fields: Record<string, string>,
   extra: { items?: EnquiryItem[]; totals?: EnquiryTotals; ref?: string; channel?: 'email' | 'whatsapp' } = {}
 ): Promise<{ ref: string }> {
+  const guide = sourceGuide();
+  if (guide && (type === 'order' || type === 'quote')) fields = { ...fields, 'Source guide': guide };
   let res: Response;
   try {
     res = await fetch('/api/enquiry/', {
