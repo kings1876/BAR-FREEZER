@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
-const title = 'Bar Fridges & Bar Freezers Australia | Bar Freezer';
+const title = 'Bar Freezers & Bar Fridges for Sale Australia | Bar Freezer';
 const description =
-  'Shop bar fridges and bar freezers in Australia: under bar, glass door and display models, kegerators, wine fridges and ice machines. Delivered Australia-wide.';
+  'Shop 1,300+ bar freezers and bar fridges in Australia: under bar, glass door, kegerators and wine fridges. Free quote, delivered Australia-wide.';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://barfreezer.com.au'),

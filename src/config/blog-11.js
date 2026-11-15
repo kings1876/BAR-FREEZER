@@ -11,7 +11,7 @@ export const BLOG_11 = [
     category: "Buying Guide",
     primaryKeyword: "tefcold vs skope",
     supportingKeywords: ["skope vs tefcold", "tefcold commercial fridge", "skope underbench fridge", "commercial fridge brands", "tefcold bar fridge"],
-    excerpt: "Tefcold vs Skope for your bar or venue? Compare real Tefcold and Skope fridge models by size, price and listed warranty, then request a free quote.",
+    excerpt: "Tefcold vs Skope for your bar or venue? Compare real models by size, price and listed warranty, then get a free quote delivered to your postcode.",
     faqs: [
       { q: "Is Tefcold or Skope better for a bar?", a: "Neither wins on every job. Tefcold lists many bottle coolers and glass door units at lower prices, while Skope lists more underbench fridges built for heavy daily use. Match the model to your space and workload." },
       { q: "Which brand is cheaper, Tefcold or Skope?", a: "In our range Tefcold bottle coolers start at $980 and Skope bottle coolers at $1,987. Skope underbench fridges run higher, but products differ in size and build, so compare model to model." },

@@ -9,7 +9,7 @@ export const BLOG_2 = [
     category: "Buying Guide",
     primaryKeyword: "kegerator",
     supportingKeywords: ["keg fridge", "kegerator fridge", "miniature kegerator", "refrigerator for kegerator", "beer tap"],
-    excerpt: "Planning to buy a kegerator in Australia? Compare keg fridge sizes, taps, gas and cooling so draught beer pours well at home or in your venue.",
+    excerpt: "Buying a kegerator in Australia? Compare keg fridge sizes, taps, gas and cooling for home or venue, then get a free quote on the right model.",
     faqs: [
       { q: "What is the difference between a kegerator and a keg fridge?", a: "The terms are often used interchangeably. A kegerator is a fridge set up to store and dispense draught beer, while a keg fridge may simply be a fridge large enough to hold a keg." },
       { q: "What size keg will a kegerator hold?", a: "It depends on the model. Compact units take small kegs, while larger commercial cabinets take full-size kegs. Always check the internal dimensions and the keg sizes listed on the product page." },

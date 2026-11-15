@@ -174,7 +174,7 @@ If you are fitting out a venue, the right answer often turns out to be a mix of 
     category: "Buying Guide",
     primaryKeyword: "bar fridge size",
     supportingKeywords: ["125l bar fridge", "90l bar fridge", "130l bar fridge", "fridge sizes", "bar fridge dimensions"],
-    excerpt: "Choosing the right bar fridge size is about litres, dimensions and ventilation. See what 90L, 125L and 130L models hold and how to measure your space.",
+    excerpt: "Which bar fridge size do you need? See what 90L, 125L and 130L models hold and how to measure your space, then get a free quote.",
     faqs: [
       { q: "How many cans fit in a 125L bar fridge?", a: "It depends on shelf layout and whether you stack cans. Shelves, door racks and a freezer compartment all change usable space, so check the product page and allow for airflow rather than packing it solid." },
       { q: "What size bar fridge do I need for a home bar?", a: "For a small home bar, a unit around 90L to 130L is a common starting point. Entertain often and you may want something larger or a second fridge." },

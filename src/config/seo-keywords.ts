@@ -8,19 +8,19 @@ import { ACCESSORY_META } from './seo-accessories';
 export const KEYWORD_META: Record<string, { title: string; description: string }> = {
   '/bar-fridges/': {
     title: "Bar Fridges for Sale Australia | Glass Door & Under Bar",
-    description: "Buy bar fridges in Australia: under bar, glass door, back bar and outdoor models. Compare sizes and prices, delivered Australia-wide.",
+    description: "Compare 750+ bar fridges in Australia: under bar, glass door, back bar, beer and outdoor models. Get a free quote, delivered Australia-wide.",
   },
   '/bar-freezers/': {
     title: "Bar Freezers for Sale Australia | Under Bar & Back Bar",
-    description: "Buy commercial bar freezers: under bar, back bar, glass door display and chest freezers. Compare prices, delivered Australia-wide.",
+    description: "Compare 500+ commercial bar freezers: under bar, back bar, glass door display, chest and upright models. Free quote, delivered Australia-wide.",
   },
   '/bar-fridges/wine-fridges/': {
     title: "Wine Fridges for Sale Australia | Wine Coolers",
-    description: "Buy single and dual zone wine fridges and wine coolers for home, bar and restaurant use. Compare capacity and price, delivered Australia-wide.",
+    description: "Compare 63 single and dual zone wine fridges and coolers for home, bar and restaurant. Get a free quote, delivered Australia-wide.",
   },
   '/bar-fridges/kegerators-dispensers/': {
     title: "Kegerators for Sale Australia | Keg Fridges",
-    description: "Buy kegerators, keg fridges and beer dispensers for bars, venues and home use. Single and multi-tap options, delivered Australia-wide.",
+    description: "Compare 23 kegerators, keg fridges and beer dispensers for bars, venues and home. Single and multi-tap, free quote, delivered Australia-wide.",
   },
   '/bar-fridges/outdoor-alfresco-fridges/': {
     title: "Outdoor Bar Fridges for Sale | Alfresco Fridges",
@@ -44,7 +44,7 @@ export const KEYWORD_META: Record<string, { title: string; description: string }
   },
   '/bar-freezers/upright-commercial-freezers/': {
     title: "Commercial Upright Freezers for Sale Australia",
-    description: "Buy upright commercial freezers in 1, 2 and 3 door sizes for restaurants, cafes and bars. Compare capacity, dimensions and prices.",
+    description: "Compare 85 upright commercial freezers in 1, 2 and 3 door sizes for restaurants, cafes and bars. Free quote, delivered Australia-wide.",
   },
   '/accessories-parts/ice-machines-storage/': {
     title: "Commercial Ice Makers for Sale | Ice Machines",
