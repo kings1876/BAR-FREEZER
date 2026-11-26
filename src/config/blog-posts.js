@@ -16,5 +16,6 @@ import { BLOG_14 } from './blog-14.js';
 import { BLOG_15 } from './blog-15.js';
 import { BLOG_16 } from './blog-16.js';
 import { BLOG_17 } from './blog-17.js';
+import { BLOG_18 } from './blog-18.js';
 
-export const BLOG_POSTS = [...BLOG_1, ...BLOG_2, ...BLOG_3, ...BLOG_4, ...BLOG_5, ...BLOG_6, ...BLOG_7, ...BLOG_8, ...BLOG_9, ...BLOG_10, ...BLOG_11, ...BLOG_12, ...BLOG_13, ...BLOG_14, ...BLOG_15, ...BLOG_16, ...BLOG_17];
+export const BLOG_POSTS = [...BLOG_1, ...BLOG_2, ...BLOG_3, ...BLOG_4, ...BLOG_5, ...BLOG_6, ...BLOG_7, ...BLOG_8, ...BLOG_9, ...BLOG_10, ...BLOG_11, ...BLOG_12, ...BLOG_13, ...BLOG_14, ...BLOG_15, ...BLOG_16, ...BLOG_17, ...BLOG_18];
